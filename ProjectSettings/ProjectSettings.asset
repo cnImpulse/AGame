@@ -549,7 +549,12 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    1: ENABLE_LOG
+    4: ENABLE_LOG
+    7: ENABLE_LOG
+    13: ENABLE_LOG
+    14: ENABLE_LOG
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
