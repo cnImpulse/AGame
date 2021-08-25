@@ -9,6 +9,6 @@ public class ProcedureBattle : ProcedureBase
     {
         base.OnEnter(procedureOwner);
 
-        Log.Info("进入战斗流程。");
+        Log.Info("进入战斗。");
     }
 }
