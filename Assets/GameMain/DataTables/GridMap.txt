@@ -1,0 +1,5 @@
+#	地图表			
+#	Id		Width	Height
+#	int		int	int
+#	地图编号	策划备注	宽	高
+	10000	默认地图	18	10

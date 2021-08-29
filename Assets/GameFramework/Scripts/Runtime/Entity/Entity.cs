@@ -15,7 +15,7 @@ namespace UnityGameFramework.Runtime
     /// <summary>
     /// 实体。
     /// </summary>
-    public sealed class Entity : MonoBehaviour, IEntity
+    public class Entity : MonoBehaviour, IEntity
     {
         private int m_Id;
         private string m_EntityAssetName;
