@@ -18,5 +18,10 @@ namespace SSRPG
         {
             return Utility.Text.Format("Assets/GameMain/Entities/{0}.prefab", assetName);
         }
+
+        public static string GetTileAsset(string assetName)
+        {
+            return Utility.Text.Format("Assets/GameMain/Tilemap/{0}.asset", assetName);
+        }
     }
 }

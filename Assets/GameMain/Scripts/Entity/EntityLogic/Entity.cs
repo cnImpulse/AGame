@@ -16,5 +16,19 @@ namespace SSRPG
                 return Entity.Id;
             }
         }
+
+        protected override void OnShow(object userData)
+        {
+            base.OnShow(userData);
+
+            m_EntityData = userData as EntityData;
+            if (m_EntityData == null)
+            {
+                Log.Error("Entity data is invalid!");
+                return;
+            }
+
+            Name = Utility.Text.Format("[Entity {0}]", Id);
+        }
     }
 }

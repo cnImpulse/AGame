@@ -48,7 +48,7 @@ namespace SSRPG
         {
             get
             {
-                return Height;
+                return m_Height;
             }
             set
             {
