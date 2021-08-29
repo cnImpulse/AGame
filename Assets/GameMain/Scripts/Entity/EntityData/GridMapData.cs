@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using GameFramework.DataTable;
 
 namespace SSRPG
 {
@@ -12,10 +13,17 @@ namespace SSRPG
         [SerializeField]
         private int m_Height = 0;
 
-        public GridMapData(int entityId, int typeId, int width, int height) : base(entityId, typeId)
+        public GridMapData(int entityId, int typeId) : base(entityId, typeId)
         {
-            m_Width = width;
-            m_Height = height;
+            IDataTable<DRGridMap> dtGridMaps = GameEntry.DataTable.GetDataTable<DRGridMap>();
+            DRGridMap dRGridMap = dtGridMaps.GetDataRow(TypeId);
+            if (dRGridMap == null)
+            {
+                return;
+            }
+
+            m_Width = dRGridMap.Width;
+            m_Height = dRGridMap.Height;
         }
 
         /// <summary>

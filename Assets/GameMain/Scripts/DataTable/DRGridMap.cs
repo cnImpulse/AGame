@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-08-29 17:03:19.517
+// 生成时间：2021-08-29 17:12:42.070
 //------------------------------------------------------------
 
 using GameFramework;
@@ -16,7 +16,7 @@ using System.Text;
 using UnityEngine;
 using UnityGameFramework.Runtime;
 
-namespace StarForce
+namespace SSRPG
 {
     /// <summary>
     /// 地图表。

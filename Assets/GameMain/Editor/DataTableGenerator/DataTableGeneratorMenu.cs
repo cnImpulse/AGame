@@ -14,7 +14,7 @@ namespace StarForce.Editor.DataTableTools
 {
     public sealed class DataTableGeneratorMenu
     {
-        [MenuItem("Star Force/Generate DataTables")]
+        [MenuItem("Data Table/Generate DataTables")]
         private static void GenerateDataTables()
         {
             List<string> dataTableNames = GetDataTableNames();

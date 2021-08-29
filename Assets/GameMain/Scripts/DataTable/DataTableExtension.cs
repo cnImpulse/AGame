@@ -10,11 +10,11 @@ using System;
 using UnityEngine;
 using UnityGameFramework.Runtime;
 
-namespace StarForce
+namespace SSRPG
 {
     public static class DataTableExtension
     {
-        private const string DataRowClassPrefixName = "StarForce.DR";
+        private const string DataRowClassPrefixName = "SSRPG.DR";
         internal static readonly char[] DataSplitSeparators = new char[] { '\t' };
         internal static readonly char[] DataTrimSeparators = new char[] { '\"' };
 
