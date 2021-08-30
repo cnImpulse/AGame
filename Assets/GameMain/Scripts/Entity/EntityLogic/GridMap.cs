@@ -24,6 +24,8 @@ namespace SSRPG
 
             empty = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtility.GetTileAsset("empty"));
             tilemap = transform.Find("Tilemap").GetComponent<Tilemap>();
+
+            gameObject.SetLayerRecursively(Constant.Layer.GridMapLayerId);
         }
 
         protected override void OnShow(object userData)
@@ -31,7 +33,12 @@ namespace SSRPG
             base.OnShow(userData);
 
             m_Data = userData as GridMapData;
-            Name = Utility.Text.Format("[GridMap {0}]", Id);
+            if (m_Data == null)
+            {
+                Log.Error("GridMap object data is invalid.");
+                return;
+            }
+
             Camera.main.transform.position = new Vector3(m_Data.Width / 2f, m_Data.Height / 2f, -10);
 
             RefreshMap();

@@ -24,6 +24,7 @@ namespace SSRPG
 
             m_Width = dRGridMap.Width;
             m_Height = dRGridMap.Height;
+            Name = "GridMap";
         }
 
         /// <summary>
@@ -42,7 +43,7 @@ namespace SSRPG
         }
 
         /// <summary>
-        /// 地图宽。
+        /// 地图高。
         /// </summary>
         public int Height
         {

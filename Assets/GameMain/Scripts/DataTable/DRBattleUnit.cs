@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-08-30 23:55:48.419
+// 生成时间：2021-08-30 23:55:48.423
 //------------------------------------------------------------
 
 using GameFramework;
@@ -19,14 +19,14 @@ using UnityGameFramework.Runtime;
 namespace SSRPG
 {
     /// <summary>
-    /// 地图表。
+    /// 战斗单位表。
     /// </summary>
-    public class DRGridMap : DataRowBase
+    public class DRBattleUnit : DataRowBase
     {
         private int m_Id = 0;
 
         /// <summary>
-        /// 获取地图编号。
+        /// 获取单位编号。
         /// </summary>
         public override int Id
         {
@@ -37,18 +37,36 @@ namespace SSRPG
         }
 
         /// <summary>
-        /// 获取宽。
+        /// 获取名字。
         /// </summary>
-        public int Width
+        public string Name
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// 获取高。
+        /// 获取生命值。
         /// </summary>
-        public int Height
+        public int MaxHP
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取攻击力。
+        /// </summary>
+        public int ATK
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取移动力。
+        /// </summary>
+        public int MOV
         {
             get;
             private set;
@@ -66,8 +84,10 @@ namespace SSRPG
             index++;
             m_Id = int.Parse(columnStrings[index++]);
             index++;
-            Width = int.Parse(columnStrings[index++]);
-            Height = int.Parse(columnStrings[index++]);
+            Name = columnStrings[index++];
+            MaxHP = int.Parse(columnStrings[index++]);
+            ATK = int.Parse(columnStrings[index++]);
+            MOV = int.Parse(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -80,8 +100,10 @@ namespace SSRPG
                 using (BinaryReader binaryReader = new BinaryReader(memoryStream, Encoding.UTF8))
                 {
                     m_Id = binaryReader.Read7BitEncodedInt32();
-                    Width = binaryReader.Read7BitEncodedInt32();
-                    Height = binaryReader.Read7BitEncodedInt32();
+                    Name = binaryReader.ReadString();
+                    MaxHP = binaryReader.Read7BitEncodedInt32();
+                    ATK = binaryReader.Read7BitEncodedInt32();
+                    MOV = binaryReader.Read7BitEncodedInt32();
                 }
             }
 

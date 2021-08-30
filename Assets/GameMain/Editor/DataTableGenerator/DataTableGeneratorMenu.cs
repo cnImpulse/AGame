@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using GameFramework;
 using UnityEditor;
 using UnityEngine;
+using SSRPG;
 
 namespace StarForce.Editor.DataTableTools
 {
@@ -17,8 +18,8 @@ namespace StarForce.Editor.DataTableTools
         [MenuItem("Data Table/Generate DataTables")]
         private static void GenerateDataTables()
         {
-            List<string> dataTableNames = GetDataTableNames();
-            foreach (var name in dataTableNames)
+            //List<string> dataTableNames = GetDataTableNames();
+            foreach (var name in ProcedurePreload.DataTableNames)
             {
                 DataTableProcessor dataTableProcessor = DataTableGenerator.CreateDataTableProcessor(name);
                 if (!DataTableGenerator.CheckRawData(dataTableProcessor, name))

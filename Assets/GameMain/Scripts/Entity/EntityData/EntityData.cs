@@ -15,10 +15,14 @@ namespace SSRPG
         [SerializeField]
         private Vector3 m_Position = Vector3.zero;
 
+        [SerializeField]
+        private string m_Name = "";
+
         public EntityData(int entityId, int typeId)
         {
             m_Id = entityId;
             m_TypeId = typeId;
+            m_Name = "Entity";
         }
 
         /// <summary>
@@ -55,6 +59,21 @@ namespace SSRPG
             set
             {
                 m_Position = value;
+            }
+        }
+
+        /// <summary>
+        /// 单位名称。
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return m_Name;
+            }
+            set
+            {
+                m_Name = value;
             }
         }
     }

@@ -13,6 +13,7 @@ namespace SSRPG
         {
             "Entity",
             "GridMap",
+            "BattleUnit",
         };
 
         private Dictionary<string, bool> m_LoadedFlag = new Dictionary<string, bool>();

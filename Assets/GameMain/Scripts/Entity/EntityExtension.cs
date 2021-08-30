@@ -52,6 +52,11 @@ namespace SSRPG
             entityComponent.ShowEntity(typeof(GridMap), "GridMap", data);
         }
 
+        public static void ShowBattleUnit(this EntityComponent entityComponent, BattleUnitData data)
+        {
+            entityComponent.ShowEntity(typeof(BattleUnit), "BattleUnit", data);
+        }
+
         public static int GenerateSerialId(this EntityComponent entityComponent)
         {
             return --s_SerialId;
