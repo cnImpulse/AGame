@@ -44,7 +44,7 @@ namespace SSRPG
                 return;
             }
 
-            entityComponent.ShowEntity(data.Id, logicType, AssetUtility.GetEntityAsset(drEntity.AssetName), entityGroup, data);
+            entityComponent.ShowEntity(data.Id, logicType, AssetUtl.GetEntityAsset(drEntity.AssetName), entityGroup, data);
         }
 
         public static void ShowGridMap(this EntityComponent entityComponent, GridMapData data)

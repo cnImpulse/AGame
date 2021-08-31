@@ -2,7 +2,7 @@
 
 namespace SSRPG
 {
-    public static class AssetUtility
+    public static class AssetUtl
     {
         public static string GetConfigAsset(string assetName, bool fromBytes)
         {

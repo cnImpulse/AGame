@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using GameFramework.DataTable;
+using System.Collections.Generic;
 
 namespace SSRPG
 {
@@ -13,6 +14,9 @@ namespace SSRPG
         [SerializeField]
         private int m_Height = 0;
 
+        [SerializeField]
+        private Dictionary<int, GridData> m_GridList = null;
+
         public GridMapData(int entityId, int typeId) : base(entityId, typeId)
         {
             IDataTable<DRGridMap> dtGridMaps = GameEntry.DataTable.GetDataTable<DRGridMap>();
@@ -24,6 +28,7 @@ namespace SSRPG
 
             m_Width = dRGridMap.Width;
             m_Height = dRGridMap.Height;
+            m_GridList = GridMapUtl.GenerateGridList(Width, Height);
             Name = "GridMap";
         }
 
@@ -54,6 +59,17 @@ namespace SSRPG
             set
             {
                 m_Height = value;
+            }
+        }
+
+        /// <summary>
+        /// 获得网格数据列表
+        /// </summary>
+        public Dictionary<int, GridData> GridList
+        {
+            get
+            {
+                return m_GridList;
             }
         }
     }

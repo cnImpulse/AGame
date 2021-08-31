@@ -22,7 +22,7 @@ namespace SSRPG
         {
             base.OnInit(userData);
 
-            empty = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtility.GetTileAsset("empty"));
+            empty = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAsset("empty"));
             tilemap = transform.Find("Tilemap").GetComponent<Tilemap>();
 
             gameObject.SetLayerRecursively(Constant.Layer.GridMapLayerId);
@@ -51,12 +51,9 @@ namespace SSRPG
                 return;
             }
 
-            for(int i=0; i < m_Data.Height; ++i)
+            foreach(var gridData in m_Data.GridList.Values)
             {
-                for(int j=0; j< m_Data.Width; ++j)
-                {
-                    tilemap.SetTile(new Vector3Int(j, i, 0), empty);
-                }
+                tilemap.SetTile((Vector3Int)gridData.GridPos, empty);
             }
         }
     }
