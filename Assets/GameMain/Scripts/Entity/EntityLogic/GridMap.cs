@@ -14,15 +14,15 @@ namespace SSRPG
         [SerializeField]
         private GridMapData m_Data;
 
-        private Tile empty;
+        private Tile empty, wall;
         private Tilemap tilemap;
-
 
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
 
             empty = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAsset("empty"));
+            wall = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAsset("wall"));
             tilemap = transform.Find("Tilemap").GetComponent<Tilemap>();
 
             gameObject.SetLayerRecursively(Constant.Layer.GridMapLayerId);
@@ -53,7 +53,13 @@ namespace SSRPG
 
             foreach(var gridData in m_Data.GridList.Values)
             {
-                tilemap.SetTile((Vector3Int)gridData.GridPos, empty);
+                Tile tile = empty;
+                if (gridData.GridType == GridType.Wall)
+                {
+                    tile = wall;
+                }
+
+                tilemap.SetTile((Vector3Int)gridData.GridPos, tile);
             }
         }
     }

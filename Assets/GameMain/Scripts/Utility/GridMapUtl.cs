@@ -15,8 +15,13 @@ namespace SSRPG
                 {
                     Vector2Int gridPos = new Vector2Int(i, j);
                     int gridIndex = GetGridIndex(width, gridPos);
+                    GridType gridType = GridType.Normal;
+                    if (i == 0 || j == 0 || i == width - 1 || j == height - 1)
+                    {
+                        gridType = GridType.Wall;
+                    }
 
-                    gridList.Add(gridIndex, new GridData(gridPos, GridType.Normal));
+                    gridList.Add(gridIndex, new GridData(gridPos, gridType));
                 }
             }
 
