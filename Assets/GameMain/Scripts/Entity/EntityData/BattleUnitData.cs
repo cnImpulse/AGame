@@ -16,8 +16,8 @@ namespace SSRPG
         [SerializeField]
         private int m_MOV = 0;
 
-        public BattleUnitData(int entityId, int typeId, Vector2Int gridPos, CampType campType)
-            : base(entityId, typeId, gridPos, GridUnitType.BattleUnit, campType) 
+        public BattleUnitData(int typeId, Vector2Int gridPos, CampType campType)
+            : base(typeId, gridPos, GridUnitType.BattleUnit, campType) 
         {
             IDataTable<DRBattleUnit> dtBattleUnits = GameEntry.DataTable.GetDataTable<DRBattleUnit>();
             DRBattleUnit drBattleUnit = dtBattleUnits.GetDataRow(typeId);
@@ -30,7 +30,6 @@ namespace SSRPG
             m_MOV   = drBattleUnit.MOV;
             m_MaxHP = drBattleUnit.MaxHP;
             Name    = drBattleUnit.Name;
-            HP      = m_MaxHP;
         }
 
         /// <summary>

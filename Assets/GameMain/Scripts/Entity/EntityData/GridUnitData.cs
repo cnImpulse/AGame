@@ -18,12 +18,13 @@ namespace SSRPG
         [SerializeField]
         private int m_HP = 0;
 
-        public GridUnitData(int entityId, int typeId, Vector2Int gridPos, GridUnitType gridUnitType, CampType campType)
-            : base(entityId, typeId)
+        public GridUnitData(int typeId, Vector2Int gridPos, GridUnitType gridUnitType, CampType campType)
+            : base(typeId)
         {
             m_GridPos       = gridPos;
             m_GridUnitType  = gridUnitType;
             m_CampType      = campType;
+            m_HP            = MaxHP;
             Name            = gridUnitType.ToString();
         }
 

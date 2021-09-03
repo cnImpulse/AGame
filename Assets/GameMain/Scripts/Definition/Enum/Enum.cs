@@ -17,6 +17,7 @@ namespace SSRPG
     {
         None,
         BattleUnit,
+        BirthPlace,
     }
 
     /// <summary>

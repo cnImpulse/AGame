@@ -29,8 +29,18 @@ namespace SSRPG
                 Log.Error("BattleUnit object data is invalid.");
                 return;
             }
+        }
 
-            Name = Utility.Text.Format("[{0} {1}]", m_Data.Name, Id);
+        protected override void OnAttachTo(EntityLogic parentEntity, Transform parentTransform, object userData)
+        {
+            base.OnAttached(parentEntity, parentTransform, userData);
+
+            GridMap ownerMap = parentEntity as GridMap;
+            if (ownerMap == null)
+            {
+                return;
+            }
+            m_Data.Position = ownerMap.GridPosToWorldPos(m_Data.GridPos);
         }
     }
 }

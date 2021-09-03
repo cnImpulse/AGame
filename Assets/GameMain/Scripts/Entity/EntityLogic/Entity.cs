@@ -28,7 +28,7 @@ namespace SSRPG
                 return;
             }
 
-            Name = Utility.Text.Format("[{0} {1}]", GetType().ToString(), Id);
+            Name = Utility.Text.Format("[{0} {1}]", m_EntityData.Name, Id);
         }
     }
 }

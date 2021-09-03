@@ -41,16 +41,12 @@ namespace SSRPG
 
             Camera.main.transform.position = new Vector3(m_Data.Width / 2f, m_Data.Height / 2f, -10);
 
+            PlayerBrith();
             RefreshMap();
         }
 
         private void RefreshMap()
         {
-            if (m_Data == null || tilemap == null || empty == null) 
-            {
-                return;
-            }
-
             foreach(var gridData in m_Data.GridList.Values)
             {
                 Tile tile = empty;
@@ -61,6 +57,20 @@ namespace SSRPG
 
                 tilemap.SetTile((Vector3Int)gridData.GridPos, tile);
             }
+        }
+
+        private void PlayerBrith()
+        {
+            foreach(var place in m_Data.PlayerBrithPlaces)
+            {
+                BattleUnitData data = new BattleUnitData(20000, place, CampType.Player);
+                GameEntry.Entity.ShowBattleUnit(data);
+            }
+        }
+
+        public Vector3 GridPosToWorldPos(Vector2Int gridPos)
+        {
+            return tilemap.GetCellCenterWorld((Vector3Int)gridPos);
         }
     }
 }

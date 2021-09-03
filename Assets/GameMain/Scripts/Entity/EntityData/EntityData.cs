@@ -18,9 +18,9 @@ namespace SSRPG
         [SerializeField]
         private string m_Name = "";
 
-        public EntityData(int entityId, int typeId)
+        public EntityData(int typeId)
         {
-            m_Id = entityId;
+            m_Id = GameEntry.Entity.GenerateSerialId();
             m_TypeId = typeId;
             m_Name = "Entity";
         }

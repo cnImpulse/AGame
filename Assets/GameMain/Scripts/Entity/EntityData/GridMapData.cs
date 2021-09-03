@@ -17,7 +17,10 @@ namespace SSRPG
         [SerializeField]
         private Dictionary<int, GridData> m_GridList = null;
 
-        public GridMapData(int entityId, int typeId) : base(entityId, typeId)
+        [SerializeField]
+        private List<Vector2Int> m_PlayerBrithPlaces = null;
+
+        public GridMapData(int typeId) : base(typeId)
         {
             IDataTable<DRGridMap> dtGridMaps = GameEntry.DataTable.GetDataTable<DRGridMap>();
             DRGridMap dRGridMap = dtGridMaps.GetDataRow(TypeId);
@@ -29,6 +32,7 @@ namespace SSRPG
             m_Width = dRGridMap.Width;
             m_Height = dRGridMap.Height;
             m_GridList = GridMapUtl.GenerateGridList(Width, Height);
+            m_PlayerBrithPlaces = GridMapUtl.GenerateBrithPlaces(Width, Height);
             Name = "GridMap";
         }
 
@@ -70,6 +74,17 @@ namespace SSRPG
             get
             {
                 return m_GridList;
+            }
+        }
+
+        /// <summary>
+        /// 玩家出生点
+        /// </summary>
+        public List<Vector2Int> PlayerBrithPlaces
+        {
+            get
+            {
+                return m_PlayerBrithPlaces;
             }
         }
     }

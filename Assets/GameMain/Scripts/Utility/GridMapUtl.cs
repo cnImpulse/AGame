@@ -28,6 +28,13 @@ namespace SSRPG
             return gridList;
         }
 
+        public static List<Vector2Int> GenerateBrithPlaces(int width, int height)
+        {
+            List<Vector2Int> brithPlaces = new List<Vector2Int>();
+            brithPlaces.Add(new Vector2Int(width / 2, 1));
+            return brithPlaces;
+        }
+
         public static int GetGridIndex(int width, Vector2Int gridPos)
         {
             return gridPos.y * width + gridPos.x;
