@@ -17,22 +17,24 @@ namespace SSRPG
         [SerializeField]
         private Dictionary<int, GridData> m_GridList = null;
 
-        [SerializeField]
-        private List<Vector2Int> m_PlayerBrithPlaces = null;
-
         public GridMapData(int typeId) : base(typeId)
         {
-            IDataTable<DRGridMap> dtGridMaps = GameEntry.DataTable.GetDataTable<DRGridMap>();
-            DRGridMap dRGridMap = dtGridMaps.GetDataRow(TypeId);
-            if (dRGridMap == null)
-            {
-                return;
-            }
+            //IDataTable<DRGridMap> dtGridMaps = GameEntry.DataTable.GetDataTable<DRGridMap>();
+            //DRGridMap dRGridMap = dtGridMaps.GetDataRow(TypeId);
+            //if (dRGridMap == null)
+            //{
+            //    return;
+            //}
 
-            m_Width = dRGridMap.Width;
-            m_Height = dRGridMap.Height;
-            m_GridList = GridMapUtl.GenerateGridList(Width, Height);
-            m_PlayerBrithPlaces = GridMapUtl.GenerateBrithPlaces(Width, Height);
+            //m_Width = dRGridMap.Width;
+            //m_Height = dRGridMap.Height;
+            //m_GridList = GridMapUtl.GenerateGridList(Width, Height);
+
+            MapData mapData = AssetUtl.GetMapData(1);
+
+            m_Width = mapData.Width;
+            m_Height = mapData.Height;
+            m_GridList = mapData.GridList;
             Name = "GridMap";
         }
 
@@ -74,17 +76,6 @@ namespace SSRPG
             get
             {
                 return m_GridList;
-            }
-        }
-
-        /// <summary>
-        /// 玩家出生点
-        /// </summary>
-        public List<Vector2Int> PlayerBrithPlaces
-        {
-            get
-            {
-                return m_PlayerBrithPlaces;
             }
         }
     }

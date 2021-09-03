@@ -39,9 +39,6 @@ namespace SSRPG
                 return;
             }
 
-            Camera.main.transform.position = new Vector3(m_Data.Width / 2f, m_Data.Height / 2f, -10);
-
-            PlayerBrith();
             RefreshMap();
         }
 
@@ -56,15 +53,6 @@ namespace SSRPG
                 }
 
                 tilemap.SetTile((Vector3Int)gridData.GridPos, tile);
-            }
-        }
-
-        private void PlayerBrith()
-        {
-            foreach(var place in m_Data.PlayerBrithPlaces)
-            {
-                BattleUnitData data = new BattleUnitData(20000, place, CampType.Player);
-                GameEntry.Entity.ShowBattleUnit(data);
             }
         }
 

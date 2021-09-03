@@ -1,4 +1,6 @@
-﻿using GameFramework;
+﻿using System.IO;
+using GameFramework;
+using Newtonsoft.Json;
 
 namespace SSRPG
 {
@@ -22,6 +24,20 @@ namespace SSRPG
         public static string GetTileAsset(string assetName)
         {
             return Utility.Text.Format("Assets/GameMain/Tilemap/{0}.asset", assetName);
+        }
+
+        public static string GetMapDataPath(int mapId)
+        {
+            return Utility.Text.Format("Assets/GameMain/GameData/MapData/GridMap_{0}.json", mapId);
+        }
+
+        public static MapData GetMapData(int mapId)
+        {
+            string path = GetMapDataPath(mapId);
+            StreamReader sr = new StreamReader(path);
+            string json = sr.ReadLine();
+
+            return JsonConvert.DeserializeObject<MapData>(json);
         }
     }
 }
