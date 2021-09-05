@@ -5,5 +5,7 @@
         None,
 
         MenuForm = 100,
+
+        SelectBattleUnitForm = 200,
     }
 }

@@ -4,3 +4,4 @@
 #	界面编号	策划备注	资源名称	界面组名称
 	1	弹出框	DialogForm	Default
 	100	主菜单	MenuForm	Default
+	200	选择面板	SelectForm	Default

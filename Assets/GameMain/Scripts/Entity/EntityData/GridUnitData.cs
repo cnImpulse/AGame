@@ -57,7 +57,7 @@ namespace SSRPG
         {
             get
             {
-                return CampType;
+                return m_CampType;
             }
         }
 
