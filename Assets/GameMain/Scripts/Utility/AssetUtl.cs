@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using GameFramework;
 using Newtonsoft.Json;
+using UnityEditor;
+using UnityEngine;
 
 namespace SSRPG
 {
@@ -28,7 +30,12 @@ namespace SSRPG
 
         public static string GetMapDataPath(int mapId)
         {
-            return Utility.Text.Format("Assets/GameMain/GameData/MapData/GridMap_{0}.json", mapId);
+            return Utility.Text.Format("Assets/GameMain/GameData/MapData/MapData_{0}.json", mapId);
+        }
+
+        public static string GetBattleDataPath(int battleId)
+        {
+            return Utility.Text.Format("Assets/GameMain/GameData/BattleData/BattleData_{0}.json", battleId);
         }
 
         public static MapData GetMapData(int mapId)
@@ -38,6 +45,22 @@ namespace SSRPG
             string json = sr.ReadLine();
 
             return JsonConvert.DeserializeObject<MapData>(json);
+        }
+
+        public static void SaveData<T>(string path, T data)
+        {
+            if (path == null || data == null)
+            {
+                return;
+            }
+
+            string json = JsonConvert.SerializeObject(data);
+            FileInfo file = new FileInfo(path);
+            StreamWriter sw = file.CreateText();
+            sw.Write(json);
+            sw.Close();
+            sw.Dispose();
+            AssetDatabase.Refresh();
         }
     }
 }

@@ -6,16 +6,16 @@ using Newtonsoft.Json;
 
 namespace SSRPG
 {
-    public class MapEditor : MonoBehaviour
+    public class BattleEditor : MonoBehaviour
     {
-        private Tile empty, wall;
+        private Tile enemy_1, player;
         private Tilemap tilemap = null;
-        private MapData mapData = null;
+        private BattleData battleData = new BattleData();
 
         private void Awake()
         {
-            empty = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAsset("empty"));
-            wall = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAsset("wall"));
+            enemy_1 = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAsset("enemy_1"));
+            player = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAsset("player"));
             tilemap = GetComponent<Tilemap>();
         }
 
@@ -30,7 +30,8 @@ namespace SSRPG
             BoundsInt bounds = tilemap.cellBounds;
             int width = bounds.size.x, height = bounds.size.y;
 
-            mapData = new MapData(width, height);
+            battleData.mapId = 1;
+            battleData.maxPlayerBattleUnit = 2;
             for (int i = bounds.xMin; i <= bounds.xMax; ++i)
             {
                 for (int j = bounds.yMin; j <= bounds.yMax; ++j)
@@ -39,13 +40,14 @@ namespace SSRPG
                     int gridIndex = GridMapUtl.GetGridIndex(width, (Vector2Int)pos);
 
                     Tile tile = tilemap.GetTile<Tile>(pos);
-                    if (tile == empty)
+                    if (tile == enemy_1)
                     {
-                        mapData.GridList.Add(gridIndex, new GridData((Vector2Int)pos, GridType.Normal));
+                        battleData.enemyIds.Add(20000);
+                        battleData.enemyPos.Add((Vector2Int)pos);
                     }
-                    else if (tile == wall)
+                    else if (tile == player)
                     {
-                        mapData.GridList.Add(gridIndex, new GridData((Vector2Int)pos, GridType.Wall));
+                        battleData.playerBrithPos.Add((Vector2Int)pos);
                     }
                 }
             }
@@ -55,8 +57,8 @@ namespace SSRPG
         {
             Debug.Log("SaveStart!");
 
-            string path = AssetUtl.GetMapDataPath(1);
-            AssetUtl.SaveData(path, mapData);
+            string path = AssetUtl.GetBattleDataPath(1);
+            AssetUtl.SaveData(path, battleData);
 
             Debug.Log("Done!");
         }
