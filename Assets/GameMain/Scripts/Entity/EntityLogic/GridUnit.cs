@@ -39,6 +39,21 @@ namespace SSRPG
                 Log.Error("GridUnit object data is invalid.");
                 return;
             }
+
+            GameEntry.Entity.AttachEntity(Entity, m_Data.ParentId);
+        }
+
+        protected override void OnAttachTo(EntityLogic parentEntity, Transform parentTransform, object userData)
+        {
+            base.OnAttachTo(parentEntity, parentTransform, userData);
+
+            GridMap gridMap = parentEntity as GridMap;
+            if (gridMap == null)
+            {
+                return;
+            }
+
+            transform.position = gridMap.GridPosToWorldPos(m_Data.GridPos);
         }
     }
 }

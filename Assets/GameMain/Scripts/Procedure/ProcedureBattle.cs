@@ -13,7 +13,22 @@ namespace SSRPG
             base.OnEnter(procedureOwner);
 
             Log.Info("进入战斗。");
-            GameEntry.Entity.ShowGridMap(new GridMapData(10000));
+
+            int battleId = 1;
+            string path = AssetUtl.GetBattleDataPath(battleId);
+            BattleData battleData = AssetUtl.LoadJsonData<BattleData>(path);
+
+            GridMapData gridMapData = new GridMapData(battleData.mapId);
+            GameEntry.Entity.ShowGridMap(gridMapData);
+
+            for(int i=0; i<battleData.enemyIds.Count; ++i)
+            {
+                int typeId = battleData.enemyIds[i];
+                Vector2Int pos = battleData.enemyPos[i];
+
+                BattleUnitData battleUnitData = new BattleUnitData(typeId, gridMapData.Id, pos, CampType.Enemy);
+                GameEntry.Entity.ShowBattleUnit(battleUnitData);
+            }
         }
     }
 }

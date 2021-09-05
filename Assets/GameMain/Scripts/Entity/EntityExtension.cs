@@ -23,12 +23,17 @@ namespace SSRPG
             return (Entity)entity.Logic;
         }
 
+        public static void AttachEntity(this EntityComponent entityComponent, Entity entity, int parentId, string parentTransformPath = null, object userData = null)
+        {
+            entityComponent.AttachEntity(entity.Entity, parentId, parentTransformPath, userData);
+        }
+
         public static void HideEntity(this EntityComponent entityComponent, Entity entity)
         {
             entityComponent.HideEntity(entity.Entity);
         }
 
-        private static void ShowEntity(this EntityComponent entityComponent, Type logicType, string entityGroup, EntityData data)
+        private static void ShowEntity(this EntityComponent entityComponent, Type logicType, string entityGroup, EntityData data, int entityType)
         {
             if (data == null)
             {
@@ -37,7 +42,7 @@ namespace SSRPG
             }
 
             IDataTable<DREntity> dtEntity = GameEntry.DataTable.GetDataTable<DREntity>();
-            DREntity drEntity = dtEntity.GetDataRow(data.TypeId);
+            DREntity drEntity = dtEntity.GetDataRow(entityType);
             if (drEntity == null)
             {
                 Log.Warning("Can not load entity id '{0}' from data table.", data.TypeId.ToString());
@@ -49,12 +54,12 @@ namespace SSRPG
 
         public static void ShowGridMap(this EntityComponent entityComponent, GridMapData data)
         {
-            entityComponent.ShowEntity(typeof(GridMap), "GridMap", data);
+            entityComponent.ShowEntity(typeof(GridMap), "GridMap", data, 10000);
         }
 
         public static void ShowBattleUnit(this EntityComponent entityComponent, BattleUnitData data)
         {
-            entityComponent.ShowEntity(typeof(BattleUnit), "BattleUnit", data);
+            entityComponent.ShowEntity(typeof(BattleUnit), "BattleUnit", data, 20000);
         }
 
         public static int GenerateSerialId(this EntityComponent entityComponent)

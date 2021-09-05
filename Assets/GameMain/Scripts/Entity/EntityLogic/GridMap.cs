@@ -42,6 +42,16 @@ namespace SSRPG
             RefreshMap();
         }
 
+        protected override void OnAttached(EntityLogic childEntity, Transform parentTransform, object userData)
+        {
+            base.OnAttached(childEntity, parentTransform, userData);
+        }
+
+        protected override void OnDetached(EntityLogic childEntity, object userData)
+        {
+            base.OnDetached(childEntity, userData);
+        }
+
         private void RefreshMap()
         {
             foreach(var gridData in m_Data.GridList.Values)

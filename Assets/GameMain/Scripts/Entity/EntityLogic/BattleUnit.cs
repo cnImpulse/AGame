@@ -30,17 +30,5 @@ namespace SSRPG
                 return;
             }
         }
-
-        protected override void OnAttachTo(EntityLogic parentEntity, Transform parentTransform, object userData)
-        {
-            base.OnAttached(parentEntity, parentTransform, userData);
-
-            GridMap ownerMap = parentEntity as GridMap;
-            if (ownerMap == null)
-            {
-                return;
-            }
-            m_Data.Position = ownerMap.GridPosToWorldPos(m_Data.GridPos);
-        }
     }
 }

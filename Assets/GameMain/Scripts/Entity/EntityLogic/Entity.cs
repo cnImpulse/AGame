@@ -30,5 +30,25 @@ namespace SSRPG
 
             Name = Utility.Text.Format("[{0} {1}]", m_EntityData.Name, Id);
         }
+
+        protected override void OnAttached(EntityLogic childEntity, Transform parentTransform, object userData)
+        {
+            base.OnAttached(childEntity, parentTransform, userData);
+        }
+
+        protected override void OnDetached(EntityLogic childEntity, object userData)
+        {
+            base.OnDetached(childEntity, userData);
+        }
+
+        protected override void OnAttachTo(EntityLogic parentEntity, Transform parentTransform, object userData)
+        {
+            base.OnAttachTo(parentEntity, parentTransform, userData);
+        }
+
+        protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
+        {
+            base.OnUpdate(elapseSeconds, realElapseSeconds);
+        }
     }
 }

@@ -19,18 +19,8 @@ namespace SSRPG
 
         public GridMapData(int typeId) : base(typeId)
         {
-            //IDataTable<DRGridMap> dtGridMaps = GameEntry.DataTable.GetDataTable<DRGridMap>();
-            //DRGridMap dRGridMap = dtGridMaps.GetDataRow(TypeId);
-            //if (dRGridMap == null)
-            //{
-            //    return;
-            //}
-
-            //m_Width = dRGridMap.Width;
-            //m_Height = dRGridMap.Height;
-            //m_GridList = GridMapUtl.GenerateGridList(Width, Height);
-
-            MapData mapData = AssetUtl.GetMapData(1);
+            string path = AssetUtl.GetMapDataPath(typeId);
+            MapData mapData = AssetUtl.LoadJsonData<MapData>(path);
 
             m_Width = mapData.Width;
             m_Height = mapData.Height;
