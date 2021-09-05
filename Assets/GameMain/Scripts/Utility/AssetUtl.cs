@@ -61,5 +61,14 @@ namespace SSRPG
             sw.Dispose();
             AssetDatabase.Refresh();
         }
+
+        #region UI
+
+        public static string GetUIFormAsset(string assetName)
+        {
+            return Utility.Text.Format("Assets/GameMain/UI/UIForms/{0}.prefab", assetName);
+        }
+
+        #endregion
     }
 }

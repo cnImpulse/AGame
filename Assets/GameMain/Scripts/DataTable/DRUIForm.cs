@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-09-05 16:38:42.112
+// 生成时间：2021-09-05 16:38:42.118
 //------------------------------------------------------------
 
 using GameFramework;
@@ -19,14 +19,14 @@ using UnityGameFramework.Runtime;
 namespace SSRPG
 {
     /// <summary>
-    /// 地图表。
+    /// 界面配置表。
     /// </summary>
-    public class DRGridMap : DataRowBase
+    public class DRUIForm : DataRowBase
     {
         private int m_Id = 0;
 
         /// <summary>
-        /// 获取地图编号。
+        /// 获取界面编号。
         /// </summary>
         public override int Id
         {
@@ -37,18 +37,18 @@ namespace SSRPG
         }
 
         /// <summary>
-        /// 获取宽。
+        /// 获取资源名称。
         /// </summary>
-        public int Width
+        public string AssetName
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// 获取高。
+        /// 获取界面组名称。
         /// </summary>
-        public int Height
+        public string UIGroupName
         {
             get;
             private set;
@@ -66,8 +66,8 @@ namespace SSRPG
             index++;
             m_Id = int.Parse(columnStrings[index++]);
             index++;
-            Width = int.Parse(columnStrings[index++]);
-            Height = int.Parse(columnStrings[index++]);
+            AssetName = columnStrings[index++];
+            UIGroupName = columnStrings[index++];
 
             GeneratePropertyArray();
             return true;
@@ -80,8 +80,8 @@ namespace SSRPG
                 using (BinaryReader binaryReader = new BinaryReader(memoryStream, Encoding.UTF8))
                 {
                     m_Id = binaryReader.Read7BitEncodedInt32();
-                    Width = binaryReader.Read7BitEncodedInt32();
-                    Height = binaryReader.Read7BitEncodedInt32();
+                    AssetName = binaryReader.ReadString();
+                    UIGroupName = binaryReader.ReadString();
                 }
             }
 

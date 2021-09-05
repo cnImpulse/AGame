@@ -14,6 +14,7 @@ namespace SSRPG
             "Entity",
             "GridMap",
             "BattleUnit",
+            "UIForm",
         };
 
         private Dictionary<string, bool> m_LoadedFlag = new Dictionary<string, bool>();
@@ -50,7 +51,7 @@ namespace SSRPG
                 }
             }
 
-            ChangeState<ProcedureBattle>(procedureOwner);
+            ChangeState<ProcedureMenu>(procedureOwner);
         }
 
         private void PreloadResources()
