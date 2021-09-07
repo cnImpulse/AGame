@@ -5,7 +5,7 @@ using GameFramework.Event;
 namespace SSRPG
 {
     /// <summary>
-    /// 瓦片地图点击事件
+    /// 网格地图点击事件
     /// </summary>
     public class PointGridMapEventArgs : GameEventArgs
     {
@@ -13,7 +13,7 @@ namespace SSRPG
 
         public PointGridMapEventArgs()
         {
-            PointPos = default;
+            position = default;
         }
 
         public override int Id
@@ -25,24 +25,24 @@ namespace SSRPG
         }
 
         /// <summary>
-        /// 点击位置
+        /// 点击的网格数据
         /// </summary>
-        public Vector2Int PointPos
+        public Vector3 position
         {
             get;
             private set;
         }
 
-        public static PointGridMapEventArgs Create(Vector2Int pointPos)
+        public static PointGridMapEventArgs Create(Vector3 position)
         {
             PointGridMapEventArgs e = ReferencePool.Acquire<PointGridMapEventArgs>();
-            e.PointPos = pointPos;
+            e.position = position;
             return e;
         }
 
         public override void Clear()
         {
-            PointPos = default;
+            position = default;
         }
     }
 }

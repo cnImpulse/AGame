@@ -76,10 +76,10 @@ namespace SSRPG
             return new Vector2(float.Parse(splitedValue[0]), float.Parse(splitedValue[1]));
         }
 
-        public static Vector3 ParseVector3(string value)
+        public static UnityEngine.Vector3 ParseVector3(string value)
         {
             string[] splitedValue = value.Split(',');
-            return new Vector3(float.Parse(splitedValue[0]), float.Parse(splitedValue[1]), float.Parse(splitedValue[2]));
+            return new UnityEngine.Vector3(float.Parse(splitedValue[0]), float.Parse(splitedValue[1]), float.Parse(splitedValue[2]));
         }
 
         public static Vector4 ParseVector4(string value)

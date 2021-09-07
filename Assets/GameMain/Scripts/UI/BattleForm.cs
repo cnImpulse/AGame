@@ -6,7 +6,7 @@ using UnityGameFramework.Runtime;
 
 namespace SSRPG
 {
-    public class SelectBattleUnitForm : UIForm
+    public class BattleForm : UIForm
     {
         private ProcedureBattle m_ProcedureBattle = null;
 
@@ -22,7 +22,7 @@ namespace SSRPG
             m_ProcedureBattle = userData as ProcedureBattle;
             if (m_ProcedureBattle == null)
             {
-                Log.Warning("ProcedureBattle is invalid when open SelectBattleUnitForm.");
+                Log.Warning("ProcedureBattle is invalid when open BattleForm.");
                 return;
             }
 

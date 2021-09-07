@@ -68,5 +68,10 @@ namespace SSRPG
                 return m_GridList;
             }
         }
+
+        public int GetGridIndex(Vector2Int gridPos)
+        {
+            return gridPos.y * Width + gridPos.x;
+        }
     }
 }

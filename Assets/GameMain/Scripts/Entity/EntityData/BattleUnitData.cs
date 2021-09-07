@@ -29,6 +29,7 @@ namespace SSRPG
             m_ATK   = drBattleUnit.ATK;
             m_MOV   = drBattleUnit.MOV;
             m_MaxHP = drBattleUnit.MaxHP;
+            HP      = MaxHP;
             Name    = drBattleUnit.Name;
         }
 

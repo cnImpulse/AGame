@@ -13,7 +13,7 @@ namespace SSRPG
         private int m_TypeId = 0;
 
         [SerializeField]
-        private Vector3 m_Position = Vector3.zero;
+        private UnityEngine.Vector3 m_Position = UnityEngine.Vector3.zero;
 
         [SerializeField]
         private string m_Name = "";
@@ -50,7 +50,7 @@ namespace SSRPG
         /// <summary>
         /// 实体位置。
         /// </summary>
-        public Vector3 Position
+        public UnityEngine.Vector3 Position
         {
             get
             {

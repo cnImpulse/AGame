@@ -11,9 +11,10 @@ namespace SSRPG
     public class ProcedureBattle : ProcedureBase
     {
         private IFsm<ProcedureBattle> m_BattleFsm = null;
-        private SelectBattleUnitForm m_Form = null;
+        private BattleForm m_Form = null;
 
-        public BattleData m_BattleData = null;
+        private BattleData m_BattleData = null;
+
         public CampType activeCamp = CampType.Player;
 
         public void StartBattle()
@@ -83,7 +84,7 @@ namespace SSRPG
             int playerCount = m_BattleData.maxPlayerBattleUnit;
             for (int i = 0; i < Mathf.Min(posCount, playerCount) ; ++i)
             {
-                int typeId = 1;
+                int typeId = 20000;
                 Vector2Int pos = m_BattleData.playerBrithPos[i];
 
                 BattleUnitData battleUnitData = new BattleUnitData(typeId, gridMapData.Id, pos, CampType.Player);
@@ -93,7 +94,7 @@ namespace SSRPG
 
         private void SelectPlayerBattleUnit()
         {
-            GameEntry.UI.OpenUIForm(UIFormId.SelectBattleUnitForm, this);
+            GameEntry.UI.OpenUIForm(UIFormId.BattleForm, this);
         }
 
         private void OnOpenUIFormSuccess(object sender, GameEventArgs e)
@@ -104,7 +105,7 @@ namespace SSRPG
                 return;
             }
 
-            m_Form = (SelectBattleUnitForm)ne.UIForm.Logic;
+            m_Form = (BattleForm)ne.UIForm.Logic;
         }
     }
 }

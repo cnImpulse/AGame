@@ -12,10 +12,14 @@ namespace SSRPG
         [SerializeField]
         private GridType m_GridType;
 
+        [SerializeField]
+        private GridUnit m_GridUnit;
+
         public GridData(Vector2Int gridPos, GridType gridType)
         {
             m_GridPos = gridPos;
             m_GridType = gridType;
+            m_GridUnit = null;
         }
 
         /// <summary>
@@ -38,6 +42,27 @@ namespace SSRPG
             {
                 return m_GridType;
             }
+        }
+
+        /// <summary>
+        /// 占据网格的单位
+        /// </summary>
+        public GridUnit GridUnit
+        {
+            get
+            {
+                return m_GridUnit;
+            }
+        }
+
+        public void OnGridUnitEnter(GridUnit gridUnit)
+        {
+            m_GridUnit = gridUnit;
+        }
+
+        public void OnGridUnitLeave()
+        {
+            m_GridUnit = null;
         }
     }
 }

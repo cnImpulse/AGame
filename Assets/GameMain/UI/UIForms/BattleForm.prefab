@@ -59,7 +59,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -113,10 +113,10 @@ RectTransform:
   m_Father: {fileID: 5955728484268468925}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.3}
-  m_AnchorMax: {x: 1, y: 0.3}
-  m_AnchoredPosition: {x: -150, y: 76}
-  m_SizeDelta: {x: 300, y: 150}
+  m_AnchorMin: {x: 1, y: 0.2}
+  m_AnchorMax: {x: 1, y: 0.2}
+  m_AnchoredPosition: {x: -100, y: 50}
+  m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5955728484225170154
 CanvasRenderer:
@@ -200,8 +200,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5955728484268468924}
-        m_TargetAssemblyTypeName: SSRPG.SelectBattleUnitForm, Assembly-CSharp
+      - m_Target: {fileID: 4738037367392879059}
+        m_TargetAssemblyTypeName: SSRPG.BattleForm, Assembly-CSharp
         m_MethodName: OnStartBtnClick
         m_Mode: 1
         m_Arguments:
@@ -223,9 +223,9 @@ GameObject:
   - component: {fileID: 5955728484268468925}
   - component: {fileID: 5955728484268468926}
   - component: {fileID: 5955728484268468927}
-  - component: {fileID: 5955728484268468924}
+  - component: {fileID: 4738037367392879059}
   m_Layer: 5
-  m_Name: SelectForm
+  m_Name: BattleForm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5955728484268468924
+--- !u!114 &4738037367392879059
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -299,7 +299,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5955728484268468914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f257d243ffb994f47b7dc3521f641b4d, type: 3}
+  m_Script: {fileID: 11500000, guid: bbff810fa925b4eb48e333a5e8af2387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5955728484353983969
@@ -335,7 +335,7 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.2991482}
+  m_AnchorMax: {x: 1, y: 0.2}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

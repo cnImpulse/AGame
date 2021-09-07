@@ -22,6 +22,14 @@ namespace SSRPG
             }
         }
 
+        public GridUnitData Data
+        {
+            get
+            {
+                return m_Data;
+            }
+        }
+
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
