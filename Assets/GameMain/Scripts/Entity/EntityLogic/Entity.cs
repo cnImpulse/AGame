@@ -29,6 +29,7 @@ namespace SSRPG
             }
 
             Name = Utility.Text.Format("[{0} {1}]", m_EntityData.Name, Id);
+            transform.position = m_EntityData.Position;
         }
 
         protected override void OnAttached(EntityLogic childEntity, Transform parentTransform, object userData)

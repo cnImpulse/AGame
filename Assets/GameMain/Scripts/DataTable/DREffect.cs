@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-09-09 00:12:23.772
+// 生成时间：2021-09-09 00:12:23.774
 //------------------------------------------------------------
 
 using GameFramework;
@@ -19,14 +19,14 @@ using UnityGameFramework.Runtime;
 namespace SSRPG
 {
     /// <summary>
-    /// 界面配置表。
+    /// 特效表。
     /// </summary>
-    public class DRUIForm : DataRowBase
+    public class DREffect : DataRowBase
     {
         private int m_Id = 0;
 
         /// <summary>
-        /// 获取界面编号。
+        /// 获取特效编号。
         /// </summary>
         public override int Id
         {
@@ -45,15 +45,6 @@ namespace SSRPG
             private set;
         }
 
-        /// <summary>
-        /// 获取界面组名称。
-        /// </summary>
-        public string UIGroupName
-        {
-            get;
-            private set;
-        }
-
         public override bool ParseDataRow(string dataRowString, object userData)
         {
             string[] columnStrings = dataRowString.Split(DataTableExtension.DataSplitSeparators);
@@ -67,7 +58,6 @@ namespace SSRPG
             m_Id = int.Parse(columnStrings[index++]);
             index++;
             AssetName = columnStrings[index++];
-            UIGroupName = columnStrings[index++];
 
             GeneratePropertyArray();
             return true;
@@ -81,7 +71,6 @@ namespace SSRPG
                 {
                     m_Id = binaryReader.Read7BitEncodedInt32();
                     AssetName = binaryReader.ReadString();
-                    UIGroupName = binaryReader.ReadString();
                 }
             }
 

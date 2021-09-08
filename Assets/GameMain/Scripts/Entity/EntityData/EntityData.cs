@@ -25,6 +25,13 @@ namespace SSRPG
             m_Name = "Entity";
         }
 
+        public EntityData(int id, int typeId)
+        {
+            m_Id = id;
+            m_TypeId = typeId;
+            m_Name = "Entity";
+        }
+
         /// <summary>
         /// 实体编号。
         /// </summary>

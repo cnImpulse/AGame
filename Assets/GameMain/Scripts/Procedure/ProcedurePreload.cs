@@ -15,6 +15,7 @@ namespace SSRPG
             "GridMap",
             "BattleUnit",
             "UIForm",
+            "Effect",
         };
 
         private Dictionary<string, bool> m_LoadedFlag = new Dictionary<string, bool>();

@@ -56,6 +56,7 @@ namespace SSRPG
 
             BattleUnit battleUnit = gridUnit as BattleUnit;
             Log.Info(battleUnit.Name);
+            GameEntry.Effect.CreatEffect(EffectType.SelectType, battleUnit.transform.position);
         }
     }
 }

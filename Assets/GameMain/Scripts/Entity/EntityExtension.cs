@@ -62,6 +62,25 @@ namespace SSRPG
             entityComponent.ShowEntity(typeof(BattleUnit), "BattleUnit", data, 20000);
         }
 
+        public static void ShowEffect(this EntityComponent entityComponent, EffectDataBase data)
+        {
+            if (data == null)
+            {
+                Log.Warning("Data is invalid.");
+                return;
+            }
+
+            IDataTable<DREffect> dtEffect = GameEntry.DataTable.GetDataTable<DREffect>();
+            DREffect drEffect = dtEffect.GetDataRow(data.TypeId);
+            if (drEffect == null)
+            {
+                Log.Warning("Can not load effect id '{0}' from data table.", data.TypeId.ToString());
+                return;
+            }
+
+            entityComponent.ShowEntity(data.Id, typeof(EffectBase), AssetUtl.GetEffectAsset(drEffect.AssetName), "Effect", data);
+        }
+
         public static int GenerateSerialId(this EntityComponent entityComponent)
         {
             return --s_SerialId;

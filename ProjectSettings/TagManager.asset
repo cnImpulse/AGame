@@ -44,3 +44,6 @@ TagManager:
   - name: GridUnit
     uniqueID: 310705351
     locked: 0
+  - name: Effect
+    uniqueID: 446760627
+    locked: 0
