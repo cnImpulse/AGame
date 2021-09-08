@@ -13,7 +13,7 @@ namespace SSRPG
 
         public PointGridMapEventArgs()
         {
-            position = default;
+            gridData = null;
         }
 
         public override int Id
@@ -27,22 +27,22 @@ namespace SSRPG
         /// <summary>
         /// 点击的网格数据
         /// </summary>
-        public Vector3 position
+        public GridData gridData
         {
             get;
             private set;
         }
 
-        public static PointGridMapEventArgs Create(Vector3 position)
+        public static PointGridMapEventArgs Create(GridData gridData)
         {
             PointGridMapEventArgs e = ReferencePool.Acquire<PointGridMapEventArgs>();
-            e.position = position;
+            e.gridData = gridData;
             return e;
         }
 
         public override void Clear()
         {
-            position = default;
+            gridData = null;
         }
     }
 }

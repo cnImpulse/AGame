@@ -108,7 +108,12 @@ namespace SSRPG
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            Log.Info(eventData.position);
+            Vector2Int gridPos = (Vector2Int)tilemap.WorldToCell(eventData.pointerPressRaycast.worldPosition);
+            GridData gridData = m_Data.GetGridData(gridPos);
+            if (gridData != null)
+            {
+                GameEntry.Event.Fire(this, PointGridMapEventArgs.Create(gridData));
+            }
         }
     }
 }

@@ -25,12 +25,16 @@ namespace SSRPG
         {
             base.OnEnter(fsm);
 
+            GameEntry.Event.Subscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
+
             Log.Info("进入选择状态。");
         }
 
         protected override void OnLeave(IFsm<ProcedureBattle> fsm, bool isShutdown)
         {
             base.OnLeave(fsm, isShutdown);
+
+            GameEntry.Event.Unsubscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
 
             Log.Info("离开选择状态。");
         }
@@ -39,6 +43,19 @@ namespace SSRPG
         {
             base.OnDestroy(fsm);
             Log.Info("销毁选择状态。");
+        }
+
+        private void OnPointGridMap(object sender, GameEventArgs e)
+        {
+            PointGridMapEventArgs ne = (PointGridMapEventArgs)e;
+            GridUnit gridUnit = ne.gridData.GridUnit;
+            if (gridUnit == null || gridUnit.Data.GridUnitType != GridUnitType.BattleUnit)
+            {
+                return;
+            }
+
+            BattleUnit battleUnit = gridUnit as BattleUnit;
+            Log.Info(battleUnit.Name);
         }
     }
 }

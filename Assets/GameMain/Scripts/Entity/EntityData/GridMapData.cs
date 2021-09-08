@@ -73,5 +73,20 @@ namespace SSRPG
         {
             return gridPos.y * Width + gridPos.x;
         }
+
+        public GridData GetGridData(Vector2Int gridPos)
+        {
+            int gridIndex = GetGridIndex(gridPos);
+            return GetGridData(gridIndex);
+        }
+
+        public GridData GetGridData(int gridIndex)
+        {
+            if (GridList.TryGetValue(gridIndex, out var gridData))
+            {
+                return gridData;
+            }
+            return null;
+        }
     }
 }
