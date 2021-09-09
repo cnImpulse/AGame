@@ -22,7 +22,7 @@ namespace SSRPG
             }
         }
 
-        public GridUnitData Data
+        public virtual GridUnitData GridData
         {
             get
             {

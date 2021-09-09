@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: streak
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: -299301266314734283, guid: 3515c8cd8ad7e4000bef6bf155fd625c, type: 3}
+  - {fileID: 7472930868407138867, guid: 3515c8cd8ad7e4000bef6bf155fd625c, type: 3}
+  - {fileID: -6950170746195771075, guid: 3515c8cd8ad7e4000bef6bf155fd625c, type: 3}
+  - {fileID: 2774004082993463014, guid: 3515c8cd8ad7e4000bef6bf155fd625c, type: 3}
+  - {fileID: 8706819267150793597, guid: 3515c8cd8ad7e4000bef6bf155fd625c, type: 3}
+  m_MinSpeed: 8
+  m_MaxSpeed: 8
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0

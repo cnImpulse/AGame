@@ -8,6 +8,8 @@ namespace SSRPG
     [Serializable]
     public class GridMapData : EntityData
     {
+        public static Vector2Int[] s_DirArray4 = { Vector2Int.down, Vector2Int.up, Vector2Int.left, Vector2Int.right };
+
         [SerializeField]
         private int m_Width = 0;
 
@@ -87,6 +89,75 @@ namespace SSRPG
                 return gridData;
             }
             return null;
+        }
+
+        // 广度优先搜索
+        public List<GridData> GetCanMoveGrids(BattleUnitData battleUnitData)
+        {
+            if (battleUnitData == null)
+            {
+                return null;
+            }
+
+            int mov = battleUnitData.MOV;
+            GridData start = GetGridData(battleUnitData.GridPos);
+
+            Queue<GridData> open = new Queue<GridData>();
+            List<GridData> close = new List<GridData>();
+
+            open.Enqueue(start);
+            for (int i = 0; i <= mov; ++i)
+            {
+                int length = open.Count;
+                if (length == 0)
+                {
+                    break;
+                }
+
+                for (int j = 0; j < length; ++j)
+                {
+                    GridData gridData = open.Dequeue();
+                    List<GridData> neighbors = GetNeighbors(gridData, battleUnitData);
+                    foreach (var neighbor in neighbors)
+                    {
+                        if (!close.Contains(neighbor) && !open.Contains(neighbor)) 
+                        {
+                            open.Enqueue(neighbor);
+                        }
+                    }
+                    close.Add(gridData);
+                }
+            }
+
+            // 排除被占据的单元格
+            List<GridData> canMoveList = new List<GridData>();
+            foreach (var grid in close)
+            {
+                if (grid.CanArrive())
+                {
+                    canMoveList.Add(grid);
+                }
+            }
+
+            return canMoveList;
+        }
+
+        // 战斗单位可穿过的邻居
+        private List<GridData> GetNeighbors(GridData gridData, BattleUnitData battleUnitData)
+        {
+            List<GridData> neighbors = new List<GridData>();
+            for (int i = 0; i < s_DirArray4.Length; ++i)
+            {
+                GridData grid = GetGridData(gridData.GridPos + s_DirArray4[i]);
+                if (grid == null || !grid.CanAcross(battleUnitData))
+                {
+                    continue;
+                }
+
+                neighbors.Add(grid);
+            }
+
+            return neighbors;
         }
     }
 }

@@ -28,6 +28,8 @@ namespace SSRPG
 
             GameEntry.Event.Subscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
 
+            gridMap = GameEntry.Entity.GetEntity(fsm.Owner.GridMapData.Id).Logic as GridMap;
+
             Log.Info("进入选择状态。");
         }
 
@@ -50,15 +52,35 @@ namespace SSRPG
         {
             PointGridMapEventArgs ne = (PointGridMapEventArgs)e;
             GridUnit gridUnit = ne.gridData.GridUnit;
-            if (gridUnit == null || gridUnit.Data.GridUnitType != GridUnitType.BattleUnit)
+            if (gridUnit == null || gridUnit.GridData.GridUnitType != GridUnitType.BattleUnit)
             {
-                GameEntry.Effect.DestoryEffect(effectId);
-                effectId = 0;
+                UnSelectBattleUnit();
                 return;
             }
 
-            BattleUnit battleUnit = gridUnit as BattleUnit;
-            Vector3 position = battleUnit.transform.position;
+            SelectBattleUnit(gridUnit as BattleUnit);
+        }
+
+        private void SelectBattleUnit(BattleUnit battleUnit)
+        {
+            selectUnit = battleUnit;
+            ShowSelectEffect(selectUnit.transform.position);
+
+            if (battleUnit.BattleUnitData.CampType == CampType.Player)
+            {
+                var canMoveList = gridMap.GridMapData.GetCanMoveGrids(battleUnit.BattleUnitData);
+                gridMap.ShowCanMoveArea(canMoveList);
+            }
+        }
+
+        private void UnSelectBattleUnit()
+        {
+            HideSelectEffect();
+            selectUnit = null;
+        }
+
+        private void ShowSelectEffect(Vector3 position)
+        {
             if (effectId == 0)
             {
                 effectId = GameEntry.Effect.CreatEffect(EffectType.SelectType, position);
@@ -67,6 +89,12 @@ namespace SSRPG
             {
                 GameEntry.Effect.ChangeEffectPos(effectId, position);
             }
+        }
+
+        private void HideSelectEffect()
+        {
+            GameEntry.Effect.DestoryEffect(effectId);
+            effectId = 0;
         }
     }
 }

@@ -13,14 +13,22 @@ namespace SSRPG
     public class GridMap : Entity, IPointerDownHandler
     {
         [SerializeField]
-        private GridMapData m_Data;
+        private GridMapData m_Data = null;
 
         [SerializeField]
         private List<GridUnit> m_GridUnitList = null;
 
-        private Tile empty, wall;
-        private Tilemap tilemap;
+        private TileBase empty, wall, streak;
+        private Tilemap m_Tilemap, m_GridMapEffect;
         private BoxCollider2D box;
+
+        public GridMapData GridMapData
+        {
+            get
+            {
+                return m_Data;
+            }
+        }
 
         protected override void OnInit(object userData)
         {
@@ -28,7 +36,9 @@ namespace SSRPG
 
             empty = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAsset("empty"));
             wall = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAsset("wall"));
-            tilemap = transform.Find("Tilemap").GetComponent<Tilemap>();
+            streak = AssetDatabase.LoadAssetAtPath<TileBase>(AssetUtl.GetTileAsset("streak"));
+            m_Tilemap = transform.Find("Tilemap").GetComponent<Tilemap>();
+            m_GridMapEffect = transform.Find("GridMapEffect").GetComponent<Tilemap>();
             box = gameObject.GetOrAddComponent<BoxCollider2D>();
 
             m_GridUnitList = new List<GridUnit>();
@@ -71,20 +81,20 @@ namespace SSRPG
         {
             foreach(var gridData in m_Data.GridList.Values)
             {
-                Tile tile = empty;
+                TileBase tile = empty;
                 if (gridData.GridType == GridType.Wall)
                 {
                     tile = wall;
                 }
 
-                tilemap.SetTile((Vector3Int)gridData.GridPos, tile);
+                m_Tilemap.SetTile((Vector3Int)gridData.GridPos, tile);
             }
-            box.size = tilemap.localBounds.size;
+            box.size = m_Tilemap.localBounds.size;
         }
 
         public UnityEngine.Vector3 GridPosToWorldPos(Vector2Int gridPos)
         {
-            return tilemap.GetCellCenterWorld((Vector3Int)gridPos);
+            return m_Tilemap.GetCellCenterWorld((Vector3Int)gridPos);
         }
 
         /// <summary>
@@ -94,7 +104,7 @@ namespace SSRPG
         /// <returns>注册结果</returns>
         private bool RegisterGridUnit(GridUnit gridUnit)
         {
-            int gridIndex = m_Data.GetGridIndex(gridUnit.Data.GridPos);
+            int gridIndex = m_Data.GetGridIndex(gridUnit.GridData.GridPos);
             GridData gridData = m_Data.GridList[gridIndex];
             if (gridData == null || gridData.GridType != GridType.Normal)
             {
@@ -108,12 +118,31 @@ namespace SSRPG
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            Vector2Int gridPos = (Vector2Int)tilemap.WorldToCell(eventData.pointerPressRaycast.worldPosition);
+            Vector2Int gridPos = (Vector2Int)m_Tilemap.WorldToCell(eventData.pointerPressRaycast.worldPosition);
             GridData gridData = m_Data.GetGridData(gridPos);
             if (gridData != null)
             {
                 GameEntry.Event.Fire(this, PointGridMapEventArgs.Create(gridData));
             }
+        }
+
+        public void ShowCanMoveArea(List<GridData> gridDatas)
+        {
+            if (gridDatas == null)
+            {
+                return;
+            }
+
+            m_GridMapEffect.ClearAllTiles();
+            foreach (var grid in gridDatas)
+            {
+                m_GridMapEffect.SetTile((Vector3Int)grid.GridPos, streak);
+            }
+        }
+
+        public void HideCanMoveArea()
+        {
+            m_GridMapEffect.ClearAllTiles();
         }
     }
 }

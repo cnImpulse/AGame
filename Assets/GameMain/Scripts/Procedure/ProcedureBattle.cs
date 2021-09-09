@@ -15,7 +15,8 @@ namespace SSRPG
 
         private BattleData m_BattleData = null;
 
-        public CampType activeCamp = CampType.Player;
+        public GridMapData GridMapData = null;
+        public CampType ActiveCamp = CampType.Player;
 
         public void StartBattle()
         {
@@ -66,8 +67,8 @@ namespace SSRPG
             string path = AssetUtl.GetBattleDataPath(battleId);
             m_BattleData = AssetUtl.LoadJsonData<BattleData>(path);
 
-            GridMapData gridMapData = new GridMapData(m_BattleData.mapId);
-            GameEntry.Entity.ShowGridMap(gridMapData);
+            GridMapData = new GridMapData(m_BattleData.mapId);
+            GameEntry.Entity.ShowGridMap(GridMapData);
 
             // 加载敌人
             for (int i = 0; i < m_BattleData.enemyIds.Count; ++i)
@@ -75,7 +76,7 @@ namespace SSRPG
                 int typeId = m_BattleData.enemyIds[i];
                 Vector2Int pos = m_BattleData.enemyPos[i];
 
-                BattleUnitData battleUnitData = new BattleUnitData(typeId, gridMapData.Id, pos, CampType.Enemy);
+                BattleUnitData battleUnitData = new BattleUnitData(typeId, GridMapData.Id, pos, CampType.Enemy);
                 GameEntry.Entity.ShowBattleUnit(battleUnitData);
             }
 
@@ -87,7 +88,7 @@ namespace SSRPG
                 int typeId = 20000;
                 Vector2Int pos = m_BattleData.playerBrithPos[i];
 
-                BattleUnitData battleUnitData = new BattleUnitData(typeId, gridMapData.Id, pos, CampType.Player);
+                BattleUnitData battleUnitData = new BattleUnitData(typeId, GridMapData.Id, pos, CampType.Player);
                 GameEntry.Entity.ShowBattleUnit(battleUnitData);
             }
         }

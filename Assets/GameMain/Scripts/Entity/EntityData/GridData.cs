@@ -64,5 +64,42 @@ namespace SSRPG
         {
             m_GridUnit = null;
         }
+
+        /// <summary>
+        /// 是否可以经过
+        /// </summary>
+        /// <param name="战斗单位数据"></param>
+        public bool CanAcross(BattleUnitData battleUnitData)
+        {
+            if (battleUnitData == null)
+            {
+                return false;
+            }
+
+            if (GridType == GridType.Wall)
+            {
+                return false;
+            }
+
+            if (GridUnit != null && GridUnit.GridData.CampType != battleUnitData.CampType)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 是否可以到达
+        /// </summary>
+        public bool CanArrive()
+        {
+            if (GridType == GridType.Wall || GridUnit != null)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
