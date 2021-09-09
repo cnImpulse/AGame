@@ -14,6 +14,7 @@ namespace SSRPG
     {
         private BattleUnit selectUnit = null;
         private GridMap gridMap = null;
+        private int effectId = 0;
 
         protected override void OnInit(IFsm<ProcedureBattle> fsm)
         {
@@ -51,12 +52,21 @@ namespace SSRPG
             GridUnit gridUnit = ne.gridData.GridUnit;
             if (gridUnit == null || gridUnit.Data.GridUnitType != GridUnitType.BattleUnit)
             {
+                GameEntry.Effect.DestoryEffect(effectId);
+                effectId = 0;
                 return;
             }
 
             BattleUnit battleUnit = gridUnit as BattleUnit;
-            Log.Info(battleUnit.Name);
-            GameEntry.Effect.CreatEffect(EffectType.SelectType, battleUnit.transform.position);
+            Vector3 position = battleUnit.transform.position;
+            if (effectId == 0)
+            {
+                effectId = GameEntry.Effect.CreatEffect(EffectType.SelectType, position);
+            }
+            else
+            {
+                GameEntry.Effect.ChangeEffectPos(effectId, position);
+            }
         }
     }
 }

@@ -31,6 +31,12 @@ namespace SSRPG
             
         }
 
+        /// <summary>
+        /// 创建特效
+        /// </summary>
+        /// <param name="type">特效类型</param>
+        /// <param name="position">特效位置</param>
+        /// <returns>特效实体Id</returns>
         public int CreatEffect(EffectType type, Vector3 position)
         {
             int entityId = GameEntry.Entity.GenerateSerialId();
@@ -38,6 +44,34 @@ namespace SSRPG
 
             GameEntry.Entity.ShowEffect(effectData);
             return entityId;
+        }
+
+        /// <summary>
+        /// 销毁特效
+        /// </summary>
+        /// <param name="entityId">特效实体Id</param>
+        public void DestoryEffect(int entityId)
+        {
+            if (entityId == 0)
+            {
+                return;
+            }
+            GameEntry.Entity.HideEntity(entityId);
+        }
+
+        /// <summary>
+        /// 改变特效位置
+        /// </summary>
+        /// <param name="entityId">特效实体Id</param>
+        /// <param name="position">特效位置</param>
+        public bool ChangeEffectPos(int entityId, Vector3 position)
+        {
+            if (m_EffectList.TryGetValue(entityId, out var effect))
+            {
+                effect.transform.position = position;
+                return true;
+            }
+            return false;
         }
 
         private void OnCreatEffect(object sender, GameFrameworkEventArgs e)
@@ -50,11 +84,6 @@ namespace SSRPG
 
             m_EffectList.Add(ne.Entity.Id, ne.Entity.Logic as EffectBase);
             ne.Entity.transform.SetParent(m_EffectInstanceRoot);
-        }
-
-        private void OnDestroy()
-        {
-            GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, OnCreatEffect);
         }
     }
 }

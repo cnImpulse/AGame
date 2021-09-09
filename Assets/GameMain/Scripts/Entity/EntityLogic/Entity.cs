@@ -7,7 +7,7 @@ namespace SSRPG
     public abstract class Entity : EntityLogic
     {
         [SerializeField]
-        private EntityData m_EntityData = null;
+        private EntityData m_Data = null;
 
         public int Id
         {
@@ -21,15 +21,14 @@ namespace SSRPG
         {
             base.OnShow(userData);
 
-            m_EntityData = userData as EntityData;
-            if (m_EntityData == null)
+            m_Data = userData as EntityData;
+            if (m_Data == null)
             {
                 Log.Error("Entity data is invalid!");
                 return;
             }
 
-            Name = Utility.Text.Format("[{0} {1}]", m_EntityData.Name, Id);
-            transform.position = m_EntityData.Position;
+            Name = Utility.Text.Format("[{0} {1}]", m_Data.Name, Id);
         }
 
         protected override void OnAttached(EntityLogic childEntity, Transform parentTransform, object userData)

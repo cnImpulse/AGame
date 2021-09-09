@@ -23,6 +23,8 @@ namespace SSRPG
                 Log.Error("EffectDataBase object data is invalid.");
                 return;
             }
+
+            transform.position = m_Data.Position;
         }
     }
 }

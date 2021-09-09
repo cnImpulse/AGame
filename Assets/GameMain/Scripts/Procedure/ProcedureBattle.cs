@@ -22,7 +22,7 @@ namespace SSRPG
             Log.Info("战斗开始。");
 
             m_Form.Close();
-
+            m_Form = null;
             m_BattleFsm.Start<SelectUnitState>();
         }
 

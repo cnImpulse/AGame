@@ -25,8 +25,6 @@ namespace SSRPG
                 Log.Warning("ProcedureBattle is invalid when open BattleForm.");
                 return;
             }
-
-
         }
     }
 }

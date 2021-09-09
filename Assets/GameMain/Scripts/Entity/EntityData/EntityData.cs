@@ -13,9 +13,6 @@ namespace SSRPG
         private int m_TypeId = 0;
 
         [SerializeField]
-        private UnityEngine.Vector3 m_Position = UnityEngine.Vector3.zero;
-
-        [SerializeField]
         private string m_Name = "";
 
         public EntityData(int typeId)
@@ -51,21 +48,6 @@ namespace SSRPG
             get
             {
                 return m_TypeId;
-            }
-        }
-
-        /// <summary>
-        /// 实体位置。
-        /// </summary>
-        public UnityEngine.Vector3 Position
-        {
-            get
-            {
-                return m_Position;
-            }
-            set
-            {
-                m_Position = value;
             }
         }
 
