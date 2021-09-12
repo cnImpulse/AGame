@@ -112,7 +112,6 @@ namespace SSRPG
             }
 
             gridData.OnGridUnitEnter(gridUnit);
-            Log.Info(gridData.GridPos);
             return true;
         }
 
@@ -143,6 +142,14 @@ namespace SSRPG
         public void HideCanMoveArea()
         {
             m_GridMapEffect.ClearAllTiles();
+        }
+
+        public void MoveTo(GridUnit gridUnit, Vector2Int destination)
+        {
+            GridData gridData = m_Data.GetGridData(destination);
+
+            gridData.OnGridUnitLeave();
+            gridData.OnGridUnitEnter(gridUnit);
         }
     }
 }

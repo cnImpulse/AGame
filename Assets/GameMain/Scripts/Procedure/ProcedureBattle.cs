@@ -24,14 +24,14 @@ namespace SSRPG
 
             m_Form.Close();
             m_Form = null;
-            m_BattleFsm.Start<SelectUnitState>();
+            m_BattleFsm.Start<SelectBattleUnitState>();
         }
 
         protected override void OnInit(ProcedureOwner procedureOwner)
         {
             base.OnInit(procedureOwner);
 
-            m_BattleFsm = GameEntry.Fsm.CreateFsm(this, new SelectUnitState());
+            m_BattleFsm = GameEntry.Fsm.CreateFsm(this, new SelectBattleUnitState(), new BattleUnitMoveState());
         }
 
         protected override void OnEnter(ProcedureOwner procedureOwner)

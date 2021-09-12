@@ -1,0 +1,72 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using GameFramework.Fsm;
+using GameFramework.Event;
+using UnityGameFramework.Runtime;
+
+namespace SSRPG
+{
+    /// <summary>
+    /// 玩家回合，战斗单位移动状态
+    /// </summary>
+    public class BattleUnitMoveState : FsmState<ProcedureBattle>
+    {
+        private GridMap m_GridMap = null;
+
+        private BattleUnit m_ActiveBattleUnit = null;
+        private List<GridData> m_CanMoveList = null;
+
+        protected override void OnEnter(IFsm<ProcedureBattle> fsm)
+        {
+            base.OnEnter(fsm);
+
+            Log.Info("进入移动状态。");
+
+            GameEntry.Event.Subscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
+
+            if (m_GridMap == null)
+            {
+                m_GridMap = GameEntry.Entity.GetEntity(fsm.Owner.GridMapData.Id).Logic as GridMap;
+            }
+
+            m_ActiveBattleUnit = fsm.GetData("ActiveBattleUnit").GetValue() as BattleUnit;
+            m_CanMoveList = m_GridMap.GridMapData.GetCanMoveGrids(m_ActiveBattleUnit.BattleUnitData);
+            m_GridMap.ShowCanMoveArea(m_CanMoveList);
+        }
+
+        protected override void OnUpdate(IFsm<ProcedureBattle> fsm, float elapseSeconds, float realElapseSeconds)
+        {
+            base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
+
+            if (m_ActiveBattleUnit == null)
+            {
+                ChangeState<SelectBattleUnitState>(fsm);
+            }
+        }
+
+        protected override void OnLeave(IFsm<ProcedureBattle> fsm, bool isShutdown)
+        {
+            base.OnLeave(fsm, isShutdown);
+
+            m_ActiveBattleUnit = null;
+            m_GridMap.HideCanMoveArea();
+            fsm.RemoveData("ActiveBattleUnit");
+
+            GameEntry.Event.Unsubscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
+
+            Log.Info("离开移动状态。");
+        }
+
+        private void OnPointGridMap(object sender, GameEventArgs e)
+        {
+            PointGridMapEventArgs ne = (PointGridMapEventArgs)e;
+            if (m_CanMoveList.Contains(ne.gridData))
+            {
+                m_ActiveBattleUnit.Move(ne.gridData.GridPos);
+                Log.Info("移动到：{0}", ne.gridData.GridPos);
+            }
+            m_ActiveBattleUnit = null;
+        }
+    }
+}

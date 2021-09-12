@@ -44,5 +44,12 @@ namespace SSRPG
                 case CampType.Enemy: spriteRenderer.color = enemyColor; break;
             }
         }
+
+        public void Move(Vector2Int destination)
+        {
+            m_Data.GridPos = destination;
+            transform.position = m_GridMap.GridPosToWorldPos(destination);
+            m_GridMap.MoveTo(this, destination);
+        }
     }
 }

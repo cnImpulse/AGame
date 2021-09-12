@@ -37,6 +37,10 @@ namespace SSRPG
             {
                 return m_GridPos;
             }
+            set
+            {
+                m_GridPos = value;
+            }
         }
 
         /// <summary>

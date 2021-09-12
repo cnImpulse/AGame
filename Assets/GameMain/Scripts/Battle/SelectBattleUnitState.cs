@@ -8,44 +8,45 @@ using UnityGameFramework.Runtime;
 namespace SSRPG
 {
     /// <summary>
-    /// 玩家回合，选择单位行动状态
+    /// 玩家回合，选择战斗单位状态
     /// </summary>
-    public class SelectUnitState : FsmState<ProcedureBattle>
+    public class SelectBattleUnitState : FsmState<ProcedureBattle>
     {
-        private BattleUnit selectUnit = null;
-        private GridMap gridMap = null;
-        private int effectId = 0;
-
-        protected override void OnInit(IFsm<ProcedureBattle> fsm)
-        {
-            base.OnInit(fsm);
-            Log.Info("创建选择状态。");
-        }
+        private int m_EffectId = 0;
+        private BattleUnit m_SelectBattleUnit = null;
 
         protected override void OnEnter(IFsm<ProcedureBattle> fsm)
         {
             base.OnEnter(fsm);
 
-            GameEntry.Event.Subscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
-
-            gridMap = GameEntry.Entity.GetEntity(fsm.Owner.GridMapData.Id).Logic as GridMap;
-
             Log.Info("进入选择状态。");
+
+            GameEntry.Event.Subscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
+        }
+
+        protected override void OnUpdate(IFsm<ProcedureBattle> fsm, float elapseSeconds, float realElapseSeconds)
+        {
+            base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
+
+            if (m_SelectBattleUnit != null && fsm.Owner.ActiveCamp == m_SelectBattleUnit.BattleUnitData.CampType)
+            {
+                VarObject data = new VarObject();
+                data.Value = m_SelectBattleUnit;
+
+                fsm.SetData("ActiveBattleUnit", data);
+                ChangeState<BattleUnitMoveState>(fsm);
+            }
         }
 
         protected override void OnLeave(IFsm<ProcedureBattle> fsm, bool isShutdown)
         {
             base.OnLeave(fsm, isShutdown);
 
+            UnSelectBattleUnit();
+
             GameEntry.Event.Unsubscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
 
             Log.Info("离开选择状态。");
-        }
-
-        protected override void OnDestroy(IFsm<ProcedureBattle> fsm)
-        {
-            base.OnDestroy(fsm);
-            Log.Info("销毁选择状态。");
         }
 
         private void OnPointGridMap(object sender, GameEventArgs e)
@@ -63,38 +64,33 @@ namespace SSRPG
 
         private void SelectBattleUnit(BattleUnit battleUnit)
         {
-            selectUnit = battleUnit;
-            ShowSelectEffect(selectUnit.transform.position);
+            m_SelectBattleUnit = battleUnit;
 
-            if (battleUnit.BattleUnitData.CampType == CampType.Player)
-            {
-                var canMoveList = gridMap.GridMapData.GetCanMoveGrids(battleUnit.BattleUnitData);
-                gridMap.ShowCanMoveArea(canMoveList);
-            }
+            ShowSelectEffect(battleUnit.transform.position);
         }
 
         private void UnSelectBattleUnit()
         {
+            m_SelectBattleUnit = null;
             HideSelectEffect();
-            selectUnit = null;
         }
 
         private void ShowSelectEffect(Vector3 position)
         {
-            if (effectId == 0)
+            if (m_EffectId == 0)
             {
-                effectId = GameEntry.Effect.CreatEffect(EffectType.SelectType, position);
+                m_EffectId = GameEntry.Effect.CreatEffect(EffectType.SelectType, position);
             }
             else
             {
-                GameEntry.Effect.ChangeEffectPos(effectId, position);
+                GameEntry.Effect.ChangeEffectPos(m_EffectId, position);
             }
         }
 
         private void HideSelectEffect()
         {
-            GameEntry.Effect.DestoryEffect(effectId);
-            effectId = 0;
+            GameEntry.Effect.DestoryEffect(m_EffectId);
+            m_EffectId = 0;
         }
     }
 }

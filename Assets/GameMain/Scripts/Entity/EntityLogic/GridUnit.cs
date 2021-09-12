@@ -14,6 +14,8 @@ namespace SSRPG
         [SerializeField]
         private GridUnitData m_Data;
 
+        protected GridMap m_GridMap;
+
         public bool IsDead
         {
             get
@@ -55,13 +57,13 @@ namespace SSRPG
         {
             base.OnAttachTo(parentEntity, parentTransform, userData);
 
-            GridMap gridMap = parentEntity as GridMap;
-            if (gridMap == null)
+            m_GridMap = parentEntity as GridMap;
+            if (m_GridMap == null)
             {
                 return;
             }
 
-            transform.position = gridMap.GridPosToWorldPos(m_Data.GridPos);
+            transform.position = m_GridMap.GridPosToWorldPos(m_Data.GridPos);
         }
     }
 }
