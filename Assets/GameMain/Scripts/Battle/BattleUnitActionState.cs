@@ -8,23 +8,26 @@ using UnityGameFramework.Runtime;
 namespace SSRPG
 {
     /// <summary>
-    /// 玩家回合，战斗单位移动状态
+    /// 玩家回合，选择战斗单位行动指令状态
     /// </summary>
-    public class BattleUnitMoveState : FsmState<ProcedureBattle>
+    public class BattleUnitActionState : FsmState<ProcedureBattle>
     {
         private GridMap m_GridMap = null;
 
+        private ActionForm m_Form = null;
+        private ActionType m_ActionType = ActionType.None;
         private BattleUnit m_ActiveBattleUnit = null;
-        private List<GridData> m_CanMoveList = null;
-        private bool m_EndMove = false;
+
+        public BattleUnit ActiveBattleUnit => m_ActiveBattleUnit;
 
         protected override void OnEnter(IFsm<ProcedureBattle> fsm)
         {
             base.OnEnter(fsm);
 
-            Log.Info("进入移动状态。");
+            Log.Info("进入行动指令选择状态。");
 
             GameEntry.Event.Subscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
+            GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
 
             if (m_GridMap == null)
             {
@@ -32,8 +35,7 @@ namespace SSRPG
             }
 
             m_ActiveBattleUnit = fsm.GetData("ActiveBattleUnit").GetValue() as BattleUnit;
-            m_CanMoveList = m_GridMap.GridMapData.GetCanMoveGrids(m_ActiveBattleUnit.BattleUnitData);
-            m_GridMap.ShowCanMoveArea(m_CanMoveList);
+            GameEntry.UI.OpenUIForm(UIFormId.ActionForm, this);
         }
 
         protected override void OnUpdate(IFsm<ProcedureBattle> fsm, float elapseSeconds, float realElapseSeconds)
@@ -42,14 +44,12 @@ namespace SSRPG
 
             if (m_ActiveBattleUnit == null)
             {
-                if (m_EndMove)
-                {
-                    ChangeState<BattleUnitActionState>(fsm);
-                }
-                else
-                {
-                    ChangeState<SelectBattleUnitState>(fsm);
-                }
+                ChangeState<SelectBattleUnitState>(fsm);
+            }
+
+            if (m_ActionType == ActionType.Attack)
+            {
+                ChangeState<BattleUnitAttackState>(fsm);
             }
         }
 
@@ -57,26 +57,42 @@ namespace SSRPG
         {
             base.OnLeave(fsm, isShutdown);
 
-            m_EndMove = false;
+            m_ActionType = ActionType.None;
             m_ActiveBattleUnit = null;
-            m_GridMap.HideCanMoveArea();
+
+            if (m_Form != null)
+            {
+                m_Form.Close(isShutdown);
+                m_Form = null;
+            }
 
             GameEntry.Event.Unsubscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
+            GameEntry.Event.Unsubscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
 
-            Log.Info("离开移动状态。");
+            Log.Info("进入行动指令选择状态。");
+        }
+
+        public void SelectAction(ActionType actionType)
+        {
+            m_ActionType = actionType;
         }
 
         private void OnPointGridMap(object sender, GameEventArgs e)
         {
             PointGridMapEventArgs ne = (PointGridMapEventArgs)e;
-            if (m_CanMoveList.Contains(ne.gridData))
-            {
-                m_ActiveBattleUnit.Move(ne.gridData.GridPos);
-                m_EndMove = true;
 
-                Log.Info("移动到：{0}", ne.gridData.GridPos);
+            // tocode
+        }
+
+        private void OnOpenUIFormSuccess(object sender, GameEventArgs e)
+        {
+            OpenUIFormSuccessEventArgs ne = (OpenUIFormSuccessEventArgs)e;
+            if (ne.UserData != this)
+            {
+                return;
             }
-            m_ActiveBattleUnit = null;
+
+            m_Form = (ActionForm)ne.UIForm.Logic;
         }
     }
 }

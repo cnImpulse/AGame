@@ -10,19 +10,18 @@ namespace SSRPG
     /// <summary>
     /// 玩家回合，战斗单位移动状态
     /// </summary>
-    public class BattleUnitMoveState : FsmState<ProcedureBattle>
+    public class BattleUnitAttackState : FsmState<ProcedureBattle>
     {
         private GridMap m_GridMap = null;
 
         private BattleUnit m_ActiveBattleUnit = null;
-        private List<GridData> m_CanMoveList = null;
-        private bool m_EndMove = false;
+        private List<GridData> m_CanAttackList = null;
 
         protected override void OnEnter(IFsm<ProcedureBattle> fsm)
         {
             base.OnEnter(fsm);
 
-            Log.Info("进入移动状态。");
+            Log.Info("进入攻击状态。");
 
             GameEntry.Event.Subscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
 
@@ -32,8 +31,7 @@ namespace SSRPG
             }
 
             m_ActiveBattleUnit = fsm.GetData("ActiveBattleUnit").GetValue() as BattleUnit;
-            m_CanMoveList = m_GridMap.GridMapData.GetCanMoveGrids(m_ActiveBattleUnit.BattleUnitData);
-            m_GridMap.ShowCanMoveArea(m_CanMoveList);
+            m_CanAttackList = null;
         }
 
         protected override void OnUpdate(IFsm<ProcedureBattle> fsm, float elapseSeconds, float realElapseSeconds)
@@ -42,14 +40,7 @@ namespace SSRPG
 
             if (m_ActiveBattleUnit == null)
             {
-                if (m_EndMove)
-                {
-                    ChangeState<BattleUnitActionState>(fsm);
-                }
-                else
-                {
-                    ChangeState<SelectBattleUnitState>(fsm);
-                }
+                ChangeState<SelectBattleUnitState>(fsm);
             }
         }
 
@@ -57,26 +48,18 @@ namespace SSRPG
         {
             base.OnLeave(fsm, isShutdown);
 
-            m_EndMove = false;
+            m_CanAttackList = null;
             m_ActiveBattleUnit = null;
-            m_GridMap.HideCanMoveArea();
 
             GameEntry.Event.Unsubscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
 
-            Log.Info("离开移动状态。");
+            Log.Info("离开攻击状态。");
         }
 
         private void OnPointGridMap(object sender, GameEventArgs e)
         {
             PointGridMapEventArgs ne = (PointGridMapEventArgs)e;
-            if (m_CanMoveList.Contains(ne.gridData))
-            {
-                m_ActiveBattleUnit.Move(ne.gridData.GridPos);
-                m_EndMove = true;
-
-                Log.Info("移动到：{0}", ne.gridData.GridPos);
-            }
-            m_ActiveBattleUnit = null;
+            
         }
     }
 }

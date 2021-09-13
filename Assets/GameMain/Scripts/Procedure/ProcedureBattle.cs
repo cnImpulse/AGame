@@ -31,7 +31,8 @@ namespace SSRPG
         {
             base.OnInit(procedureOwner);
 
-            m_BattleFsm = GameEntry.Fsm.CreateFsm(this, new SelectBattleUnitState(), new BattleUnitMoveState());
+            m_BattleFsm = GameEntry.Fsm.CreateFsm(this, new SelectBattleUnitState(), new BattleUnitMoveState(),
+                new BattleUnitActionState(), new BattleUnitAttackState());
         }
 
         protected override void OnEnter(ProcedureOwner procedureOwner)

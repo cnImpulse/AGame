@@ -30,4 +30,13 @@ namespace SSRPG
         Enemy,
         Neutral,
     }
+
+    /// <summary>
+    /// 行动指令类型
+    /// </summary>
+    public enum ActionType
+    {
+        None,
+        Attack = 1,
+    }
 }
