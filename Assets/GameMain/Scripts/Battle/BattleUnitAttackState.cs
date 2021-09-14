@@ -31,7 +31,8 @@ namespace SSRPG
             }
 
             m_ActiveBattleUnit = fsm.GetData("ActiveBattleUnit").GetValue() as BattleUnit;
-            m_CanAttackList = null;
+            m_CanAttackList = m_GridMap.GridMapData.GetCanAttackGrids(m_ActiveBattleUnit.BattleUnitData);
+            m_GridMap.ShowAttackArea(m_CanAttackList);
         }
 
         protected override void OnUpdate(IFsm<ProcedureBattle> fsm, float elapseSeconds, float realElapseSeconds)

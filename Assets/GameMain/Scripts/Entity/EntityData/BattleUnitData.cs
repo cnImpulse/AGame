@@ -14,6 +14,9 @@ namespace SSRPG
         private int m_ATK = 0;
 
         [SerializeField]
+        private int m_AtkRange = 0;
+
+        [SerializeField]
         private int m_MOV = 0;
 
         public BattleUnitData(int typeId, int parentId, Vector2Int gridPos, CampType campType)
@@ -26,11 +29,13 @@ namespace SSRPG
                 return;
             }
 
-            m_ATK   = drBattleUnit.ATK;
-            m_MOV   = drBattleUnit.MOV;
-            m_MaxHP = drBattleUnit.MaxHP;
-            HP      = MaxHP;
-            Name    = drBattleUnit.Name;
+            m_ATK       = drBattleUnit.ATK;
+            m_MOV       = drBattleUnit.MOV;
+            m_MaxHP     = drBattleUnit.MaxHP;
+            m_AtkRange  = drBattleUnit.AtkRange;
+
+            HP          = MaxHP;
+            Name        = drBattleUnit.Name;
         }
 
         /// <summary>
@@ -47,23 +52,16 @@ namespace SSRPG
         /// <summary>
         /// 攻击力
         /// </summary>
-        public int ATK
-        {
-            get
-            {
-                return m_ATK;
-            }
-        }
+        public int ATK => m_ATK;
 
         /// <summary>
         /// 移动力
         /// </summary>
-        public int MOV
-        {
-            get
-            {
-                return m_MOV;
-            }
-        }
+        public int MOV => m_MOV;
+
+        /// <summary>
+        /// 攻击范围
+        /// </summary>
+        public int AtkRange => m_AtkRange;
     }
 }

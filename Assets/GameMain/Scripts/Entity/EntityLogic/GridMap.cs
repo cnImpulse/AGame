@@ -125,7 +125,19 @@ namespace SSRPG
             }
         }
 
-        public void ShowCanMoveArea(List<GridData> gridDatas)
+        public void ShowMoveArea(List<GridData> gridDatas)
+        {
+            m_GridMapEffect.color = Color.yellow;
+            ShowTilemapEffect(gridDatas, streak);
+        }
+
+        public void ShowAttackArea(List<GridData> gridDatas)
+        {
+            m_GridMapEffect.color = Color.red;
+            ShowTilemapEffect(gridDatas, streak);
+        }
+
+        private void ShowTilemapEffect(List<GridData> gridDatas, TileBase tile)
         {
             if (gridDatas == null)
             {
@@ -135,11 +147,11 @@ namespace SSRPG
             m_GridMapEffect.ClearAllTiles();
             foreach (var grid in gridDatas)
             {
-                m_GridMapEffect.SetTile((Vector3Int)grid.GridPos, streak);
+                m_GridMapEffect.SetTile((Vector3Int)grid.GridPos, tile);
             }
         }
 
-        public void HideCanMoveArea()
+        public void HideTilemapEffect()
         {
             m_GridMapEffect.ClearAllTiles();
         }

@@ -9,6 +9,7 @@ namespace SSRPG
     public class GridMapData : EntityData
     {
         public static Vector2Int[] s_DirArray4 = { Vector2Int.down, Vector2Int.up, Vector2Int.left, Vector2Int.right };
+        public static Vector2Int[] s_Dir2Array4 = { Vector2Int.one, new Vector2Int(1, -1), new Vector2Int(-1, -1), new Vector2Int(-1, 1) };
 
         [SerializeField]
         private int m_Width = 0;
@@ -117,7 +118,7 @@ namespace SSRPG
                 for (int j = 0; j < length; ++j)
                 {
                     GridData gridData = open.Dequeue();
-                    List<GridData> neighbors = GetNeighbors(gridData, battleUnitData);
+                    List<GridData> neighbors = GetNeighbors(gridData, battleUnitData, NeighborType.CanAcross);
                     foreach (var neighbor in neighbors)
                     {
                         if (!close.Contains(neighbor) && !open.Contains(neighbor)) 
@@ -142,14 +143,61 @@ namespace SSRPG
             return canMoveList;
         }
 
+        // 菱形遍历
+        public List<GridData> GetCanAttackGrids(BattleUnitData battleUnitData)
+        {
+            if (battleUnitData == null)
+            {
+                return null;
+            }
+
+            int atkRange = battleUnitData.AtkRange;
+            GridData center = GetGridData(battleUnitData.GridPos);
+            List<GridData> canAttackList = new List<GridData>();
+
+            for (int i = 1; i <= atkRange; ++i)
+            {
+                Vector2Int position = new Vector2Int(-i, 0);
+                for (int k = 0; k < s_Dir2Array4.Length; ++k)
+                {
+                    for (int j = 0; j < i; ++j)
+                    {
+                        GridData gridData = GetGridData(position + center.GridPos);
+                        position += s_Dir2Array4[k];
+                        if (gridData == null || !gridData.CanAttack(battleUnitData))
+                        {
+                            continue;
+                        }
+
+                        canAttackList.Add(gridData);
+                    }
+                }
+            }
+
+            return canAttackList;
+        }
+
         // 战斗单位可穿过的邻居
-        private List<GridData> GetNeighbors(GridData gridData, BattleUnitData battleUnitData)
+        private List<GridData> GetNeighbors(GridData gridData, BattleUnitData battleUnitData, NeighborType type = NeighborType.None)
         {
             List<GridData> neighbors = new List<GridData>();
             for (int i = 0; i < s_DirArray4.Length; ++i)
             {
                 GridData grid = GetGridData(gridData.GridPos + s_DirArray4[i]);
-                if (grid == null || !grid.CanAcross(battleUnitData))
+                if (grid == null)
+                {
+                    continue;
+                }
+
+                bool flag = true;
+                switch (type)
+                {
+                    case NeighborType.CanArrive: flag = grid.CanArrive(); break;
+                    case NeighborType.CanAcross: flag = grid.CanAcross(battleUnitData); break;
+                    case NeighborType.CanAttack: flag = grid.CanAttack(battleUnitData); break;
+                }
+
+                if (flag == false)
                 {
                     continue;
                 }

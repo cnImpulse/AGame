@@ -1,5 +1,5 @@
-#	战斗单位表					
-#	Id		Name	MaxHP	ATK	MOV
-#	int		string	int	int	int
-#	单位编号	策划备注	名字	生命值	攻击力	移动力
-	20000	默认单位	空白	10	1	5
+#	战斗单位表						
+#	Id		Name	MaxHP	ATK	AtkRange	MOV
+#	int		string	int	int	int	int
+#	单位编号	策划备注	名字	生命值	攻击力	攻击范围	移动力
+	20000	默认单位	空白	10	1	1	5

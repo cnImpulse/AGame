@@ -33,7 +33,7 @@ namespace SSRPG
 
             m_ActiveBattleUnit = fsm.GetData("ActiveBattleUnit").GetValue() as BattleUnit;
             m_CanMoveList = m_GridMap.GridMapData.GetCanMoveGrids(m_ActiveBattleUnit.BattleUnitData);
-            m_GridMap.ShowCanMoveArea(m_CanMoveList);
+            m_GridMap.ShowMoveArea(m_CanMoveList);
         }
 
         protected override void OnUpdate(IFsm<ProcedureBattle> fsm, float elapseSeconds, float realElapseSeconds)
@@ -59,7 +59,7 @@ namespace SSRPG
 
             m_EndMove = false;
             m_ActiveBattleUnit = null;
-            m_GridMap.HideCanMoveArea();
+            m_GridMap.HideTilemapEffect();
 
             GameEntry.Event.Unsubscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
 

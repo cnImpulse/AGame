@@ -101,5 +101,28 @@ namespace SSRPG
 
             return true;
         }
+
+        /// <summary>
+        /// 是否可以攻击
+        /// </summary>
+        public bool CanAttack(BattleUnitData battleUnitData)
+        {
+            if (battleUnitData == null)
+            {
+                return false;
+            }
+
+            if (GridType == GridType.Wall)
+            {
+                return false;
+            }
+
+            if (GridUnit != null && GridUnit.GridData.CampType == battleUnitData.CampType)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

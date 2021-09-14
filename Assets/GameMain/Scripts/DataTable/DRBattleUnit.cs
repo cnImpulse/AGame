@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-09-12 23:19:21.901
+// 生成时间：2021-09-14 00:53:29.978
 //------------------------------------------------------------
 
 using GameFramework;
@@ -64,6 +64,15 @@ namespace SSRPG
         }
 
         /// <summary>
+        /// 获取攻击范围。
+        /// </summary>
+        public int AtkRange
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// 获取移动力。
         /// </summary>
         public int MOV
@@ -87,6 +96,7 @@ namespace SSRPG
             Name = columnStrings[index++];
             MaxHP = int.Parse(columnStrings[index++]);
             ATK = int.Parse(columnStrings[index++]);
+            AtkRange = int.Parse(columnStrings[index++]);
             MOV = int.Parse(columnStrings[index++]);
 
             GeneratePropertyArray();
@@ -103,6 +113,7 @@ namespace SSRPG
                     Name = binaryReader.ReadString();
                     MaxHP = binaryReader.Read7BitEncodedInt32();
                     ATK = binaryReader.Read7BitEncodedInt32();
+                    AtkRange = binaryReader.Read7BitEncodedInt32();
                     MOV = binaryReader.Read7BitEncodedInt32();
                 }
             }

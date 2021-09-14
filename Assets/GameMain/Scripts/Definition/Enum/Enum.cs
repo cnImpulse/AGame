@@ -39,4 +39,15 @@ namespace SSRPG
         None,
         Attack = 1,
     }
+
+    /// <summary>
+    /// 邻居网格类型
+    /// </summary>
+    public enum NeighborType
+    {
+        None,
+        CanAcross,
+        CanArrive,
+        CanAttack,
+    }
 }
