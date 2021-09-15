@@ -81,7 +81,7 @@ namespace SSRPG
                 return false;
             }
 
-            if (GridUnit != null && GridUnit.GridData.CampType != battleUnitData.CampType)
+            if (GridUnit != null && GridUnit.GridUnitData.CampType != battleUnitData.CampType)
             {
                 return false;
             }
@@ -117,7 +117,7 @@ namespace SSRPG
                 return false;
             }
 
-            if (GridUnit != null && GridUnit.GridData.CampType == battleUnitData.CampType)
+            if (GridUnit != null && GridUnit.GridUnitData.CampType == battleUnitData.CampType)
             {
                 return false;
             }

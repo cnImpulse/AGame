@@ -104,7 +104,7 @@ namespace SSRPG
         /// <returns>注册结果</returns>
         private bool RegisterGridUnit(GridUnit gridUnit)
         {
-            int gridIndex = m_Data.GetGridIndex(gridUnit.GridData.GridPos);
+            int gridIndex = m_Data.GetGridIndex(gridUnit.GridUnitData.GridPos);
             GridData gridData = m_Data.GridList[gridIndex];
             if (gridData == null || gridData.GridType != GridType.Normal)
             {
@@ -158,10 +158,13 @@ namespace SSRPG
 
         public void MoveTo(GridUnit gridUnit, Vector2Int destination)
         {
-            GridData gridData = m_Data.GetGridData(destination);
+            GridData start = m_Data.GetGridData(gridUnit.GridUnitData.GridPos);
+            GridData end = m_Data.GetGridData(destination);
 
-            gridData.OnGridUnitLeave();
-            gridData.OnGridUnitEnter(gridUnit);
+            start.OnGridUnitLeave();
+            end.OnGridUnitEnter(gridUnit);
+
+            gridUnit.GridUnitData.GridPos = destination;
         }
     }
 }

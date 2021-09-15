@@ -24,7 +24,7 @@ namespace SSRPG
             }
         }
 
-        public virtual GridUnitData GridData
+        public virtual GridUnitData GridUnitData
         {
             get
             {
@@ -64,6 +64,22 @@ namespace SSRPG
             }
 
             transform.position = m_GridMap.GridPosToWorldPos(m_Data.GridPos);
+        }
+
+        public void BeAttack(int atk)
+        {
+            atk = Mathf.Max(0, atk);
+
+            m_Data.HP -= atk;
+            if (IsDead)
+            {
+                Dead();
+            }
+        }
+
+        private void Dead()
+        {
+
         }
     }
 }

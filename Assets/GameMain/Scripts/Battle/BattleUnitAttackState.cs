@@ -14,6 +14,7 @@ namespace SSRPG
     {
         private GridMap m_GridMap = null;
 
+        private bool m_EndAttack = false;
         private BattleUnit m_ActiveBattleUnit = null;
         private List<GridData> m_CanAttackList = null;
 
@@ -41,7 +42,14 @@ namespace SSRPG
 
             if (m_ActiveBattleUnit == null)
             {
-                ChangeState<SelectBattleUnitState>(fsm);
+                if (m_EndAttack)
+                {
+                    ChangeState<SelectBattleUnitState>(fsm);
+                }
+                else
+                {
+                    ChangeState<BattleUnitActionState>(fsm);
+                }
             }
         }
 
@@ -49,8 +57,10 @@ namespace SSRPG
         {
             base.OnLeave(fsm, isShutdown);
 
+            m_EndAttack = false;
             m_CanAttackList = null;
             m_ActiveBattleUnit = null;
+            m_GridMap.HideTilemapEffect();
 
             GameEntry.Event.Unsubscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
 
@@ -60,7 +70,19 @@ namespace SSRPG
         private void OnPointGridMap(object sender, GameEventArgs e)
         {
             PointGridMapEventArgs ne = (PointGridMapEventArgs)e;
-            
+            if (m_CanAttackList.Contains(ne.gridData)) 
+            {
+                if (ne.gridData.GridUnit == null)
+                {
+                    return;
+                }
+
+                m_ActiveBattleUnit.Attack(ne.gridData);
+                m_EndAttack = true;
+
+                Log.Info("攻击：{0}", ne.gridData.GridPos);
+            }
+            m_ActiveBattleUnit = null;
         }
     }
 }

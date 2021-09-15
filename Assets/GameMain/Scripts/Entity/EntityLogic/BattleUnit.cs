@@ -47,9 +47,19 @@ namespace SSRPG
 
         public void Move(Vector2Int destination)
         {
-            m_Data.GridPos = destination;
-            transform.position = m_GridMap.GridPosToWorldPos(destination);
             m_GridMap.MoveTo(this, destination);
+            transform.position = m_GridMap.GridPosToWorldPos(destination);
+        }
+
+        public void Attack(GridData gridData)
+        {
+            if (gridData == null || gridData.GridUnit == null)
+            {
+                return;
+            }
+
+            GridUnit gridUnit = gridData.GridUnit;
+            gridUnit.BeAttack(m_Data.ATK);
         }
     }
 }
