@@ -71,8 +71,6 @@ namespace SSRPG
 
             GridUnit gridUnit = gridData.GridUnit;
             gridUnit.BeAttack(m_Data.ATK);
-
-            OnEndAction();
         }
 
         public bool CanAction
@@ -90,7 +88,7 @@ namespace SSRPG
             }
             else if (ne.EndActionCamp == m_Data.CampType)
             {
-                OnEndAction();
+                EndAction();
             }
         }
 
@@ -99,7 +97,7 @@ namespace SSRPG
             CanAction = true;
         }
 
-        public void OnEndAction()
+        public void EndAction()
         {
             CanAction = false;
         }

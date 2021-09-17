@@ -38,14 +38,21 @@ namespace SSRPG
         {
             base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
 
-            ChangeState<SelectBattleUnitState>(fsm);
+            if (m_ActiveCamp == CampType.Player)
+            {
+                ChangeState<SelectBattleUnitState>(fsm);
+            }
+            else if(m_ActiveCamp == CampType.Enemy)
+            {
+
+            }
         }
 
         protected override void OnLeave(IFsm<ProcedureBattle> fsm, bool isShutdown)
         {
             base.OnLeave(fsm, isShutdown);
 
-            fsm.Owner.ActiveCamp = m_ActiveCamp;
+            fsm.Owner.activeCamp = m_ActiveCamp;
 
             Log.Info("离开回合切换状态。");
         }

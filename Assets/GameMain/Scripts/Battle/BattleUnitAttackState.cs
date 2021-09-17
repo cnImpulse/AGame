@@ -28,7 +28,7 @@ namespace SSRPG
 
             if (m_GridMap == null)
             {
-                m_GridMap = GameEntry.Entity.GetEntity(fsm.Owner.GridMapData.Id).Logic as GridMap;
+                m_GridMap = fsm.Owner.gridMap;
             }
 
             m_ActiveBattleUnit = fsm.GetData("ActiveBattleUnit").GetValue() as BattleUnit;
@@ -44,7 +44,7 @@ namespace SSRPG
             {
                 if (m_EndAttack)
                 {
-                    ChangeState<SelectBattleUnitState>(fsm);
+                    ChangeState<BattleUnitEndActionState>(fsm);
                 }
                 else
                 {
