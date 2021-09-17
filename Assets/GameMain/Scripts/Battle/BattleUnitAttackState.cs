@@ -77,10 +77,10 @@ namespace SSRPG
                     return;
                 }
 
+                Log.Info("攻击：{0}", ne.gridData.GridPos);
+
                 m_ActiveBattleUnit.Attack(ne.gridData);
                 m_EndAttack = true;
-
-                Log.Info("攻击：{0}", ne.gridData.GridPos);
             }
             m_ActiveBattleUnit = null;
         }

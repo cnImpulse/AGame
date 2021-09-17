@@ -73,13 +73,17 @@ namespace SSRPG
             m_Data.HP -= atk;
             if (IsDead)
             {
-                Dead();
+                OnDead();
             }
         }
 
-        private void Dead()
+        private void OnDead()
         {
+            Log.Info("{0}: 死亡", Name);
 
+            GridData gridData = m_GridMap.GridMapData.GetGridData(m_Data.GridPos);
+            gridData.OnGridUnitLeave();
+            GameEntry.Entity.HideEntity(this);
         }
     }
 }

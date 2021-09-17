@@ -49,6 +49,7 @@ namespace SSRPG
         {
             m_GridMap.MoveTo(this, destination);
             transform.position = m_GridMap.GridPosToWorldPos(destination);
+            CanMove = false;
         }
 
         public void Attack(GridData gridData)
@@ -60,6 +61,27 @@ namespace SSRPG
 
             GridUnit gridUnit = gridData.GridUnit;
             gridUnit.BeAttack(m_Data.ATK);
+            CanAttack = false;
+        }
+
+        public void OnRoundBegan()
+        {
+            CanMove = true;
+            CanAttack = true;
+        }
+
+        // 可移动
+        public bool CanMove
+        {
+            get;
+            private set;
+        }
+
+        // 可攻击
+        public bool CanAttack
+        {
+            get;
+            private set;
         }
     }
 }

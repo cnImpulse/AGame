@@ -10,6 +10,7 @@ namespace SSRPG
     {
         private GameObject m_ActionList = null;
         private Button m_AttackBtn = null;
+        private Button m_AwaitBtn = null;
 
         private BattleUnitActionState m_ActionState = null;
 
@@ -19,6 +20,7 @@ namespace SSRPG
 
             m_ActionList = transform.Find("m_ActionList").gameObject;
             m_AttackBtn = transform.Find("m_ActionList/m_AttackBtn").GetComponent<Button>();
+            m_AwaitBtn = transform.Find("m_ActionList/m_AwaitBtn").GetComponent<Button>();
         }
 
         protected override void OnOpen(object userData)
@@ -33,12 +35,13 @@ namespace SSRPG
             }
 
             transform.position = Camera.main.WorldToScreenPoint(m_ActionState.ActiveBattleUnit.transform.position);
-            m_AttackBtn.onClick.AddListener(OnClickBtn);
+            m_AttackBtn.onClick.AddListener(delegate () { OnClickBtn(ActionType.Attack); });
+            m_AwaitBtn.onClick.AddListener(delegate () { OnClickBtn(ActionType.Await); });
         }
 
-        private void OnClickBtn()
+        private void OnClickBtn(ActionType type)
         {
-            m_ActionState.SelectAction(ActionType.Attack);
+            m_ActionState.SelectAction(type);
         }
     }
 }

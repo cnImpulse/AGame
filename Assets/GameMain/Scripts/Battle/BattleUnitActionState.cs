@@ -51,6 +51,10 @@ namespace SSRPG
             {
                 ChangeState<BattleUnitAttackState>(fsm);
             }
+            else if (m_ActionType == ActionType.Await)
+            {
+                ChangeState<SelectBattleUnitState>(fsm);
+            }
         }
 
         protected override void OnLeave(IFsm<ProcedureBattle> fsm, bool isShutdown)
