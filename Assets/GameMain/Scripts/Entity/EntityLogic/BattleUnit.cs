@@ -1,6 +1,7 @@
 using UnityEngine;
 using GameFramework;
 using UnityGameFramework.Runtime;
+using GameFramework.Event;
 
 namespace SSRPG
 {
@@ -38,18 +39,27 @@ namespace SSRPG
                 return;
             }
 
+            CanAction = false;
             switch (m_Data.CampType)
             {
                 case CampType.Player: spriteRenderer.color = playerColor; break;
                 case CampType.Enemy: spriteRenderer.color = enemyColor; break;
             }
+
+            GameEntry.Event.Subscribe(RoundSwitchEventArgs.EventId, OnRoundSwitch);
+        }
+
+        protected override void OnHide(bool isShutdown, object userData)
+        {
+            base.OnHide(isShutdown, userData);
+
+            GameEntry.Event.Unsubscribe(RoundSwitchEventArgs.EventId, OnRoundSwitch);
         }
 
         public void Move(Vector2Int destination)
         {
             m_GridMap.MoveTo(this, destination);
             transform.position = m_GridMap.GridPosToWorldPos(destination);
-            CanMove = false;
         }
 
         public void Attack(GridData gridData)
@@ -61,27 +71,37 @@ namespace SSRPG
 
             GridUnit gridUnit = gridData.GridUnit;
             gridUnit.BeAttack(m_Data.ATK);
-            CanAttack = false;
+
+            OnEndAction();
         }
 
-        public void OnRoundBegan()
-        {
-            CanMove = true;
-            CanAttack = true;
-        }
-
-        // 可移动
-        public bool CanMove
+        public bool CanAction
         {
             get;
             private set;
         }
 
-        // 可攻击
-        public bool CanAttack
+        public void OnRoundSwitch(object sender, GameEventArgs e)
         {
-            get;
-            private set;
+            RoundSwitchEventArgs ne = (RoundSwitchEventArgs)e;
+            if (ne.ActionCamp == m_Data.CampType)
+            {
+                OnRoundBegin();
+            }
+            else if (ne.EndActionCamp == m_Data.CampType)
+            {
+                OnEndAction();
+            }
+        }
+
+        private void OnRoundBegin()
+        {
+            CanAction = true;
+        }
+
+        public void OnEndAction()
+        {
+            CanAction = false;
         }
     }
 }

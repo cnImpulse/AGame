@@ -16,7 +16,7 @@ namespace SSRPG
         private BattleData m_BattleData = null;
 
         public GridMapData GridMapData = null;
-        public CampType ActiveCamp = CampType.Player;
+        public CampType ActiveCamp = CampType.None;
 
         public void StartBattle()
         {
@@ -24,15 +24,15 @@ namespace SSRPG
 
             m_Form.Close();
             m_Form = null;
-            m_BattleFsm.Start<SelectBattleUnitState>();
+            m_BattleFsm.Start<RoundSwitchState>();
         }
 
         protected override void OnInit(ProcedureOwner procedureOwner)
         {
             base.OnInit(procedureOwner);
 
-            m_BattleFsm = GameEntry.Fsm.CreateFsm(this, new SelectBattleUnitState(), new BattleUnitMoveState(),
-                new BattleUnitActionState(), new BattleUnitAttackState());
+            m_BattleFsm = GameEntry.Fsm.CreateFsm(this, new RoundSwitchState(), new SelectBattleUnitState(),
+                new BattleUnitMoveState(), new BattleUnitActionState(), new BattleUnitAttackState());
         }
 
         protected override void OnEnter(ProcedureOwner procedureOwner)

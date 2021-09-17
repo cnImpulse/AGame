@@ -28,7 +28,7 @@ namespace SSRPG
         {
             base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
 
-            if (m_SelectBattleUnit != null && fsm.Owner.ActiveCamp == m_SelectBattleUnit.BattleUnitData.CampType)
+            if (m_SelectBattleUnit != null && m_SelectBattleUnit.CanAction)
             {
                 VarObject data = new VarObject();
                 data.Value = m_SelectBattleUnit;
