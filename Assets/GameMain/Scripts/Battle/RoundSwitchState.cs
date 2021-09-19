@@ -44,7 +44,7 @@ namespace SSRPG
             }
             else if(m_ActiveCamp == CampType.Enemy)
             {
-
+                ChangeState<EnemyActionState>(fsm);
             }
         }
 

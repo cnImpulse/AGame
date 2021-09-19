@@ -34,7 +34,14 @@ namespace SSRPG
             }
             else
             {
-                ChangeState<SelectBattleUnitState>(fsm);
+                if(m_ActiveBattleUnit.BattleUnitData.CampType == CampType.Player)
+                {
+                    ChangeState<SelectBattleUnitState>(fsm);
+                }
+                else if (m_ActiveBattleUnit.BattleUnitData.CampType == CampType.Enemy)
+                {
+                    ChangeState<EnemyActionState>(fsm);
+                }
             }
         }
 

@@ -37,7 +37,8 @@ namespace SSRPG
             playerBattleUnits = new List<BattleUnit>();
             enemyBattleUnits = new List<BattleUnit>();
             m_BattleFsm = GameEntry.Fsm.CreateFsm(this, new RoundSwitchState(), new SelectBattleUnitState(),
-                new BattleUnitMoveState(), new BattleUnitActionState(), new BattleUnitAttackState(), new BattleUnitEndActionState());
+                new BattleUnitMoveState(), new BattleUnitActionState(), new BattleUnitAttackState(),
+                new EnemyActionState(), new BattleUnitEndActionState());
         }
 
         protected override void OnEnter(ProcedureOwner procedureOwner)

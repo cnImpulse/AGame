@@ -16,9 +16,19 @@ namespace SSRPG
             private set;
         }
 
+        /// <summary>
+        /// 获取导航器组件
+        /// </summary>
+        public static NavigatorComponent Navigator
+        {
+            get;
+            private set;
+        }
+
         private static void InitCustomComponents()
         {
             Effect = UnityGameFramework.Runtime.GameEntry.GetComponent<EffectComponent>();
+            Navigator = UnityGameFramework.Runtime.GameEntry.GetComponent<NavigatorComponent>();
         }
     }
 }
