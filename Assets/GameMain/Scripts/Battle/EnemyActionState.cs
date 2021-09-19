@@ -14,6 +14,7 @@ namespace SSRPG
     {
         private GridMap m_GridMap = null;
 
+        private bool m_EndAction = false;
         private BattleUnit m_ActiveBattleUnit = null;
 
         protected override void OnEnter(IFsm<ProcedureBattle> fsm)
@@ -46,7 +47,8 @@ namespace SSRPG
 
                 GridData end = m_GridMap.GridMapData.GetGridData(attackTarget.GridUnitData.GridPos);
                 GameEntry.Navigator.Navigate(m_GridMap.GridMapData, m_ActiveBattleUnit.BattleUnitData, end, out path);
-                m_ActiveBattleUnit.Move(path[path.Count - 1].GridPos);
+
+                m_GridMap.StartCoroutine(EnemyActionAnim(m_ActiveBattleUnit, attackTarget, path));
             }
         }
 
@@ -54,13 +56,9 @@ namespace SSRPG
         {
             base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
 
-            if (m_ActiveBattleUnit)
+            if (m_EndAction && m_ActiveBattleUnit)
             {
                 ChangeState<BattleUnitEndActionState>(fsm);
-            }
-            else
-            {
-                ChangeState<RoundSwitchState>(fsm);
             }
         }
 
@@ -68,6 +66,7 @@ namespace SSRPG
         {
             base.OnLeave(fsm, isShutdown);
 
+            m_EndAction = false;
             m_ActiveBattleUnit = null;
             Log.Info("离开敌方行动状态。");
         }
@@ -91,5 +90,33 @@ namespace SSRPG
         }
 
         #endregion
+
+        public IEnumerator EnemyActionAnim(BattleUnit battleUnit, BattleUnit attackTarget, List<GridData> path)
+        {
+            int effectId = GameEntry.Effect.CreatEffect(EffectType.SelectType, battleUnit.transform.position);
+            yield return new WaitForSeconds(2f);
+            GameEntry.Effect.DestoryEffect(effectId);
+
+            var canMoveList = m_GridMap.GridMapData.GetCanMoveGrids(battleUnit.BattleUnitData);
+            m_GridMap.ShowMoveArea(canMoveList);
+            yield return new WaitForSeconds(0.8f);
+            m_GridMap.HideTilemapEffect();
+
+            foreach (var gridData in path)
+            {
+                battleUnit.Move(gridData.GridPos);
+                yield return new WaitForSeconds(0.3f);
+            }
+
+            var canAttackList = m_GridMap.GridMapData.GetCanAttackGrids(battleUnit.BattleUnitData);
+            m_GridMap.ShowAttackArea(canAttackList);
+            yield return new WaitForSeconds(0.5f);
+            m_GridMap.HideTilemapEffect();
+
+            yield return new WaitForSeconds(0.2f);
+            battleUnit.Attack(attackTarget.GridData);
+
+            m_EndAction = true;
+        }
     }
 }

@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 using GameFramework;
-using UnityGameFramework.Runtime;
 using GameFramework.Event;
+using UnityGameFramework.Runtime;
+using System.Collections;
 
 namespace SSRPG
 {

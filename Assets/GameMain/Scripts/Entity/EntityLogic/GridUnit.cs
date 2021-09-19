@@ -71,6 +71,8 @@ namespace SSRPG
             atk = Mathf.Max(0, atk);
 
             m_Data.HP -= atk;
+            Log.Info("{0}: 被攻击。生命值: {1}", Name, m_Data.HP);
+
             if (IsDead)
             {
                 OnDead();
@@ -84,6 +86,14 @@ namespace SSRPG
             GridData gridData = m_GridMap.GridMapData.GetGridData(m_Data.GridPos);
             gridData.OnGridUnitLeave();
             GameEntry.Entity.HideEntity(this);
+        }
+
+        public GridData GridData
+        {
+            get
+            {
+                return m_GridMap.GridMapData.GetGridData(m_Data.GridPos);
+            }
         }
     }
 }
