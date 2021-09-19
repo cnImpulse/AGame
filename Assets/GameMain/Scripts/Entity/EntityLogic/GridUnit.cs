@@ -32,6 +32,30 @@ namespace SSRPG
             }
         }
 
+        public GridUnitType GridUnitType
+        {
+            get
+            {
+                return m_Data.GridUnitType;
+            }
+        }
+
+        public CampType CampType
+        {
+            get
+            {
+                return m_Data.CampType;
+            }
+        }
+
+        public Vector2Int GridPos
+        {
+            get
+            {
+                return m_Data.GridPos;
+            }
+        }
+
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
@@ -79,13 +103,13 @@ namespace SSRPG
             }
         }
 
-        private void OnDead()
+        protected virtual void OnDead()
         {
             Log.Info("{0}: 死亡", Name);
 
-            GridData gridData = m_GridMap.GridMapData.GetGridData(m_Data.GridPos);
-            gridData.OnGridUnitLeave();
-            GameEntry.Entity.HideEntity(this);
+            m_GridMap.UnRegisterGridUnit(this);
+
+            GameEntry.Event.Fire(this, GridUnitDeadEventArgs.Create(this));
         }
 
         public GridData GridData

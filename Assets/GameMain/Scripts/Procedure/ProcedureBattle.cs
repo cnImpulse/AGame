@@ -18,7 +18,6 @@ namespace SSRPG
         private IFsm<ProcedureBattle> m_BattleFsm = null;
 
         public GridMap gridMap;
-        public List<BattleUnit> playerBattleUnits = null, enemyBattleUnits = null;
         public CampType activeCamp = CampType.None;
 
         public void StartBattle()
@@ -34,8 +33,6 @@ namespace SSRPG
         {
             base.OnInit(procedureOwner);
 
-            playerBattleUnits = new List<BattleUnit>();
-            enemyBattleUnits = new List<BattleUnit>();
             m_BattleFsm = GameEntry.Fsm.CreateFsm(this, new RoundSwitchState(), new SelectBattleUnitState(),
                 new BattleUnitMoveState(), new BattleUnitActionState(), new BattleUnitAttackState(),
                 new EnemyActionState(), new BattleUnitEndActionState());
@@ -47,6 +44,7 @@ namespace SSRPG
 
             GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntitySuccess);
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
+            GameEntry.Event.Subscribe(GridUnitDeadEventArgs.EventId, OnGridUnitDead);
 
             Log.Info("进入战斗准备阶段。");
 
@@ -126,23 +124,26 @@ namespace SSRPG
             {
                 gridMap = ne.Entity.Logic as GridMap;
             }
-            else if (ne.EntityLogicType == typeof(BattleUnit))
+        }
+
+        private void OnGridUnitDead(object sender, GameEventArgs e)
+        {
+            GridUnitDeadEventArgs ne = (GridUnitDeadEventArgs)e;
+
+            if (ne.gridUnit.GridUnitType == GridUnitType.BattleUnit)
             {
-                BattleUnit battleUnit = ne.Entity.Logic as BattleUnit;
-                if (battleUnit.BattleUnitData.CampType == CampType.Player)
+                var battleUnitList = gridMap.GetBattleUnitList(ne.gridUnit.CampType);
+                if (battleUnitList.Count == 0)
                 {
-                    playerBattleUnits.Add(battleUnit);
-                }
-                else if (battleUnit.BattleUnitData.CampType == CampType.Enemy)
-                {
-                    enemyBattleUnits.Add(battleUnit);
+                    GameEntry.Fsm.DestroyFsm(m_BattleFsm);
+                    Log.Info("战斗结束, 失败阵营: {0}", ne.gridUnit.CampType);
                 }
             }
         }
 
         public bool NeedRoundSwitch()
         {
-            List<BattleUnit> battleUnits = GetActiveBattleUnitList();
+            List<BattleUnit> battleUnits = gridMap.GetBattleUnitList(activeCamp);
             foreach (var battleUnit in battleUnits)
             {
                 if (battleUnit.CanAction)
@@ -150,20 +151,8 @@ namespace SSRPG
                     return false;
                 }
             }
-            return true;
-        }
 
-        public List<BattleUnit> GetActiveBattleUnitList()
-        {
-            if (activeCamp == CampType.Player)
-            {
-                return playerBattleUnits;
-            }
-            else if (activeCamp == CampType.Enemy)
-            {
-                return enemyBattleUnits;
-            }
-            return null;
+            return true;
         }
     }
 }

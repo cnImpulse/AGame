@@ -28,7 +28,7 @@ namespace SSRPG
                 m_GridMap = fsm.Owner.gridMap;
             }
 
-            foreach (var battleUnit in fsm.Owner.enemyBattleUnits)
+            foreach (var battleUnit in m_GridMap.GetBattleUnitList(CampType.Enemy))
             {
                 if (battleUnit.CanAction)
                 {
@@ -48,7 +48,11 @@ namespace SSRPG
                 GridData end = m_GridMap.GridMapData.GetGridData(attackTarget.GridUnitData.GridPos);
                 GameEntry.Navigator.Navigate(m_GridMap.GridMapData, m_ActiveBattleUnit.BattleUnitData, end, out path);
 
-                m_GridMap.StartCoroutine(EnemyActionAnim(m_ActiveBattleUnit, attackTarget, path));
+                GameEntry.Fsm.StartCoroutine(EnemyActionAnim(m_ActiveBattleUnit, attackTarget, path));
+            }
+            else
+            {
+                m_EndAction = true;
             }
         }
 

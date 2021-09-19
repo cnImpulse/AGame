@@ -16,7 +16,7 @@ namespace SSRPG
         private GridMapData m_Data = null;
 
         [SerializeField]
-        private List<GridUnit> m_GridUnitList = null;
+        private Dictionary<int, GridUnit> m_GridUnitList = null;
 
         private TileBase empty, wall, streak;
         private Tilemap m_Tilemap, m_GridMapEffect;
@@ -41,7 +41,7 @@ namespace SSRPG
             m_GridMapEffect = transform.Find("GridMapEffect").GetComponent<Tilemap>();
             box = gameObject.GetOrAddComponent<BoxCollider2D>();
 
-            m_GridUnitList = new List<GridUnit>();
+            m_GridUnitList = new Dictionary<int, GridUnit>();
             gameObject.SetLayerRecursively(Constant.Layer.GridMapLayerId);
         }
 
@@ -92,26 +92,44 @@ namespace SSRPG
             box.size = m_Tilemap.localBounds.size;
         }
 
-        public UnityEngine.Vector3 GridPosToWorldPos(Vector2Int gridPos)
+        public Vector3 GridPosToWorldPos(Vector2Int gridPos)
         {
             return m_Tilemap.GetCellCenterWorld((Vector3Int)gridPos);
         }
 
         /// <summary>
-        /// 注册网格单位数据到地图
+        /// 注册网格单位实体
         /// </summary>
         /// <param name="gridUnit">网格单位</param>
         /// <returns>注册结果</returns>
         private bool RegisterGridUnit(GridUnit gridUnit)
         {
-            int gridIndex = m_Data.GetGridIndex(gridUnit.GridUnitData.GridPos);
-            GridData gridData = m_Data.GridList[gridIndex];
+            GridData gridData = m_Data.GetGridData(gridUnit.GridPos);
             if (gridData == null || gridData.GridType != GridType.Normal)
             {
                 return false;
             }
 
+            m_GridUnitList.Add(gridUnit.Id, gridUnit);
             gridData.OnGridUnitEnter(gridUnit);
+            return true;
+        }
+
+        /// <summary>
+        /// 注销网格单位实体
+        /// </summary>
+        /// <param name="gridUnit"></param>
+        /// <returns></returns>
+        public bool UnRegisterGridUnit(GridUnit gridUnit)
+        {
+            if (gridUnit == null || !m_GridUnitList.ContainsKey(gridUnit.Id))
+            {
+                return false;
+            }
+
+            m_GridUnitList.Remove(gridUnit.Id);
+            gridUnit.GridData.OnGridUnitLeave();
+            GameEntry.Entity.HideEntity(gridUnit);
             return true;
         }
 
@@ -165,6 +183,26 @@ namespace SSRPG
             end.OnGridUnitEnter(gridUnit);
 
             gridUnit.GridUnitData.GridPos = destination;
+        }
+
+        public List<BattleUnit> GetBattleUnitList(CampType campType)
+        {
+            return GetGridUnitList<BattleUnit>(GridUnitType.BattleUnit, campType);
+        }
+
+        private List<T> GetGridUnitList<T>(GridUnitType gridUnitType, CampType campType)
+            where T : GridUnit
+        {
+            List<T> gridUnitList = new List<T>();
+            foreach (var gridUnit in m_GridUnitList.Values)
+            {
+                if (gridUnit.GridUnitType == gridUnitType && gridUnit.CampType == campType)
+                {
+                    gridUnitList.Add(gridUnit as T);
+                }
+            }
+
+            return gridUnitList;
         }
     }
 }
