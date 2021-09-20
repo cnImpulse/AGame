@@ -25,10 +25,17 @@ namespace SSRPG
             private set;
         }
 
+        public static HPBarComponent HPBar
+        {
+            get;
+            private set;
+        }
+
         private static void InitCustomComponents()
         {
-            Effect = UnityGameFramework.Runtime.GameEntry.GetComponent<EffectComponent>();
-            Navigator = UnityGameFramework.Runtime.GameEntry.GetComponent<NavigatorComponent>();
+            Effect      = UnityGameFramework.Runtime.GameEntry.GetComponent<EffectComponent>();
+            Navigator   = UnityGameFramework.Runtime.GameEntry.GetComponent<NavigatorComponent>();
+            HPBar       = UnityGameFramework.Runtime.GameEntry.GetComponent<HPBarComponent>();
         }
     }
 }

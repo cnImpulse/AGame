@@ -5,7 +5,7 @@ using GameFramework.Event;
 namespace SSRPG
 {
     /// <summary>
-    /// 战斗回合切换事件
+    /// 网格单位死亡事件
     /// </summary>
     public class GridUnitDeadEventArgs : GameEventArgs
     {
