@@ -77,6 +77,15 @@ namespace SSRPG
             GameEntry.Entity.AttachEntity(Entity, m_Data.ParentId);
         }
 
+        protected override void OnHide(bool isShutdown, object userData)
+        {
+            base.OnHide(isShutdown, userData);
+
+            m_Data = null;
+            m_GridMap = null;
+            GameEntry.Entity.DetachEntity(Id);
+        }
+
         protected override void OnAttachTo(EntityLogic parentEntity, Transform parentTransform, object userData)
         {
             base.OnAttachTo(parentEntity, parentTransform, userData);
@@ -88,6 +97,11 @@ namespace SSRPG
             }
 
             transform.position = m_GridMap.GridPosToWorldPos(m_Data.GridPos);
+        }
+
+        protected override void OnDetachFrom(EntityLogic parentEntity, object userData)
+        {
+            base.OnDetachFrom(parentEntity, userData);
         }
 
         public void BeAttack(int atk)
@@ -108,9 +122,8 @@ namespace SSRPG
         {
             Log.Info("{0}: 死亡", Name);
 
-            m_GridMap.UnRegisterGridUnit(this);
-
-            GameEntry.Event.Fire(this, GridUnitDeadEventArgs.Create(this));
+            GameEntry.Event.Fire(this, GridUnitDeadEventArgs.Create(m_Data));
+            GameEntry.Entity.HideEntity(this);
         }
 
         public GridData GridData

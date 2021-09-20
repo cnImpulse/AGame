@@ -56,7 +56,21 @@ namespace SSRPG
                 return;
             }
 
+            Log.Info(Id);
             RefreshMap();
+        }
+
+        protected override void OnHide(bool isShutdown, object userData)
+        {
+            base.OnHide(isShutdown, userData);
+
+            foreach (var gridUnit in m_GridUnitList.Values)
+            {
+                GameEntry.Entity.HideEntity(gridUnit);
+            }
+
+            m_Tilemap.ClearAllTiles();
+            HideTilemapEffect();
         }
 
         protected override void OnAttached(EntityLogic childEntity, Transform parentTransform, object userData)
@@ -75,6 +89,14 @@ namespace SSRPG
         protected override void OnDetached(EntityLogic childEntity, object userData)
         {
             base.OnDetached(childEntity, userData);
+
+            GridUnit gridUnit = childEntity as GridUnit;
+            if (gridUnit == null)
+            {
+                return;
+            }
+
+            UnRegisterGridUnit(gridUnit);
         }
 
         private void RefreshMap()
@@ -129,7 +151,7 @@ namespace SSRPG
 
             m_GridUnitList.Remove(gridUnit.Id);
             gridUnit.GridData.OnGridUnitLeave();
-            GameEntry.Entity.HideEntity(gridUnit);
+
             return true;
         }
 

@@ -55,6 +55,7 @@ namespace SSRPG
         {
             base.OnHide(isShutdown, userData);
 
+            m_Data = null;
             GameEntry.Event.Unsubscribe(RoundSwitchEventArgs.EventId, OnRoundSwitch);
         }
 
