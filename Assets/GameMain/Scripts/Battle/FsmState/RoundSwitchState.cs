@@ -38,14 +38,14 @@ namespace SSRPG
         {
             base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
 
-            if (m_ActiveCamp == CampType.Player)
-            {
-                ChangeState<SelectBattleUnitState>(fsm);
-            }
-            else if(m_ActiveCamp == CampType.Enemy)
-            {
+            //if (m_ActiveCamp == CampType.Player)
+            //{
+            //    ChangeState<SelectBattleUnitState>(fsm);
+            //}
+            //else if(m_ActiveCamp == CampType.Enemy)
+            //{
                 ChangeState<EnemyActionState>(fsm);
-            }
+            //}
         }
 
         protected override void OnLeave(IFsm<ProcedureBattle> fsm, bool isShutdown)

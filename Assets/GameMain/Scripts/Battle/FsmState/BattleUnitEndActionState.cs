@@ -34,14 +34,14 @@ namespace SSRPG
             }
             else
             {
-                if(m_ActiveBattleUnit.BattleUnitData.CampType == CampType.Player)
-                {
-                    ChangeState<SelectBattleUnitState>(fsm);
-                }
-                else if (m_ActiveBattleUnit.BattleUnitData.CampType == CampType.Enemy)
-                {
+                //if(m_ActiveBattleUnit.BattleUnitData.CampType == CampType.Player)
+                //{
+                //    ChangeState<SelectBattleUnitState>(fsm);
+                //}
+                //else if (m_ActiveBattleUnit.BattleUnitData.CampType == CampType.Enemy)
+                //{
                     ChangeState<EnemyActionState>(fsm);
-                }
+                //}
             }
         }
 

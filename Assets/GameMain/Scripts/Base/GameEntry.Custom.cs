@@ -25,7 +25,7 @@ namespace SSRPG
             private set;
         }
 
-        public static HPBarComponent HPBar
+        public static GridUnitInfoComponent GridUnitInfo
         {
             get;
             private set;
@@ -33,9 +33,9 @@ namespace SSRPG
 
         private static void InitCustomComponents()
         {
-            Effect      = UnityGameFramework.Runtime.GameEntry.GetComponent<EffectComponent>();
-            Navigator   = UnityGameFramework.Runtime.GameEntry.GetComponent<NavigatorComponent>();
-            HPBar       = UnityGameFramework.Runtime.GameEntry.GetComponent<HPBarComponent>();
+            Effect          = UnityGameFramework.Runtime.GameEntry.GetComponent<EffectComponent>();
+            Navigator       = UnityGameFramework.Runtime.GameEntry.GetComponent<NavigatorComponent>();
+            GridUnitInfo    = UnityGameFramework.Runtime.GameEntry.GetComponent<GridUnitInfoComponent>();
         }
     }
 }

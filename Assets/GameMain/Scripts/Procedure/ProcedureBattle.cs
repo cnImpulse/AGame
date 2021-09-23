@@ -33,14 +33,11 @@ namespace SSRPG
         {
             base.OnInit(procedureOwner);
 
-            
         }
 
         protected override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
-
-            
 
             GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntitySuccess);
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
@@ -59,7 +56,7 @@ namespace SSRPG
 
             if (m_BattleEnd)
             {
-                ChangeState<ProcedureMenu>(procedureOwner);
+                ChangeState<ProcedureBattleEnd>(procedureOwner);
             }
         }
 
@@ -73,6 +70,7 @@ namespace SSRPG
             gridMap = null;
             activeCamp = default;
             m_BattleEnd = false;
+            m_BattleData = null;
 
             if (m_BattleForm != null)
             {
@@ -166,8 +164,17 @@ namespace SSRPG
                 if (battleUnitList.Count == 0)
                 {
                     m_BattleEnd = true;
+                    BattleResultInfo info = null;
+                    if (ne.gridUnitData.CampType == CampType.Player)
+                    {
+                        info = new BattleResultInfo(CampType.Enemy);
+                    }
+                    else if(ne.gridUnitData.CampType == CampType.Enemy)
+                    {
+                        info = new BattleResultInfo(CampType.Player);
+                    }
+                    GameEntry.DataNode.SetData("BattleResultInfo", info);
                     GameEntry.Fsm.DestroyFsm(m_BattleFsm);
-                    Log.Info("战斗结束, 失败阵营: {0}", ne.gridUnitData.CampType);
                 }
             }
         }

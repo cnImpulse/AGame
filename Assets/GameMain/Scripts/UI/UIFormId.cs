@@ -10,5 +10,6 @@
         BattleEndForm = 201,
 
         ActionForm = 300,
+        GridUnitInfoForm = 301,
     }
 }

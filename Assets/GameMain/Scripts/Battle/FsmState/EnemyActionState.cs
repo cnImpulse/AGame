@@ -21,14 +21,12 @@ namespace SSRPG
         {
             base.OnEnter(fsm);
 
-            Log.Info("进入敌方行动状态。");
-
             if (m_GridMap == null)
             {
                 m_GridMap = fsm.Owner.gridMap;
             }
 
-            foreach (var battleUnit in m_GridMap.GetBattleUnitList(CampType.Enemy))
+            foreach (var battleUnit in m_GridMap.GetBattleUnitList(fsm.Owner.activeCamp))
             {
                 if (battleUnit.CanAction)
                 {
@@ -48,7 +46,7 @@ namespace SSRPG
                 GridData end = m_GridMap.GridMapData.GetGridData(attackTarget.GridUnitData.GridPos);
                 GameEntry.Navigator.Navigate(m_GridMap.GridMapData, m_ActiveBattleUnit.BattleUnitData, end, out path);
 
-                GameEntry.Fsm.StartCoroutine(EnemyActionAnim(m_ActiveBattleUnit, attackTarget, path));
+                GameEntry.Fsm.StartCoroutine(BattleUnitAutoAction(m_ActiveBattleUnit, attackTarget, path));
             }
             else
             {
@@ -72,7 +70,6 @@ namespace SSRPG
 
             m_EndAction = false;
             m_ActiveBattleUnit = null;
-            Log.Info("离开敌方行动状态。");
         }
 
         #region 敌方战斗单位AI
@@ -85,7 +82,7 @@ namespace SSRPG
             {
                 GridUnit gridUnit = gridData.GridUnit;
                 if (gridUnit != null && gridUnit.GridUnitData.GridUnitType == GridUnitType.BattleUnit &&
-                    gridUnit.GridUnitData.CampType == CampType.Player)
+                    gridUnit.GridUnitData.CampType != m_ActiveBattleUnit.CampType)
                 {
                     return gridUnit as BattleUnit;
                 }
@@ -95,10 +92,10 @@ namespace SSRPG
 
         #endregion
 
-        public IEnumerator EnemyActionAnim(BattleUnit battleUnit, BattleUnit attackTarget, List<GridData> path)
+        public IEnumerator BattleUnitAutoAction(BattleUnit battleUnit, BattleUnit attackTarget, List<GridData> path)
         {
             int effectId = GameEntry.Effect.CreatEffect(EffectType.SelectType, battleUnit.transform.position);
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1.5f);
             GameEntry.Effect.DestoryEffect(effectId);
 
             var canMoveList = m_GridMap.GridMapData.GetCanMoveGrids(battleUnit.BattleUnitData);

@@ -97,6 +97,7 @@ namespace SSRPG
             }
 
             transform.position = m_GridMap.GridPosToWorldPos(m_Data.GridPos);
+            GameEntry.GridUnitInfo.ShowGridUnitInfo(this);
         }
 
         protected override void OnDetachFrom(EntityLogic parentEntity, object userData)
@@ -111,7 +112,6 @@ namespace SSRPG
             m_Data.HP -= atk;
             Log.Info("{0}: 被攻击。生命值: {1}", Name, m_Data.HP);
 
-            GameEntry.HPBar.ShowHPBar(this, m_Data.HP, m_Data.MaxHP);
             if (IsDead)
             {
                 OnDead();

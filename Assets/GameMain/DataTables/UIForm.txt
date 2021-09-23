@@ -5,4 +5,5 @@
 	1	弹出框	DialogForm	Default
 	100	主菜单	MenuForm	Default
 	200	战斗界面	BattleForm	Default
+	201	战斗结束界面	BattleEndForm	Default
 	300	行动指令列表	ActionForm	Default

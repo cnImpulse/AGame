@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5955728484268468925}
   - component: {fileID: 5955728484268468926}
   - component: {fileID: 5955728484268468927}
-  - component: {fileID: 4738037367392879059}
+  - component: {fileID: 399381492255898550}
   m_Layer: 5
   m_Name: BattleEndForm
   m_TagString: Untagged
@@ -77,7 +77,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &4738037367392879059
+--- !u!114 &399381492255898550
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,7 +86,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5955728484268468914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbff810fa925b4eb48e333a5e8af2387, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b2a3ffe5f4db4e64b5bf4e04fc5c83c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5955728484353983969
@@ -343,7 +343,7 @@ PrefabInstance:
     - target: {fileID: 9107772131901406823, guid: b788c77d4ff874a249eae1d6817672b8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4738037367392879059}
+      objectReference: {fileID: 0}
     - target: {fileID: 9107772132182715766, guid: b788c77d4ff874a249eae1d6817672b8, type: 3}
       propertyPath: m_Text
       value: "\u518D\u6765\u4E00\u5C40"

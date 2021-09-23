@@ -56,7 +56,6 @@ namespace SSRPG
                 return;
             }
 
-            Log.Info(Id);
             RefreshMap();
         }
 
