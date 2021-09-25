@@ -94,7 +94,7 @@ namespace SSRPG
         {
             m_BattleEnd = false;
 
-            int battleId = 1;
+            int battleId = 2;
             string path = AssetUtl.GetBattleDataPath(battleId);
             m_BattleData = AssetUtl.LoadJsonData<BattleData>(path);
 
@@ -107,7 +107,7 @@ namespace SSRPG
             // 加载敌人
             for (int i = 0; i < m_BattleData.enemyIds.Count; ++i)
             {
-                int typeId = m_BattleData.enemyIds[i];
+                int typeId = m_BattleData.enemyIds[i] + Random.Range(1, 6);
                 Vector2Int pos = m_BattleData.enemyPos[i];
 
                 BattleUnitData battleUnitData = new BattleUnitData(typeId, mapEntityId, pos, CampType.Enemy);
@@ -119,7 +119,7 @@ namespace SSRPG
             int playerCount = m_BattleData.maxPlayerBattleUnit;
             for (int i = 0; i < Mathf.Min(posCount, playerCount); ++i)
             {
-                int typeId = 20000;
+                int typeId = 20000 + Random.Range(1, 6);
                 Vector2Int pos = m_BattleData.playerBrithPos[i];
 
                 BattleUnitData battleUnitData = new BattleUnitData(typeId, mapEntityId, pos, CampType.Player);

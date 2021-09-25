@@ -12,6 +12,15 @@ namespace SSRPG
         private Tilemap tilemap = null;
         private BattleData battleData = new BattleData();
 
+        [SerializeField]
+        private int mapId = 1;
+
+        [SerializeField]
+        private int battleId = 1;
+
+        [SerializeField]
+        private int maxPlayerBattleUnit = 3;
+
         private void Awake()
         {
             enemy_1 = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAsset("enemy_1"));
@@ -30,8 +39,8 @@ namespace SSRPG
             BoundsInt bounds = tilemap.cellBounds;
             int width = bounds.size.x, height = bounds.size.y;
 
-            battleData.mapId = 1;
-            battleData.maxPlayerBattleUnit = 2;
+            battleData.mapId = mapId;
+            battleData.maxPlayerBattleUnit = maxPlayerBattleUnit;
             for (int i = bounds.xMin; i <= bounds.xMax; ++i)
             {
                 for (int j = bounds.yMin; j <= bounds.yMax; ++j)
@@ -57,7 +66,7 @@ namespace SSRPG
         {
             Debug.Log("SaveStart!");
 
-            string path = AssetUtl.GetBattleDataPath(1);
+            string path = AssetUtl.GetBattleDataPath(battleId);
             AssetUtl.SaveData(path, battleData);
 
             Debug.Log("Done!");

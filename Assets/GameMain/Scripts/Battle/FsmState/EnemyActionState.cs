@@ -43,10 +43,16 @@ namespace SSRPG
             {
                 List<GridData> path = new List<GridData>();
 
-                GridData end = m_GridMap.GridMapData.GetGridData(attackTarget.GridUnitData.GridPos);
-                GameEntry.Navigator.Navigate(m_GridMap.GridMapData, m_ActiveBattleUnit.BattleUnitData, end, out path);
-
-                GameEntry.Fsm.StartCoroutine(BattleUnitAutoAction(m_ActiveBattleUnit, attackTarget, path));
+                GridData end = FindMoveEnd(attackTarget);
+                bool result = GameEntry.Navigator.Navigate(m_GridMap.GridMapData, m_ActiveBattleUnit.BattleUnitData, end, out path);
+                if (result == true)
+                {
+                    GameEntry.Fsm.StartCoroutine(BattleUnitAutoAction(m_ActiveBattleUnit, attackTarget, path));
+                }
+                else
+                {
+                    m_EndAction = true;
+                }
             }
             else
             {
@@ -74,6 +80,14 @@ namespace SSRPG
 
         #region 敌方战斗单位AI
 
+        // 1. 获取移动前的所有可攻击单元格
+        // 2. 找到范围内的第一个可攻击单位
+        // 3. 根据攻击范围寻找移动终点, 远程单位会尽量让敌人离自身最远
+        // 4. 移动到目标点, 攻击
+
+        /// <summary>
+        /// 寻找攻击目标
+        /// </summary>
         private BattleUnit FindAttackTarget()
         {
             var canAttackList = m_GridMap.GridMapData.GetCanAttackGrids(m_ActiveBattleUnit.BattleUnitData, true);
@@ -88,6 +102,44 @@ namespace SSRPG
                 }
             }
             return null;
+        }
+
+        /// <summary>
+        /// 寻找移动终点
+        /// </summary>
+        private GridData FindMoveEnd(BattleUnit attackTarget)
+        {
+            if (attackTarget == null)
+            {
+                return null;
+            }
+
+            GridData end = null;
+            var canMoveList = m_GridMap.GridMapData.GetCanMoveGrids(m_ActiveBattleUnit.BattleUnitData);
+            foreach (var gridData in canMoveList)
+            {
+                int distance = GridMapUtl.GetDistance(attackTarget.GridData, gridData);
+                int atkRange = m_ActiveBattleUnit.BattleUnitData.AtkRange;
+                if (distance > atkRange)
+                {
+                    continue;
+                }
+
+                if (end == null)
+                {
+                    end = gridData;
+                    continue;
+                }
+
+                int tempDis = GridMapUtl.GetDistance(attackTarget.GridData, end);
+                if (tempDis < distance)
+                    //(tempDis == distance && GridMapUtl.GetNearestGridData(m_ActiveBattleUnit.GridData, end, gridData) == gridData))
+                {
+                    end = gridData;
+                }
+            }
+
+            return end;
         }
 
         #endregion

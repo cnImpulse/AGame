@@ -12,6 +12,9 @@ namespace SSRPG
         private Tilemap tilemap = null;
         private MapData mapData = null;
 
+        [SerializeField]
+        private int mapId = 1;
+
         private void Awake()
         {
             empty = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAsset("empty"));
@@ -55,7 +58,7 @@ namespace SSRPG
         {
             Debug.Log("SaveStart!");
 
-            string path = AssetUtl.GetMapDataPath(1);
+            string path = AssetUtl.GetMapDataPath(mapId);
             AssetUtl.SaveData(path, mapData);
 
             Debug.Log("Done!");

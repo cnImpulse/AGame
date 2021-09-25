@@ -28,7 +28,9 @@ namespace SSRPG
             }
         }
 
-        // 最终路径不包括起点,不包括终点,路径可通过,但是不一定能站立。例如队友占据的单位格可通过,但是不能站立。
+        /// <summary>
+        /// 获取到达目的地的路径,终点需要可到达,路径可通过,但是不一定能站立。例如队友占据的单位格可通过,但是不能站立。
+        /// </summary>
         public bool Navigate(GridMapData mapData, BattleUnitData unitData, GridData end, out List<GridData> path)
         {
             path = new List<GridData>();
@@ -36,6 +38,17 @@ namespace SSRPG
             if (mapData == null || unitData == null || end == null)
             {
                 return false;
+            }
+
+            if (!end.CanArrive())
+            {
+                Log.Warning("终点不可到达！");
+                return false;
+            }
+
+            if (unitData.GridPos == end.GridPos)
+            {
+                return true;
             }
 
             Queue<Node> open = new Queue<Node>();
@@ -57,15 +70,14 @@ namespace SSRPG
                 {
                     Node node = open.Dequeue();
 
-                    var distance = node.gridData.GridPos - end.GridPos;
-                    if (Mathf.Abs(distance.x) + Mathf.Abs(distance.y) <= 1)
+                    if (node.gridData == end)
                     {
                         // 回溯
-                        while (node.preNode != null)
+                        do
                         {
                             path.Add(node.gridData);
                             node = node.preNode;
-                        }
+                        } while (node != null && node.preNode != null);
                         path.Reverse();
 
                         return true;

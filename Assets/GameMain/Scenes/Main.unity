@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 214348150}
   - component: {fileID: 214348151}
   m_Layer: 0
-  m_Name: Hp Bar
+  m_Name: GridUnitInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,11 +164,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 214348149}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 879e921586721514f9f85de777050af4, type: 3}
+  m_Script: {fileID: 11500000, guid: 24b8512c476e141659100d7cf23fec0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HPBarItemTemplate: {fileID: 11414536, guid: 96d2e77dd9853514da336717bd5627c0, type: 3}
-  m_HPBarInstanceRoot: {fileID: 1987051833}
+  m_Template: {fileID: 11414536, guid: 96d2e77dd9853514da336717bd5627c0, type: 3}
+  m_InstanceRoot: {fileID: 1987051833}
   m_InstancePoolCapacity: 16
 --- !u!1 &252659018
 GameObject:
@@ -809,7 +809,7 @@ GameObject:
   - component: {fileID: 1987051835}
   - component: {fileID: 1987051834}
   m_Layer: 0
-  m_Name: Hp Bar Instances
+  m_Name: GridUnitInfo Instances
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

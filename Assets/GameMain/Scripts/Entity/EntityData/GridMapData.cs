@@ -186,7 +186,7 @@ namespace SSRPG
         }
 
         // 菱形遍历
-        private List<GridData> GetRangeGridList(Vector2Int centerPos, int range)
+        public List<GridData> GetRangeGridList(Vector2Int centerPos, int range)
         {
             GridData center = GetGridData(centerPos);
             List<GridData> gridList = new List<GridData>();
