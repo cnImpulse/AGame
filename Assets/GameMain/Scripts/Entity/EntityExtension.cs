@@ -12,7 +12,8 @@ namespace SSRPG
         // 负值用于本地生成的临时实体（如特效、FakeObject等）
         private static int s_SerialId = 0;
 
-        public static Entity GetGameEntity(this EntityComponent entityComponent, int entityId)
+        public static T GetGameEntity<T>(this EntityComponent entityComponent, int entityId)
+            where T : Entity
         {
             UnityGameFramework.Runtime.Entity entity = entityComponent.GetEntity(entityId);
             if (entity == null)
@@ -20,7 +21,7 @@ namespace SSRPG
                 return null;
             }
 
-            return (Entity)entity.Logic;
+            return entity.Logic as T;
         }
 
         public static void AttachEntity(this EntityComponent entityComponent, Entity entity, int parentId, string parentTransformPath = null, object userData = null)
@@ -41,8 +42,7 @@ namespace SSRPG
                 return;
             }
 
-            IDataTable<DREntity> dtEntity = GameEntry.DataTable.GetDataTable<DREntity>();
-            DREntity drEntity = dtEntity.GetDataRow(entityType);
+            DREntity drEntity = GameEntry.DataTable.GetDataRow<DREntity>(entityType);
             if (drEntity == null)
             {
                 Log.Warning("Can not load entity id '{0}' from data table.", data.TypeId.ToString());

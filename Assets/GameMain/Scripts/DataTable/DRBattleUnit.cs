@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-09-21 19:56:43.390
+// 生成时间：2021-10-05 19:36:18.410
 //------------------------------------------------------------
 
 using GameFramework;
@@ -55,6 +55,15 @@ namespace SSRPG
         }
 
         /// <summary>
+        /// 获取魔力值。
+        /// </summary>
+        public int MaxMP
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// 获取攻击力。
         /// </summary>
         public int ATK
@@ -95,6 +104,7 @@ namespace SSRPG
             index++;
             Name = columnStrings[index++];
             MaxHP = int.Parse(columnStrings[index++]);
+            MaxMP = int.Parse(columnStrings[index++]);
             ATK = int.Parse(columnStrings[index++]);
             AtkRange = int.Parse(columnStrings[index++]);
             MOV = int.Parse(columnStrings[index++]);
@@ -112,6 +122,7 @@ namespace SSRPG
                     m_Id = binaryReader.Read7BitEncodedInt32();
                     Name = binaryReader.ReadString();
                     MaxHP = binaryReader.Read7BitEncodedInt32();
+                    MaxMP = binaryReader.Read7BitEncodedInt32();
                     ATK = binaryReader.Read7BitEncodedInt32();
                     AtkRange = binaryReader.Read7BitEncodedInt32();
                     MOV = binaryReader.Read7BitEncodedInt32();

@@ -14,6 +14,7 @@ namespace SSRPG
             "Entity",
             "GridMap",
             "BattleUnit",
+            "BattleUnitSkill",
             "UIForm",
             "Effect",
         };

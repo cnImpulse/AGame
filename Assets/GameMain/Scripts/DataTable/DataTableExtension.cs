@@ -1,11 +1,4 @@
-﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2021 Jiang Yin. All rights reserved.
-// Homepage: https://gameframework.cn/
-// Feedback: mailto:ellan@gameframework.cn
-//------------------------------------------------------------
-
-using GameFramework.DataTable;
+﻿using GameFramework.DataTable;
 using System;
 using UnityEngine;
 using UnityGameFramework.Runtime;
@@ -86,6 +79,13 @@ namespace SSRPG
         {
             string[] splitedValue = value.Split(',');
             return new Vector4(float.Parse(splitedValue[0]), float.Parse(splitedValue[1]), float.Parse(splitedValue[2]), float.Parse(splitedValue[3]));
+        }
+
+        public static T GetDataRow<T>(this DataTableComponent dataTableComponent, int id)
+            where T : IDataRow
+        {
+            IDataTable<T> dataTable = GameEntry.DataTable.GetDataTable<T>();
+            return dataTable.GetDataRow(id);
         }
     }
 }

@@ -1,0 +1,5 @@
+#	战斗单位技能表					
+#	Id		Name	DamageRate	ReleaseRange	MPCost
+#	int		string	float	int	int
+#	技能编号	策划备注	技能名	伤害倍率	基础释放范围	基础释放MP消耗
+	1	默认技能	技能	1.5	3	1

@@ -31,8 +31,18 @@ namespace SSRPG
             private set;
         }
 
+        /// <summary>
+        /// 获取技能组件
+        /// </summary>
+        public static SkillComponent Skill
+        {
+            get;
+            private set;
+        }
+
         private static void InitCustomComponents()
         {
+            Skill           = UnityGameFramework.Runtime.GameEntry.GetComponent<SkillComponent>();
             Effect          = UnityGameFramework.Runtime.GameEntry.GetComponent<EffectComponent>();
             Navigator       = UnityGameFramework.Runtime.GameEntry.GetComponent<NavigatorComponent>();
             GridUnitInfo    = UnityGameFramework.Runtime.GameEntry.GetComponent<GridUnitInfoComponent>();

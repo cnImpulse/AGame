@@ -11,6 +11,12 @@ namespace SSRPG
         private int m_MaxHP = 0;
 
         [SerializeField]
+        private int m_MaxMP = 0;
+
+        [SerializeField]
+        private int m_Mp = 0;
+
+        [SerializeField]
         private int m_ATK = 0;
 
         [SerializeField]
@@ -22,8 +28,7 @@ namespace SSRPG
         public BattleUnitData(int typeId, int parentId, Vector2Int gridPos, CampType campType)
             : base(typeId, parentId, gridPos, GridUnitType.BattleUnit, campType) 
         {
-            IDataTable<DRBattleUnit> dtBattleUnits = GameEntry.DataTable.GetDataTable<DRBattleUnit>();
-            DRBattleUnit drBattleUnit = dtBattleUnits.GetDataRow(typeId);
+            DRBattleUnit drBattleUnit = GameEntry.DataTable.GetDataRow<DRBattleUnit>(typeId);
             if (drBattleUnit == null)
             {
                 return;
@@ -32,9 +37,11 @@ namespace SSRPG
             m_ATK       = drBattleUnit.ATK;
             m_MOV       = drBattleUnit.MOV;
             m_MaxHP     = drBattleUnit.MaxHP;
+            m_MaxMP     = drBattleUnit.MaxMP;
             m_AtkRange  = drBattleUnit.AtkRange;
 
             HP          = MaxHP;
+            MP          = MaxMP;
             Name        = drBattleUnit.Name;
         }
 
@@ -46,6 +53,24 @@ namespace SSRPG
             get
             {
                 return m_MaxHP;
+            }
+        }
+
+        public int MaxMP => m_MaxMP;
+
+        public int MP
+        {
+            get => m_Mp;
+            set
+            {
+                if (value > MaxMP)
+                {
+                    m_Mp = MaxMP;
+                }
+                else
+                {
+                    m_Mp = value;
+                }
             }
         }
 
