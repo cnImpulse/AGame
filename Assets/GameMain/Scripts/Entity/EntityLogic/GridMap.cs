@@ -125,7 +125,7 @@ namespace SSRPG
         /// <returns>注册结果</returns>
         private bool RegisterGridUnit(GridUnit gridUnit)
         {
-            GridData gridData = m_Data.GetGridData(gridUnit.GridPos);
+            GridData gridData = m_Data.GetGridData(gridUnit.Data.GridPos);
             if (gridData == null || gridData.GridType != GridType.Normal)
             {
                 return false;
@@ -197,13 +197,13 @@ namespace SSRPG
 
         public void MoveTo(GridUnit gridUnit, Vector2Int destination)
         {
-            GridData start = m_Data.GetGridData(gridUnit.GridUnitData.GridPos);
+            GridData start = m_Data.GetGridData(gridUnit.Data.GridPos);
             GridData end = m_Data.GetGridData(destination);
 
             start.OnGridUnitLeave();
             end.OnGridUnitEnter(gridUnit);
 
-            gridUnit.GridUnitData.GridPos = destination;
+            gridUnit.Data.GridPos = destination;
         }
 
         public List<BattleUnit> GetBattleUnitList(CampType campType)
@@ -217,7 +217,7 @@ namespace SSRPG
             List<T> gridUnitList = new List<T>();
             foreach (var gridUnit in m_GridUnitList.Values)
             {
-                if (gridUnit.GridUnitType == gridUnitType && gridUnit.CampType == campType)
+                if (gridUnit.Data.GridUnitType == gridUnitType && gridUnit.Data.CampType == campType)
                 {
                     gridUnitList.Add(gridUnit as T);
                 }

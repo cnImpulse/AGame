@@ -16,43 +16,13 @@ namespace SSRPG
 
         protected GridMap m_GridMap;
 
+        public GridUnitData Data => m_Data;
+
         public bool IsDead
         {
             get
             {
                 return m_Data.HP <= 0;
-            }
-        }
-
-        public virtual GridUnitData GridUnitData
-        {
-            get
-            {
-                return m_Data;
-            }
-        }
-
-        public GridUnitType GridUnitType
-        {
-            get
-            {
-                return m_Data.GridUnitType;
-            }
-        }
-
-        public CampType CampType
-        {
-            get
-            {
-                return m_Data.CampType;
-            }
-        }
-
-        public Vector2Int GridPos
-        {
-            get
-            {
-                return m_Data.GridPos;
             }
         }
 

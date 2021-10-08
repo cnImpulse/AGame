@@ -1,11 +1,4 @@
-﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2021 Jiang Yin. All rights reserved.
-// Homepage: https://gameframework.cn/
-// Feedback: mailto:ellan@gameframework.cn
-//------------------------------------------------------------
-
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace SSRPG
@@ -23,14 +16,8 @@ namespace SSRPG
         }
 
         /// <summary>
-        /// 拥有者编号。
+        /// 父实体编号。
         /// </summary>
-        public int ParentId
-        {
-            get
-            {
-                return m_ParentId;
-            }
-        }
+        public int ParentId => m_ParentId;
     }
 }

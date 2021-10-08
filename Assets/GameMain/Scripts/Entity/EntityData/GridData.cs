@@ -25,35 +25,17 @@ namespace SSRPG
         /// <summary>
         /// 网格位置
         /// </summary>
-        public Vector2Int GridPos
-        {
-            get
-            {
-                return m_GridPos;
-            }
-        }
+        public Vector2Int GridPos => m_GridPos;
 
         /// <summary>
         /// 网格类型
         /// </summary>
-        public GridType GridType
-        {
-            get
-            {
-                return m_GridType;
-            }
-        }
+        public GridType GridType => m_GridType;
 
         /// <summary>
-        /// 占据网格的单位
+        /// 占据的网格单位
         /// </summary>
-        public GridUnit GridUnit
-        {
-            get
-            {
-                return m_GridUnit;
-            }
-        }
+        public GridUnit GridUnit => m_GridUnit;
 
         public void OnGridUnitEnter(GridUnit gridUnit)
         {
@@ -69,9 +51,9 @@ namespace SSRPG
         /// 是否可以经过
         /// </summary>
         /// <param name="战斗单位数据"></param>
-        public bool CanAcross(BattleUnitData battleUnitData)
+        public bool CanAcross(BattleUnit battleUnit)
         {
-            if (battleUnitData == null)
+            if (battleUnit == null)
             {
                 return false;
             }
@@ -81,7 +63,7 @@ namespace SSRPG
                 return false;
             }
 
-            if (GridUnit != null && GridUnit.GridUnitData.CampType != battleUnitData.CampType)
+            if (GridUnit != null && GridUnit.Data.CampType != battleUnit.Data.CampType)
             {
                 return false;
             }

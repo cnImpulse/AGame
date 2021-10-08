@@ -32,7 +32,7 @@ namespace SSRPG
             }
 
             m_ActiveBattleUnit = fsm.GetData("ActiveBattleUnit").GetValue() as BattleUnit;
-            m_CanMoveList = m_GridMap.GridMapData.GetCanMoveGrids(m_ActiveBattleUnit.BattleUnitData);
+            m_CanMoveList = m_GridMap.GridMapData.GetCanMoveGrids(m_ActiveBattleUnit);
             m_GridMap.ShowMoveArea(m_CanMoveList);
         }
 

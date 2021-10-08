@@ -33,47 +33,26 @@ namespace SSRPG
         /// </summary>
         public Vector2Int GridPos
         {
-            get
-            {
-                return m_GridPos;
-            }
-            set
-            {
-                m_GridPos = value;
-            }
+            get => m_GridPos;
+            set => m_GridPos = value;
         }
 
         /// <summary>
         /// 网格类型
         /// </summary>
-        public GridUnitType GridUnitType
-        {
-            get
-            {
-                return m_GridUnitType;
-            }
-        }
+        public GridUnitType GridUnitType => m_GridUnitType;
 
         /// <summary>
         /// 战斗阵营
         /// </summary>
-        public CampType CampType
-        {
-            get
-            {
-                return m_CampType;
-            }
-        }
+        public CampType CampType => m_CampType;
 
         /// <summary>
         /// 当前生命。
         /// </summary>
         public int HP
         {
-            get
-            {
-                return m_HP;
-            }
+            get => m_HP;
             set
             {
                 if (value > MaxHP)

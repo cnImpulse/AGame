@@ -44,7 +44,7 @@ namespace SSRPG
                 List<GridData> path = new List<GridData>();
 
                 GridData end = FindMoveEnd(attackTarget);
-                bool result = GameEntry.Navigator.Navigate(m_GridMap.GridMapData, m_ActiveBattleUnit.BattleUnitData, end, out path);
+                bool result = GameEntry.Navigator.Navigate(m_GridMap.GridMapData, m_ActiveBattleUnit, end, out path);
                 if (result == true)
                 {
                     GameEntry.Fsm.StartCoroutine(BattleUnitAutoAction(m_ActiveBattleUnit, attackTarget, path));
@@ -90,13 +90,13 @@ namespace SSRPG
         /// </summary>
         private BattleUnit FindAttackTarget()
         {
-            var canAttackList = m_GridMap.GridMapData.GetCanAttackGrids(m_ActiveBattleUnit.BattleUnitData, true);
+            var canAttackList = m_GridMap.GridMapData.GetCanAttackGrids(m_ActiveBattleUnit, true);
 
             foreach (var gridData in canAttackList)
             {
                 GridUnit gridUnit = gridData.GridUnit;
-                if (gridUnit != null && gridUnit.GridUnitData.GridUnitType == GridUnitType.BattleUnit &&
-                    gridUnit.GridUnitData.CampType != m_ActiveBattleUnit.CampType)
+                if (gridUnit != null && gridUnit.Data.GridUnitType == GridUnitType.BattleUnit &&
+                    gridUnit.Data.CampType != m_ActiveBattleUnit.Data.CampType)
                 {
                     return gridUnit as BattleUnit;
                 }
@@ -115,11 +115,11 @@ namespace SSRPG
             }
 
             GridData end = null;
-            var canMoveList = m_GridMap.GridMapData.GetCanMoveGrids(m_ActiveBattleUnit.BattleUnitData);
+            var canMoveList = m_GridMap.GridMapData.GetCanMoveGrids(m_ActiveBattleUnit);
             foreach (var gridData in canMoveList)
             {
                 int distance = GridMapUtl.GetDistance(attackTarget.GridData, gridData);
-                int atkRange = m_ActiveBattleUnit.BattleUnitData.AtkRange;
+                int atkRange = m_ActiveBattleUnit.Data.AtkRange;
                 if (distance > atkRange)
                 {
                     continue;
@@ -150,7 +150,7 @@ namespace SSRPG
             yield return new WaitForSeconds(1.5f);
             GameEntry.Effect.DestoryEffect(effectId);
 
-            var canMoveList = m_GridMap.GridMapData.GetCanMoveGrids(battleUnit.BattleUnitData);
+            var canMoveList = m_GridMap.GridMapData.GetCanMoveGrids(battleUnit);
             m_GridMap.ShowMoveArea(canMoveList);
             yield return new WaitForSeconds(0.8f);
             m_GridMap.HideTilemapEffect();
@@ -161,7 +161,7 @@ namespace SSRPG
                 yield return new WaitForSeconds(0.3f);
             }
 
-            var canAttackList = m_GridMap.GridMapData.GetCanAttackGrids(battleUnit.BattleUnitData);
+            var canAttackList = m_GridMap.GridMapData.GetCanAttackGrids(battleUnit);
             m_GridMap.ShowAttackArea(canAttackList);
             yield return new WaitForSeconds(0.5f);
             m_GridMap.HideTilemapEffect();

@@ -24,8 +24,8 @@ namespace SSRPG
             m_DamageRate    = drSkill.DamageRate;
             m_ReleaseRange  = drSkill.ReleaseRange;
 
-            m_Caster        = GameEntry.Entity.GetGameEntity<BattleUnit>(casterId).BattleUnitData;
-            m_Target        = GameEntry.Entity.GetGameEntity<BattleUnit>(targetId).BattleUnitData;
+            m_Caster        = GameEntry.Entity.GetGameEntity<BattleUnit>(casterId).Data;
+            m_Target        = GameEntry.Entity.GetGameEntity<BattleUnit>(targetId).Data;
         }
 
         public bool Release()

@@ -16,7 +16,7 @@ namespace SSRPG
         {
             GridUnitDamageEventArgs ne = (GridUnitDamageEventArgs)e;
 
-            GridUnitData gridUnitData = GameEntry.Entity.GetGameEntity<GridUnit>(ne.DamageInfo.TargetId).GridUnitData;
+            GridUnitData gridUnitData = GameEntry.Entity.GetGameEntity<GridUnit>(ne.DamageInfo.TargetId).Data;
             gridUnitData.HP -= ne.DamageInfo.DamageHP;
         }
     }

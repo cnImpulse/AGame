@@ -32,38 +32,20 @@ namespace SSRPG
         /// <summary>
         /// 实体编号。
         /// </summary>
-        public int Id
-        {
-            get
-            {
-                return m_Id;
-            }
-        }
+        public int Id => m_Id;
 
         /// <summary>
         /// 实体类型编号。
         /// </summary>
-        public int TypeId
-        {
-            get
-            {
-                return m_TypeId;
-            }
-        }
+        public int TypeId => m_TypeId;
 
         /// <summary>
         /// 单位名称。
         /// </summary>
         public string Name
         {
-            get
-            {
-                return m_Name;
-            }
-            set
-            {
-                m_Name = value;
-            }
+            get => m_Name;
+            set => m_Name = value;
         }
     }
 }

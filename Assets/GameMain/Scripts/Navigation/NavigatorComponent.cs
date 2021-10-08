@@ -31,11 +31,11 @@ namespace SSRPG
         /// <summary>
         /// 获取到达目的地的路径,终点需要可到达,路径可通过,但是不一定能站立。例如队友占据的单位格可通过,但是不能站立。
         /// </summary>
-        public bool Navigate(GridMapData mapData, BattleUnitData unitData, GridData end, out List<GridData> path)
+        public bool Navigate(GridMapData mapData, BattleUnit battleUnit, GridData end, out List<GridData> path)
         {
             path = new List<GridData>();
 
-            if (mapData == null || unitData == null || end == null)
+            if (mapData == null || battleUnit == null || end == null)
             {
                 return false;
             }
@@ -46,7 +46,7 @@ namespace SSRPG
                 return false;
             }
 
-            if (unitData.GridPos == end.GridPos)
+            if (battleUnit.Data.GridPos == end.GridPos)
             {
                 return true;
             }
@@ -54,7 +54,7 @@ namespace SSRPG
             Queue<Node> open = new Queue<Node>();
             Dictionary<GridData, Node> close = new Dictionary<GridData, Node>();
 
-            GridData start = mapData.GetGridData(unitData.GridPos);
+            GridData start = mapData.GetGridData(battleUnit.Data.GridPos);
             open.Enqueue(Node.Create(start));
 
             int trytimes = 50;
@@ -83,7 +83,7 @@ namespace SSRPG
                         return true;
                     }
 
-                    List<GridData> neighbors = mapData.GetNeighbors(node.gridData.GridPos, unitData, NeighborType.CanAcross);
+                    List<GridData> neighbors = mapData.GetNeighbors(node.gridData.GridPos, battleUnit, NeighborType.CanAcross);
                     foreach (var neighbor in neighbors)
                     {
                         if (close.ContainsKey(neighbor) || Exit(open, neighbor))

@@ -41,7 +41,7 @@ namespace SSRPG
             m_ParentCanvas = parentCanvas;
             gameObject.SetActive(true);
 
-            m_NameText.text = owner.GridUnitData.Name;
+            m_NameText.text = owner.Data.Name;
         }
 
         public bool Refresh()
@@ -72,7 +72,7 @@ namespace SSRPG
 
         private void RefreshHp()
         {
-            m_HpText.text = string.Format("{0} / {1}", m_Owner.GridUnitData.MaxHP, m_Owner.GridUnitData.HP);
+            m_HpText.text = string.Format("{0} / {1}", m_Owner.Data.MaxHP, m_Owner.Data.HP);
         }
 
         public void Reset()

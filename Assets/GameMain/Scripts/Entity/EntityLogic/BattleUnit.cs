@@ -19,7 +19,7 @@ namespace SSRPG
 
         private SpriteRenderer spriteRenderer = null;
 
-        public BattleUnitData BattleUnitData => m_Data;
+        public new BattleUnitData Data => m_Data;
 
         protected override void OnInit(object userData)
         {

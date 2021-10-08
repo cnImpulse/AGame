@@ -53,7 +53,7 @@ namespace SSRPG
         {
             PointGridMapEventArgs ne = (PointGridMapEventArgs)e;
             GridUnit gridUnit = ne.gridData.GridUnit;
-            if (gridUnit == null || gridUnit.GridUnitData.GridUnitType != GridUnitType.BattleUnit)
+            if (gridUnit == null || gridUnit.Data.GridUnitType != GridUnitType.BattleUnit)
             {
                 UnSelectBattleUnit();
                 return;
