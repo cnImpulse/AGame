@@ -34,43 +34,17 @@ namespace SSRPG
         /// <summary>
         /// 地图宽。
         /// </summary>
-        public int Width
-        {
-            get
-            {
-                return m_Width;
-            }
-            set
-            {
-                m_Width = value;
-            }
-        }
+        public int Width => m_Width;
 
         /// <summary>
         /// 地图高。
         /// </summary>
-        public int Height
-        {
-            get
-            {
-                return m_Height;
-            }
-            set
-            {
-                m_Height = value;
-            }
-        }
+        public int Height => m_Height;
 
         /// <summary>
         /// 获得网格数据列表
         /// </summary>
-        public Dictionary<int, GridData> GridList
-        {
-            get
-            {
-                return m_GridList;
-            }
-        }
+        public Dictionary<int, GridData> GridList => m_GridList;
 
         public int GetGridIndex(Vector2Int gridPos)
         {

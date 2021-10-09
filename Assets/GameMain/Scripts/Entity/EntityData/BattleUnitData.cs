@@ -48,16 +48,16 @@ namespace SSRPG
         /// <summary>
         /// 最大生命。
         /// </summary>
-        public override int MaxHP
-        {
-            get
-            {
-                return m_MaxHP;
-            }
-        }
+        public override int MaxHP => m_MaxHP;
 
+        /// <summary>
+        /// 最大魔法值
+        /// </summary>
         public int MaxMP => m_MaxMP;
 
+        /// <summary>
+        /// 魔法值
+        /// </summary>
         public int MP
         {
             get => m_Mp;

@@ -18,13 +18,9 @@ namespace SSRPG
 
         public GridUnitData Data => m_Data;
 
-        public bool IsDead
-        {
-            get
-            {
-                return m_Data.HP <= 0;
-            }
-        }
+        public bool IsDead => m_Data.HP <= 0;
+
+        public GridData GridData => m_GridMap.Data.GetGridData(m_Data.GridPos);
 
         protected override void OnInit(object userData)
         {
@@ -75,13 +71,13 @@ namespace SSRPG
             base.OnDetachFrom(parentEntity, userData);
         }
 
-        public void BeAttack(int atk)
+        //-----------------------------------
+
+        public void BeAttack(int damageHP)
         {
-            atk = Mathf.Max(0, atk);
+            damageHP = Mathf.Max(0, damageHP);
 
-            m_Data.HP -= atk;
-            Log.Info("{0}: 被攻击。生命值: {1}", Name, m_Data.HP);
-
+            m_Data.HP -= damageHP;
             if (IsDead)
             {
                 OnDead();
@@ -94,14 +90,6 @@ namespace SSRPG
 
             GameEntry.Event.Fire(this, GridUnitDeadEventArgs.Create(m_Data));
             GameEntry.Entity.HideEntity(this);
-        }
-
-        public GridData GridData
-        {
-            get
-            {
-                return m_GridMap.GridMapData.GetGridData(m_Data.GridPos);
-            }
         }
     }
 }

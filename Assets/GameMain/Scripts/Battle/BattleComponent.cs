@@ -5,19 +5,17 @@ namespace SSRPG
 {
     public class BattleComponent : GameFrameworkComponent
     {
-        protected override void Awake()
+        private void Start()
         {
-            base.Awake();
-
             GameEntry.Event.Subscribe(GridUnitDamageEventArgs.EventId, OnGridUnitDamage);
         }
 
         private void OnGridUnitDamage(object sender, GameEventArgs e)
         {
-            GridUnitDamageEventArgs ne = (GridUnitDamageEventArgs)e;
+            var ne = (GridUnitDamageEventArgs)e;
 
-            GridUnitData gridUnitData = GameEntry.Entity.GetGameEntity<GridUnit>(ne.DamageInfo.TargetId).Data;
-            gridUnitData.HP -= ne.DamageInfo.DamageHP;
+            GridUnit gridUnit = GameEntry.Entity.GetGameEntity<GridUnit>(ne.DamageInfo.TargetId);
+            gridUnit.BeAttack(ne.DamageInfo.DamageHP);
         }
     }
 }

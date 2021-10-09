@@ -1,9 +1,6 @@
-using System.Collections.Generic;
-using UnityEngine;
-using GameFramework;
 using GameFramework.Event;
+using UnityEngine;
 using UnityGameFramework.Runtime;
-using System.Collections;
 
 namespace SSRPG
 {
@@ -13,13 +10,18 @@ namespace SSRPG
     public class BattleUnit : GridUnit
     {
         private static Color enemyColor, playerColor;
+        private SpriteRenderer spriteRenderer = null;
 
         [SerializeField]
         private BattleUnitData m_Data;
 
-        private SpriteRenderer spriteRenderer = null;
-
         public new BattleUnitData Data => m_Data;
+
+        public bool CanAction
+        {
+            get;
+            private set;
+        }
 
         protected override void OnInit(object userData)
         {
@@ -59,6 +61,8 @@ namespace SSRPG
             GameEntry.Event.Unsubscribe(RoundSwitchEventArgs.EventId, OnRoundSwitch);
         }
 
+        //-----------------------------------------
+
         public void Move(Vector2Int destination)
         {
             m_GridMap.MoveTo(this, destination);
@@ -72,27 +76,8 @@ namespace SSRPG
                 return;
             }
 
-            GridUnit gridUnit = gridData.GridUnit;
-            gridUnit.BeAttack(m_Data.ATK);
-        }
-
-        public bool CanAction
-        {
-            get;
-            private set;
-        }
-
-        public void OnRoundSwitch(object sender, GameEventArgs e)
-        {
-            RoundSwitchEventArgs ne = (RoundSwitchEventArgs)e;
-            if (ne.ActionCamp == m_Data.CampType)
-            {
-                OnRoundBegin();
-            }
-            else if (ne.EndActionCamp == m_Data.CampType)
-            {
-                EndAction();
-            }
+            DamageInfo damageInfo = new DamageInfo(m_Data.ATK, Id, gridData.GridUnit.Id);
+            GameEntry.Event.Fire(this, GridUnitDamageEventArgs.Create(damageInfo));
         }
 
         private void OnRoundBegin()
@@ -103,6 +88,19 @@ namespace SSRPG
         public void EndAction()
         {
             CanAction = false;
+        }
+
+        private void OnRoundSwitch(object sender, GameEventArgs e)
+        {
+            RoundSwitchEventArgs ne = (RoundSwitchEventArgs)e;
+            if (ne.ActionCamp == m_Data.CampType)
+            {
+                OnRoundBegin();
+            }
+            else if (ne.EndActionCamp == m_Data.CampType)
+            {
+                EndAction();
+            }
         }
     }
 }

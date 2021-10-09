@@ -48,7 +48,7 @@ namespace SSRPG
         public CampType CampType => m_CampType;
 
         /// <summary>
-        /// 当前生命。
+        /// 生命值。
         /// </summary>
         public int HP
         {

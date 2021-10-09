@@ -12,23 +12,17 @@ namespace SSRPG
     /// </summary>
     public class GridMap : Entity, IPointerDownHandler
     {
+        private TileBase empty, wall, streak;
+        private Tilemap m_Tilemap, m_GridMapEffect;
+        private BoxCollider2D box;
+
         [SerializeField]
         private GridMapData m_Data = null;
 
         [SerializeField]
         private Dictionary<int, GridUnit> m_GridUnitList = null;
 
-        private TileBase empty, wall, streak;
-        private Tilemap m_Tilemap, m_GridMapEffect;
-        private BoxCollider2D box;
-
-        public GridMapData GridMapData
-        {
-            get
-            {
-                return m_Data;
-            }
-        }
+        public GridMapData Data => m_Data;
 
         protected override void OnInit(object userData)
         {
@@ -139,8 +133,6 @@ namespace SSRPG
         /// <summary>
         /// 注销网格单位实体
         /// </summary>
-        /// <param name="gridUnit"></param>
-        /// <returns></returns>
         public bool UnRegisterGridUnit(GridUnit gridUnit)
         {
             if (gridUnit == null || !m_GridUnitList.ContainsKey(gridUnit.Id))
@@ -152,16 +144,6 @@ namespace SSRPG
             gridUnit.GridData.OnGridUnitLeave();
 
             return true;
-        }
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            Vector2Int gridPos = (Vector2Int)m_Tilemap.WorldToCell(eventData.pointerPressRaycast.worldPosition);
-            GridData gridData = m_Data.GetGridData(gridPos);
-            if (gridData != null)
-            {
-                GameEntry.Event.Fire(this, PointGridMapEventArgs.Create(gridData));
-            }
         }
 
         public void ShowMoveArea(List<GridData> gridDatas)
@@ -224,6 +206,16 @@ namespace SSRPG
             }
 
             return gridUnitList;
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            Vector2Int gridPos = (Vector2Int)m_Tilemap.WorldToCell(eventData.pointerPressRaycast.worldPosition);
+            GridData gridData = m_Data.GetGridData(gridPos);
+            if (gridData != null)
+            {
+                GameEntry.Event.Fire(this, PointGridMapEventArgs.Create(gridData));
+            }
         }
     }
 }

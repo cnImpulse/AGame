@@ -44,7 +44,7 @@ namespace SSRPG
                 List<GridData> path = new List<GridData>();
 
                 GridData end = FindMoveEnd(attackTarget);
-                bool result = GameEntry.Navigator.Navigate(m_GridMap.GridMapData, m_ActiveBattleUnit, end, out path);
+                bool result = GameEntry.Navigator.Navigate(m_GridMap.Data, m_ActiveBattleUnit, end, out path);
                 if (result == true)
                 {
                     GameEntry.Fsm.StartCoroutine(BattleUnitAutoAction(m_ActiveBattleUnit, attackTarget, path));
@@ -90,7 +90,7 @@ namespace SSRPG
         /// </summary>
         private BattleUnit FindAttackTarget()
         {
-            var canAttackList = m_GridMap.GridMapData.GetCanAttackGrids(m_ActiveBattleUnit, true);
+            var canAttackList = m_GridMap.Data.GetCanAttackGrids(m_ActiveBattleUnit, true);
 
             foreach (var gridData in canAttackList)
             {
@@ -115,7 +115,7 @@ namespace SSRPG
             }
 
             GridData end = null;
-            var canMoveList = m_GridMap.GridMapData.GetCanMoveGrids(m_ActiveBattleUnit);
+            var canMoveList = m_GridMap.Data.GetCanMoveGrids(m_ActiveBattleUnit);
             foreach (var gridData in canMoveList)
             {
                 int distance = GridMapUtl.GetDistance(attackTarget.GridData, gridData);
@@ -150,7 +150,7 @@ namespace SSRPG
             yield return new WaitForSeconds(1.5f);
             GameEntry.Effect.DestoryEffect(effectId);
 
-            var canMoveList = m_GridMap.GridMapData.GetCanMoveGrids(battleUnit);
+            var canMoveList = m_GridMap.Data.GetCanMoveGrids(battleUnit);
             m_GridMap.ShowMoveArea(canMoveList);
             yield return new WaitForSeconds(0.8f);
             m_GridMap.HideTilemapEffect();
@@ -161,7 +161,7 @@ namespace SSRPG
                 yield return new WaitForSeconds(0.3f);
             }
 
-            var canAttackList = m_GridMap.GridMapData.GetCanAttackGrids(battleUnit);
+            var canAttackList = m_GridMap.Data.GetCanAttackGrids(battleUnit);
             m_GridMap.ShowAttackArea(canAttackList);
             yield return new WaitForSeconds(0.5f);
             m_GridMap.HideTilemapEffect();

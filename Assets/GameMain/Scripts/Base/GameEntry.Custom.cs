@@ -40,9 +40,19 @@ namespace SSRPG
             private set;
         }
 
+        /// <summary>
+        /// 获取战斗组件
+        /// </summary>
+        public static BattleComponent Battle
+        {
+            get;
+            private set;
+        }
+
         private static void InitCustomComponents()
         {
             Skill           = UnityGameFramework.Runtime.GameEntry.GetComponent<SkillComponent>();
+            Battle          = UnityGameFramework.Runtime.GameEntry.GetComponent<BattleComponent>();
             Effect          = UnityGameFramework.Runtime.GameEntry.GetComponent<EffectComponent>();
             Navigator       = UnityGameFramework.Runtime.GameEntry.GetComponent<NavigatorComponent>();
             GridUnitInfo    = UnityGameFramework.Runtime.GameEntry.GetComponent<GridUnitInfoComponent>();
