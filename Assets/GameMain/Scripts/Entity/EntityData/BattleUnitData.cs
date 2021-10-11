@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using GameFramework.DataTable;
+using System.Collections.Generic;
 
 namespace SSRPG
 {
@@ -25,24 +26,23 @@ namespace SSRPG
         [SerializeField]
         private int m_MOV = 0;
 
+        [SerializeField]
+        private List<int> m_SkillList = null;
+
         public BattleUnitData(int typeId, int parentId, Vector2Int gridPos, CampType campType)
             : base(typeId, parentId, gridPos, GridUnitType.BattleUnit, campType) 
         {
             DRBattleUnit drBattleUnit = GameEntry.DataTable.GetDataRow<DRBattleUnit>(typeId);
-            if (drBattleUnit == null)
-            {
-                return;
-            }
 
-            m_ATK       = drBattleUnit.ATK;
-            m_MOV       = drBattleUnit.MOV;
-            m_MaxHP     = drBattleUnit.MaxHP;
-            m_MaxMP     = drBattleUnit.MaxMP;
-            m_AtkRange  = drBattleUnit.AtkRange;
+            m_ATK = drBattleUnit.ATK;
+            m_MOV = drBattleUnit.MOV;
+            m_MaxHP = drBattleUnit.MaxHP;
+            m_MaxMP = drBattleUnit.MaxMP;
+            m_AtkRange = drBattleUnit.AtkRange;
 
-            HP          = MaxHP;
-            MP          = MaxMP;
-            Name        = drBattleUnit.Name;
+            HP = MaxHP;
+            MP = MaxMP;
+            Name = drBattleUnit.Name;
         }
 
         /// <summary>
