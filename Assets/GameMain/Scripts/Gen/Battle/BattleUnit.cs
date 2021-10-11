@@ -29,6 +29,7 @@ public sealed partial class BattleUnit :  Bright.Config.BeanBase
         ATK = _buf.ReadInt();
         AtkRange = _buf.ReadInt();
         MOV = _buf.ReadInt();
+        {int n = System.Math.Min(_buf.ReadSize(), _buf.Size);SkillList = new System.Collections.Generic.List<int>(n);for(var i = 0 ; i < n ; i++) { int _e;  _e = _buf.ReadInt(); SkillList.Add(_e);}}
     }
 
     public static BattleUnit DeserializeBattleUnit(ByteBuf _buf)
@@ -68,6 +69,10 @@ public sealed partial class BattleUnit :  Bright.Config.BeanBase
     /// 移动力
     /// </summary>
     public int MOV { get; private set; }
+    /// <summary>
+    /// 技能
+    /// </summary>
+    public System.Collections.Generic.List<int> SkillList { get; private set; }
 
     public const int ID = -1364440750;
     public override int GetTypeId() => ID;
@@ -91,6 +96,7 @@ public sealed partial class BattleUnit :  Bright.Config.BeanBase
         + "ATK:" + ATK + ","
         + "AtkRange:" + AtkRange + ","
         + "MOV:" + MOV + ","
+        + "SkillList:" + Bright.Common.StringUtil.CollectionToString(SkillList) + ","
         + "}";
     }
     }

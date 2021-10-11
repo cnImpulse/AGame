@@ -51,7 +51,7 @@ namespace SSRPG
                     Tile tile = tilemap.GetTile<Tile>(pos);
                     if (tile == enemy_1)
                     {
-                        battleData.enemyIds.Add(20000);
+                        battleData.enemyIds.Add(10000);
                         battleData.enemyPos.Add((Vector2Int)pos);
                     }
                     else if (tile == player)

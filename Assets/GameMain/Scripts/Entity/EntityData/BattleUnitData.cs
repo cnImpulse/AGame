@@ -32,17 +32,26 @@ namespace SSRPG
         public BattleUnitData(int typeId, int parentId, Vector2Int gridPos, CampType campType)
             : base(typeId, parentId, gridPos, GridUnitType.BattleUnit, campType) 
         {
-            DRBattleUnit drBattleUnit = GameEntry.DataTable.GetDataRow<DRBattleUnit>(typeId);
+            //DRBattleUnit drBattleUnit = GameEntry.DataTable.GetDataRow<DRBattleUnit>(typeId);
 
-            m_ATK = drBattleUnit.ATK;
-            m_MOV = drBattleUnit.MOV;
-            m_MaxHP = drBattleUnit.MaxHP;
-            m_MaxMP = drBattleUnit.MaxMP;
-            m_AtkRange = drBattleUnit.AtkRange;
+            //m_ATK = drBattleUnit.ATK;
+            //m_MOV = drBattleUnit.MOV;
+            //m_MaxHP = drBattleUnit.MaxHP;
+            //m_MaxMP = drBattleUnit.MaxMP;
+            //m_AtkRange = drBattleUnit.AtkRange;
+            //Name = drBattleUnit.Name;
+
+            var cfg = GameEntry.Cfg.Tables.TblBattleUnit.Get(typeId);
+            m_ATK = cfg.ATK;
+            m_MOV = cfg.MOV;
+            m_MaxHP = cfg.MaxHP;
+            m_MaxMP = cfg.MaxMP;
+            m_AtkRange = cfg.AtkRange;
+            m_SkillList = cfg.SkillList;
+            Name = cfg.Name;
 
             HP = MaxHP;
             MP = MaxMP;
-            Name = drBattleUnit.Name;
         }
 
         /// <summary>

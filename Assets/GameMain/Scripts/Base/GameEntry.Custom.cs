@@ -8,7 +8,16 @@ namespace SSRPG
     public partial class GameEntry : MonoBehaviour
     {
         /// <summary>
-        /// 获取特效组件
+        /// 配置表组件
+        /// </summary>
+        public static CfgComponent Cfg
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 特效组件
         /// </summary>
         public static EffectComponent Effect
         {
@@ -17,7 +26,7 @@ namespace SSRPG
         }
 
         /// <summary>
-        /// 获取导航器组件
+        /// 导航器组件
         /// </summary>
         public static NavigatorComponent Navigator
         {
@@ -32,7 +41,7 @@ namespace SSRPG
         }
 
         /// <summary>
-        /// 获取技能组件
+        /// 技能组件
         /// </summary>
         public static SkillComponent Skill
         {
@@ -41,7 +50,7 @@ namespace SSRPG
         }
 
         /// <summary>
-        /// 获取战斗组件
+        /// 战斗组件
         /// </summary>
         public static BattleComponent Battle
         {
@@ -51,6 +60,7 @@ namespace SSRPG
 
         private static void InitCustomComponents()
         {
+            Cfg             = UnityGameFramework.Runtime.GameEntry.GetComponent<CfgComponent>();
             Skill           = UnityGameFramework.Runtime.GameEntry.GetComponent<SkillComponent>();
             Battle          = UnityGameFramework.Runtime.GameEntry.GetComponent<BattleComponent>();
             Effect          = UnityGameFramework.Runtime.GameEntry.GetComponent<EffectComponent>();

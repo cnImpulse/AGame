@@ -119,7 +119,7 @@ namespace SSRPG
             int playerCount = m_BattleData.maxPlayerBattleUnit;
             for (int i = 0; i < Mathf.Min(posCount, playerCount); ++i)
             {
-                int typeId = 20000 + Random.Range(1, 6);
+                int typeId = 10000 + Random.Range(1, 6);
                 Vector2Int pos = m_BattleData.playerBrithPos[i];
 
                 BattleUnitData battleUnitData = new BattleUnitData(typeId, mapEntityId, pos, CampType.Player);

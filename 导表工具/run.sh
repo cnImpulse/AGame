@@ -1,4 +1,6 @@
 #!/bin/zsh
+cd /Users/guoxuan/Game/SSRPG/导表工具
+
 dotnet Luban.ClientServer/Luban.ClientServer.dll -j cfg -- \
     -d Defines/__root__.xml \
     --input_data_dir Excels \

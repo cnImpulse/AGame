@@ -62,6 +62,8 @@ namespace SSRPG
             {
                 LoadDataTable(dataTableName);
             }
+
+            GameEntry.Cfg.LoadTables();
         }
 
         private void LoadDataTable(string dataTableName)
