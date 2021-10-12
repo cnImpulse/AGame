@@ -32,15 +32,6 @@ namespace SSRPG
         public BattleUnitData(int typeId, int parentId, Vector2Int gridPos, CampType campType)
             : base(typeId, parentId, gridPos, GridUnitType.BattleUnit, campType) 
         {
-            //DRBattleUnit drBattleUnit = GameEntry.DataTable.GetDataRow<DRBattleUnit>(typeId);
-
-            //m_ATK = drBattleUnit.ATK;
-            //m_MOV = drBattleUnit.MOV;
-            //m_MaxHP = drBattleUnit.MaxHP;
-            //m_MaxMP = drBattleUnit.MaxMP;
-            //m_AtkRange = drBattleUnit.AtkRange;
-            //Name = drBattleUnit.Name;
-
             var cfg = GameEntry.Cfg.Tables.TblBattleUnit.Get(typeId);
             m_ATK = cfg.ATK;
             m_MOV = cfg.MOV;
@@ -97,5 +88,10 @@ namespace SSRPG
         /// 攻击范围
         /// </summary>
         public int AtkRange => m_AtkRange;
+
+        /// <summary>
+        /// 技能列表
+        /// </summary>
+        public List<int> SkillList => m_SkillList;
     }
 }

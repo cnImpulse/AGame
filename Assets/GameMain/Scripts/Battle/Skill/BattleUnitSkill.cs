@@ -17,12 +17,12 @@ namespace SSRPG
 
         public BattleUnitSkill(int id, int casterId, int targetId) : base(id, casterId, targetId)
         {
-            DRBattleUnitSkill drSkill = GameEntry.DataTable.GetDataRow<DRBattleUnitSkill>(id);
+            var cfg = GameEntry.Cfg.Tables.TblBattleUnitSkill.Get(id);
 
-            m_Name          = drSkill.Name;
-            m_MPCost        = drSkill.MPCost;
-            m_DamageRate    = drSkill.DamageRate;
-            m_ReleaseRange  = drSkill.ReleaseRange;
+            m_Name          = cfg.Name;
+            m_MPCost        = cfg.MPCost;
+            m_DamageRate    = cfg.DamageRate;
+            m_ReleaseRange  = cfg.ReleaseRange;
 
             m_Caster        = GameEntry.Entity.GetGameEntity<BattleUnit>(casterId).Data;
             m_Target        = GameEntry.Entity.GetGameEntity<BattleUnit>(targetId).Data;

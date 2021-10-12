@@ -24,8 +24,7 @@ namespace SSRPG
         {
             Log.Info("战斗开始。");
 
-            m_BattleForm.Close();
-            m_BattleForm = null;
+            GameEntry.Battle.InitBattle(gridMap);
             m_BattleFsm.Start<RoundSwitchState>();
         }
 
@@ -87,7 +86,7 @@ namespace SSRPG
         {
             m_BattleFsm = GameEntry.Fsm.CreateFsm(this, new RoundSwitchState(), new SelectBattleUnitState(),
                 new BattleUnitMoveState(), new BattleUnitActionState(), new BattleUnitAttackState(),
-                new EnemyActionState(), new BattleUnitEndActionState());
+                new AutoActionState(), new BattleUnitEndActionState());
         }
 
         private void InitGridMap()
@@ -158,18 +157,18 @@ namespace SSRPG
         {
             GridUnitDeadEventArgs ne = (GridUnitDeadEventArgs)e;
 
-            if (ne.gridUnitData.GridUnitType == GridUnitType.BattleUnit)
+            if (ne.gridUnit.Data.GridUnitType == GridUnitType.BattleUnit)
             {
-                var battleUnitList = gridMap.GetBattleUnitList(ne.gridUnitData.CampType);
+                var battleUnitList = gridMap.GetBattleUnitList(ne.gridUnit.Data.CampType);
                 if (battleUnitList.Count == 0)
                 {
                     m_BattleEnd = true;
                     BattleResultInfo info = null;
-                    if (ne.gridUnitData.CampType == CampType.Player)
+                    if (ne.gridUnit.Data.CampType == CampType.Player)
                     {
                         info = new BattleResultInfo(CampType.Enemy);
                     }
-                    else if(ne.gridUnitData.CampType == CampType.Enemy)
+                    else if(ne.gridUnit.Data.CampType == CampType.Enemy)
                     {
                         info = new BattleResultInfo(CampType.Player);
                     }
@@ -177,6 +176,7 @@ namespace SSRPG
                     GameEntry.Fsm.DestroyFsm(m_BattleFsm);
                 }
             }
+            GameEntry.Entity.HideEntity(ne.gridUnit);
         }
 
         public bool NeedRoundSwitch()

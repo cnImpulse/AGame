@@ -88,8 +88,7 @@ namespace SSRPG
         {
             Log.Info("{0}: 死亡", Name);
 
-            GameEntry.Event.Fire(this, GridUnitDeadEventArgs.Create(m_Data));
-            GameEntry.Entity.HideEntity(this);
+            GameEntry.Event.Fire(this, GridUnitDeadEventArgs.Create(this));
         }
     }
 }

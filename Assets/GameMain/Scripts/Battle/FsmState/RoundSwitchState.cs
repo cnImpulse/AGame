@@ -38,14 +38,14 @@ namespace SSRPG
         {
             base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
 
-            //if (m_ActiveCamp == CampType.Player)
-            //{
-            //    ChangeState<SelectBattleUnitState>(fsm);
-            //}
-            //else if(m_ActiveCamp == CampType.Enemy)
-            //{
-                ChangeState<EnemyActionState>(fsm);
-            //}
+            if (GameEntry.Battle.AutoBattle || m_ActiveCamp != CampType.Player)
+            {
+                ChangeState<AutoActionState>(fsm);
+            }
+            else
+            {
+                ChangeState<SelectBattleUnitState>(fsm);
+            }
         }
 
         protected override void OnLeave(IFsm<ProcedureBattle> fsm, bool isShutdown)
@@ -53,8 +53,6 @@ namespace SSRPG
             base.OnLeave(fsm, isShutdown);
 
             fsm.Owner.activeCamp = m_ActiveCamp;
-
-            Log.Info("离开回合切换状态。");
         }
     }
 }

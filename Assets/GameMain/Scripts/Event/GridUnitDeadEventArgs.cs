@@ -13,7 +13,7 @@ namespace SSRPG
 
         public GridUnitDeadEventArgs()
         {
-            gridUnitData = null;
+            gridUnit = null;
         }
 
         public override int Id
@@ -24,23 +24,23 @@ namespace SSRPG
             }
         }
 
-        public GridUnitData gridUnitData
+        public GridUnit gridUnit
         {
             get;
             private set;
         }
 
-        public static GridUnitDeadEventArgs Create(GridUnitData gridUnitData)
+        public static GridUnitDeadEventArgs Create(GridUnit gridUnit)
         {
             GridUnitDeadEventArgs e = ReferencePool.Acquire<GridUnitDeadEventArgs>();
-            e.gridUnitData = gridUnitData;
+            e.gridUnit = gridUnit;
 
             return e;
         }
 
         public override void Clear()
         {
-            gridUnitData = null;
+            gridUnit = null;
         }
     }
 }

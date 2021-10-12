@@ -10,9 +10,21 @@ namespace SSRPG
     {
         private ProcedureBattle m_ProcedureBattle = null;
 
+        private GameObject m_SelectPanel = null;
+        private Toggle m_AutoBattleBtn = null;
+
         public void OnStartBtnClick()
         {
+            m_SelectPanel.SetActive(false);
             m_ProcedureBattle.StartBattle();
+        }
+
+        protected override void OnInit(object userData)
+        {
+            base.OnInit(userData);
+
+            m_SelectPanel = transform.Find("m_SelectPanel").gameObject;
+            m_AutoBattleBtn = transform.Find("m_AutoBattleBtn").GetComponent<Toggle>();
         }
 
         protected override void OnOpen(object userData)
@@ -25,6 +37,13 @@ namespace SSRPG
                 Log.Warning("ProcedureBattle is invalid when open BattleForm.");
                 return;
             }
+
+            m_AutoBattleBtn.onValueChanged.AddListener(OnValueChanged);
+        }
+
+        private void OnValueChanged(bool isOn)
+        {
+            GameEntry.Battle.AutoBattle = isOn;
         }
     }
 }

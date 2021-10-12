@@ -8,9 +8,9 @@ using UnityGameFramework.Runtime;
 namespace SSRPG
 {
     /// <summary>
-    /// 敌方回合，进入敌方行动状态
+    /// 自动行动状态
     /// </summary>
-    public class EnemyActionState : FsmState<ProcedureBattle>
+    public class AutoActionState : FsmState<ProcedureBattle>
     {
         private GridMap m_GridMap = null;
 
@@ -21,11 +21,7 @@ namespace SSRPG
         {
             base.OnEnter(fsm);
 
-            if (m_GridMap == null)
-            {
-                m_GridMap = fsm.Owner.gridMap;
-            }
-
+            m_GridMap = GameEntry.Battle.GridMap;
             foreach (var battleUnit in m_GridMap.GetBattleUnitList(fsm.Owner.activeCamp))
             {
                 if (battleUnit.CanAction)
@@ -64,7 +60,7 @@ namespace SSRPG
         {
             base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
 
-            if (m_EndAction && m_ActiveBattleUnit)
+            if (m_EndAction)
             {
                 ChangeState<BattleUnitEndActionState>(fsm);
             }
@@ -78,7 +74,7 @@ namespace SSRPG
             m_ActiveBattleUnit = null;
         }
 
-        #region 敌方战斗单位AI
+        #region 战斗单位自动行动AI
 
         // 1. 获取移动前的所有可攻击单元格
         // 2. 找到范围内的第一个可攻击单位

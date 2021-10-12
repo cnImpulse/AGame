@@ -15,19 +15,24 @@ namespace cfg
 public sealed class Tables
 {
     public Battle.TblBattleUnit TblBattleUnit {get; }
+    public Battle.TblBattleUnitSkill TblBattleUnitSkill {get; }
 
     public Tables(System.Func<string, ByteBuf> loader)
     {
         var tables = new System.Collections.Generic.Dictionary<string, object>();
         TblBattleUnit = new Battle.TblBattleUnit(loader("battle_tblbattleunit")); 
         tables.Add("Battle.TblBattleUnit", TblBattleUnit);
+        TblBattleUnitSkill = new Battle.TblBattleUnitSkill(loader("battle_tblbattleunitskill")); 
+        tables.Add("Battle.TblBattleUnitSkill", TblBattleUnitSkill);
 
         TblBattleUnit.Resolve(tables); 
+        TblBattleUnitSkill.Resolve(tables); 
     }
 
     public void TranslateText(System.Func<string, string, string> translator)
     {
         TblBattleUnit.TranslateText(translator); 
+        TblBattleUnitSkill.TranslateText(translator); 
     }
 }
 

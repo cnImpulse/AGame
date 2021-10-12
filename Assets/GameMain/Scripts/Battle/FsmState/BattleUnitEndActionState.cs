@@ -8,7 +8,7 @@ using UnityGameFramework.Runtime;
 namespace SSRPG
 {
     /// <summary>
-    /// 玩家回合，战斗单位结束行动状态
+    /// 战斗单位结束行动状态
     /// </summary>
     public class BattleUnitEndActionState : FsmState<ProcedureBattle>
     {
@@ -34,14 +34,14 @@ namespace SSRPG
             }
             else
             {
-                //if(m_ActiveBattleUnit.BattleUnitData.CampType == CampType.Player)
-                //{
-                //    ChangeState<SelectBattleUnitState>(fsm);
-                //}
-                //else if (m_ActiveBattleUnit.BattleUnitData.CampType == CampType.Enemy)
-                //{
-                    ChangeState<EnemyActionState>(fsm);
-                //}
+                if (GameEntry.Battle.AutoBattle || m_ActiveBattleUnit.Data.CampType != CampType.Player)
+                {
+                    ChangeState<AutoActionState>(fsm);
+                }
+                else
+                {
+                    ChangeState<SelectBattleUnitState>(fsm);
+                }
             }
         }
 
@@ -51,8 +51,6 @@ namespace SSRPG
 
             m_ActiveBattleUnit = null;
             fsm.RemoveData("ActiveBattleUnit");
-
-            Log.Info("离开行动结束状态");
         }
     }
 }

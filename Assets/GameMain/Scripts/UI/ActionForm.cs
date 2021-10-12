@@ -10,6 +10,7 @@ namespace SSRPG
     {
         private GameObject m_ActionList = null;
         private Button m_AttackBtn = null;
+        private Button m_SkillBtn = null;
         private Button m_AwaitBtn = null;
 
         private BattleUnitActionState m_ActionState = null;
@@ -20,6 +21,7 @@ namespace SSRPG
 
             m_ActionList = transform.Find("m_ActionList").gameObject;
             m_AttackBtn = transform.Find("m_ActionList/m_AttackBtn").GetComponent<Button>();
+            m_SkillBtn = transform.Find("m_ActionList/m_SkillBtn").GetComponent<Button>();
             m_AwaitBtn = transform.Find("m_ActionList/m_AwaitBtn").GetComponent<Button>();
         }
 
