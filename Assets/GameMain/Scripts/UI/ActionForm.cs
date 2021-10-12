@@ -8,7 +8,7 @@ namespace SSRPG
 {
     public class ActionForm : UIForm
     {
-        private GameObject m_ActionList = null;
+        private Transform m_ActionList = null;
         private Button m_AttackBtn = null;
         private Button m_SkillBtn = null;
         private Button m_AwaitBtn = null;
@@ -21,11 +21,11 @@ namespace SSRPG
         {
             base.OnInit(userData);
 
-            m_ActionList = transform.Find("m_ActionList").gameObject;
-            m_AttackBtn = m_ActionList.transform.Find("m_AttackBtn").GetComponent<Button>();
-            m_SkillBtn = m_ActionList.transform.Find("m_SkillBtn").GetComponent<Button>();
-            m_AwaitBtn = m_ActionList.transform.Find("m_AwaitBtn").GetComponent<Button>();
-            m_SkillList = m_SkillBtn.transform.Find("m_SkillList").GetComponent<UIListTemplate>();
+            m_ActionList = GetChild("m_ActionList");
+            m_AttackBtn = GetChild<Button>("m_AttackBtn");
+            m_SkillBtn = GetChild<Button>("m_SkillBtn");
+            m_AwaitBtn = GetChild<Button>("m_AwaitBtn");
+            m_SkillList = GetChild<UIListTemplate>("m_SkillList");
 
             m_AttackBtn.onClick.AddListener(() => { OnClickBtn(ActionType.Attack); });
             m_AwaitBtn.onClick.AddListener(() => { OnClickBtn(ActionType.Await); });

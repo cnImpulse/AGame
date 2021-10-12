@@ -17,8 +17,8 @@ namespace SSRPG
         {
             base.OnInit(userData);
 
-            m_AgainBtn = transform.Find("Panel/m_AgainBtn").GetComponent<Button>();
-            m_ResultText = transform.Find("Panel/m_ResultText").GetComponent<Text>();
+            m_AgainBtn = GetChild<Button>("m_AgainBtn");
+            m_ResultText = GetChild<Text>("m_ResultText");
         }
 
         protected override void OnOpen(object userData)

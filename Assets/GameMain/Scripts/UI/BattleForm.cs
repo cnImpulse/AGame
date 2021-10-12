@@ -23,8 +23,8 @@ namespace SSRPG
         {
             base.OnInit(userData);
 
-            m_SelectPanel = transform.Find("m_SelectPanel").gameObject;
-            m_AutoBattleBtn = transform.Find("m_AutoBattleBtn").GetComponent<Toggle>();
+            m_SelectPanel = GetChild("m_SelectPanel").gameObject;
+            m_AutoBattleBtn = GetChild<Toggle>("m_AutoBattleBtn");
         }
 
         protected override void OnOpen(object userData)

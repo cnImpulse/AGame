@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityGameFramework.Runtime;
@@ -8,8 +9,9 @@ namespace SSRPG
 {
     public abstract class UIForm : UIFormLogic
     {
-        private const float FadeTime = 0.3f;
+        private Dictionary<string, Transform> m_ChildList = null;
 
+        private const float FadeTime = 0.3f;
         private Canvas m_CachedCanvas = null;
         private CanvasGroup m_CanvasGroup = null;
 
@@ -46,6 +48,49 @@ namespace SSRPG
             transform.sizeDelta = Vector2.zero;
 
             gameObject.GetOrAddComponent<GraphicRaycaster>();
+
+            InitChildList();
+        }
+
+        private void InitChildList()
+        {
+            m_ChildList = new Dictionary<string, Transform>();
+            var childList = GetComponentsInChildren<Transform>(true);
+            Regex regex = new Regex("m_");
+            for (int i = 0; i < childList.Length; ++i)
+            {
+                if (!regex.IsMatch(childList[i].name))
+                {
+                    continue;
+                }
+
+                m_ChildList.Add(childList[i].name, childList[i]);
+            }
+        }
+
+        /// <summary>
+        /// 获取"m_"短命名开头的子节点
+        /// </summary>
+        public T GetChild<T>(string name)
+            where T : Component
+        {
+            if (m_ChildList.TryGetValue(name, out var child))
+            {
+                return child.GetComponent<T>();
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 获取"m_"短命名开头的子节点
+        /// </summary>
+        public Transform GetChild(string name)
+        {
+            if (m_ChildList.TryGetValue(name, out var child))
+            {
+                return child;
+            }
+            return null;
         }
 
         protected override void OnOpen(object userData)
