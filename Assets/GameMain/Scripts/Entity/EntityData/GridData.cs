@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityGameFramework.Runtime;
 
 namespace SSRPG
 {
@@ -39,11 +40,23 @@ namespace SSRPG
 
         public void OnGridUnitEnter(GridUnit gridUnit)
         {
+            if (m_GridUnit != null)
+            {
+                Log.Warning("单元格已经被占据,无法进入!");
+                return;
+            }
+
             m_GridUnit = gridUnit;
         }
 
         public void OnGridUnitLeave()
         {
+            if (m_GridUnit == null)
+            {
+                Log.Warning("没有单位占据该单元格!");
+                return;
+            }
+
             m_GridUnit = null;
         }
 

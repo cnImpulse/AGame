@@ -38,6 +38,7 @@ namespace SSRPG
                 return;
             }
 
+            m_AutoBattleBtn.isOn = GameEntry.Battle.AutoBattle;
             m_AutoBattleBtn.onValueChanged.AddListener(OnValueChanged);
         }
 

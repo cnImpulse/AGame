@@ -5,16 +5,12 @@ namespace SSRPG
 {
     public class BattleComponent : GameFrameworkComponent
     {
+        public bool AutoBattle = true;
+
         public GridMap GridMap
         {
             get;
             private set;
-        }
-
-        public bool AutoBattle
-        {
-            get;
-            set;
         }
 
         private void Start()

@@ -21,6 +21,8 @@ namespace SSRPG
         {
             base.OnEnter(fsm);
 
+            Log.Info("进入自动行动状态。");
+
             m_GridMap = GameEntry.Battle.GridMap;
             foreach (var battleUnit in m_GridMap.GetBattleUnitList(fsm.Owner.activeCamp))
             {
@@ -153,8 +155,12 @@ namespace SSRPG
 
             foreach (var gridData in path)
             {
-                battleUnit.Move(gridData.GridPos);
+                battleUnit.transform.position = m_GridMap.GridPosToWorldPos(gridData.GridPos);
                 yield return new WaitForSeconds(0.3f);
+            }
+            if (path.Count >= 1)
+            {
+                m_GridMap.MoveTo(battleUnit, path[path.Count - 1].GridPos);
             }
 
             var canAttackList = m_GridMap.Data.GetCanAttackGrids(battleUnit);

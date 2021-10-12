@@ -28,6 +28,11 @@ namespace SSRPG
         {
             base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
 
+            if (GameEntry.Battle.AutoBattle)
+            {
+                ChangeState<AutoActionState>(fsm);
+            }
+
             if (m_SelectBattleUnit != null && m_SelectBattleUnit.CanAction)
             {
                 VarObject data = new VarObject();
@@ -45,8 +50,6 @@ namespace SSRPG
             UnSelectBattleUnit();
 
             GameEntry.Event.Unsubscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
-
-            Log.Info("离开选择状态。");
         }
 
         private void OnPointGridMap(object sender, GameEventArgs e)
