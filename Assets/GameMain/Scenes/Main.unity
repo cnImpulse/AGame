@@ -210,6 +210,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24b8512c476e141659100d7cf23fec0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  empty: {fileID: 11400000, guid: 6d7baee81b3724123926ba74dc577bc8, type: 2}
+  wall: {fileID: 11400000, guid: 8c5e673ced8e6410bbc940a07b6ddd1c, type: 2}
+  streak: {fileID: 11400000, guid: 32ee94de5cbe648328cd2130fadd134c, type: 2}
   m_Template: {fileID: 11414536, guid: 96d2e77dd9853514da336717bd5627c0, type: 3}
   m_InstanceRoot: {fileID: 1987051833}
   m_InstancePoolCapacity: 16

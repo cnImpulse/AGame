@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 using GameFramework.ObjectPool;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using UnityGameFramework.Runtime;
 
 namespace SSRPG
 {
     public class GridUnitInfoComponent : GameFrameworkComponent
     {
+        public TileBase empty, wall, streak;
+
         [SerializeField]
         private GridUnitInfoItem m_Template = null;
 

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.EventSystems;
@@ -12,7 +11,6 @@ namespace SSRPG
     /// </summary>
     public class GridMap : Entity, IPointerDownHandler
     {
-        private TileBase empty, wall, streak;
         private Tilemap m_Tilemap, m_GridMapEffect;
         private BoxCollider2D box;
 
@@ -28,9 +26,6 @@ namespace SSRPG
         {
             base.OnInit(userData);
 
-            empty = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAsset("empty"));
-            wall = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAsset("wall"));
-            streak = AssetDatabase.LoadAssetAtPath<TileBase>(AssetUtl.GetTileAsset("streak"));
             m_Tilemap = transform.Find("Tilemap").GetComponent<Tilemap>();
             m_GridMapEffect = transform.Find("GridMapEffect").GetComponent<Tilemap>();
             box = gameObject.GetOrAddComponent<BoxCollider2D>();
@@ -96,10 +91,10 @@ namespace SSRPG
         {
             foreach(var gridData in m_Data.GridList.Values)
             {
-                TileBase tile = empty;
+                TileBase tile = GameEntry.GridUnitInfo.empty;
                 if (gridData.GridType == GridType.Wall)
                 {
-                    tile = wall;
+                    tile = GameEntry.GridUnitInfo.wall;
                 }
 
                 m_Tilemap.SetTile((Vector3Int)gridData.GridPos, tile);
@@ -149,13 +144,13 @@ namespace SSRPG
         public void ShowMoveArea(List<GridData> gridDatas)
         {
             m_GridMapEffect.color = Color.yellow;
-            ShowTilemapEffect(gridDatas, streak);
+            ShowTilemapEffect(gridDatas, GameEntry.GridUnitInfo.streak);
         }
 
         public void ShowAttackArea(List<GridData> gridDatas)
         {
             m_GridMapEffect.color = Color.red;
-            ShowTilemapEffect(gridDatas, streak);
+            ShowTilemapEffect(gridDatas, GameEntry.GridUnitInfo.streak);
         }
 
         private void ShowTilemapEffect(List<GridData> gridDatas, TileBase tile)

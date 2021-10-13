@@ -1,8 +1,6 @@
 ﻿using System.IO;
 using GameFramework;
 using Newtonsoft.Json;
-using UnityEditor;
-using UnityEngine;
 
 namespace SSRPG
 {
@@ -64,7 +62,6 @@ namespace SSRPG
             sw.Write(json);
             sw.Close();
             sw.Dispose();
-            AssetDatabase.Refresh();
         }
 
         #region UI
