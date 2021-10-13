@@ -26,11 +26,7 @@ namespace SSRPG
 
             GameEntry.Event.Subscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
 
-            if (m_GridMap == null)
-            {
-                m_GridMap = fsm.Owner.gridMap;
-            }
-
+            m_GridMap = GameEntry.Battle.GridMap;
             m_ActiveBattleUnit = GameEntry.Battle.ActiveBattleUnit;
             m_CanAttackList = m_GridMap.Data.GetCanAttackGrids(m_ActiveBattleUnit);
             m_GridMap.ShowAttackArea(m_CanAttackList);
@@ -48,7 +44,7 @@ namespace SSRPG
                 }
                 else
                 {
-                    ChangeState<BattleUnitActionState>(fsm);
+                    ChangeState<PlayerActionState>(fsm);
                 }
             }
         }
@@ -63,8 +59,6 @@ namespace SSRPG
             m_GridMap.HideTilemapEffect();
 
             GameEntry.Event.Unsubscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
-
-            Log.Info("离开攻击状态。");
         }
 
         private void OnPointGridMap(object sender, GameEventArgs e)

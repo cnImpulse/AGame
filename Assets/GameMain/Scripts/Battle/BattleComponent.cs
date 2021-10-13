@@ -1,3 +1,4 @@
+using System;
 using GameFramework.Event;
 using UnityGameFramework.Runtime;
 
@@ -7,8 +8,13 @@ namespace SSRPG
     {
         public bool AutoBattle = true;
 
+        [NonSerialized]
+        public int ActionArg = 0;
+        [NonSerialized]
         public BattleUnit SelectBattleUnit = null;
+        [NonSerialized]
         public BattleUnit ActiveBattleUnit = null;
+
         public GridMap GridMap
         {
             get;

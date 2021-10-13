@@ -10,11 +10,10 @@ namespace SSRPG
     /// <summary>
     /// 玩家回合，选择战斗单位行动指令状态
     /// </summary>
-    public class BattleUnitActionState : FsmState<ProcedureBattle>
+    public class PlayerActionState : FsmState<ProcedureBattle>
     {
-        private GridMap m_GridMap = null;
-
         private ActionForm m_Form = null;
+        private GridMap m_GridMap = null;
         private ActionType m_ActionType = ActionType.None;
         private BattleUnit m_ActiveBattleUnit = null;
 
@@ -29,11 +28,7 @@ namespace SSRPG
             GameEntry.Event.Subscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
 
-            if (m_GridMap == null)
-            {
-                m_GridMap = fsm.Owner.gridMap;
-            }
-
+            m_GridMap = GameEntry.Battle.GridMap;
             m_ActiveBattleUnit = GameEntry.Battle.ActiveBattleUnit;
             GameEntry.UI.OpenUIForm(UIFormId.ActionForm, this);
         }
@@ -50,6 +45,10 @@ namespace SSRPG
             if (m_ActionType == ActionType.Attack)
             {
                 ChangeState<BattleUnitAttackState>(fsm);
+            }
+            else if (m_ActionType == ActionType.Skill)
+            {
+                ChangeState<SkillReleaseState>(fsm);
             }
             else if (m_ActionType == ActionType.Await)
             {
@@ -72,13 +71,15 @@ namespace SSRPG
 
             GameEntry.Event.Unsubscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
             GameEntry.Event.Unsubscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
-
-            Log.Info("进入行动指令选择状态。");
         }
 
-        public void SelectAction(ActionType actionType)
+        /// <summary>
+        /// 后面优化为命令模式
+        /// </summary>
+        public void SelectAction(ActionType actionType, int actionId = 0)
         {
             m_ActionType = actionType;
+            GameEntry.Battle.ActionArg = actionId;
         }
 
         private void OnPointGridMap(object sender, GameEventArgs e)

@@ -15,7 +15,7 @@ namespace SSRPG
 
         private UIListTemplate m_SkillList = null;
 
-        private BattleUnitActionState m_ActionState = null;
+        private PlayerActionState m_ActionState = null;
 
         protected override void OnInit(object userData)
         {
@@ -37,7 +37,7 @@ namespace SSRPG
         {
             base.OnOpen(userData);
 
-            m_ActionState = userData as BattleUnitActionState;
+            m_ActionState = userData as PlayerActionState;
             if (m_ActionState == null)
             {
                 Log.Warning("BattleUnitActionState is invalid when open ActionForm.");
@@ -63,6 +63,7 @@ namespace SSRPG
             var cfg = GameEntry.Cfg.Tables.TblBattleUnitSkill.Get(index);
             item.name = string.Format("SkillBtn_{0}", cfg.Id);
             text.text = cfg.Name;
+
             button.onClick.AddListener(() => { OnClickSkillOptionBtn(index); });
         }
 
@@ -83,7 +84,7 @@ namespace SSRPG
 
         private void OnClickSkillOptionBtn(int skillId)
         {
-            Log.Info(skillId);
+            m_ActionState.SelectAction(ActionType.Skill, skillId);
         }
     }
 }

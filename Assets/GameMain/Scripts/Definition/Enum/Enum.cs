@@ -17,7 +17,6 @@ namespace SSRPG
     {
         None,
         BattleUnit,
-        BirthPlace,
     }
 
     /// <summary>
@@ -39,6 +38,7 @@ namespace SSRPG
         None,
         Attack = 1, // 攻击
         Await = 2,  // 待机
+        Skill = 3,  // 释放技能
     }
 
     /// <summary>

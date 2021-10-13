@@ -8,27 +8,29 @@ using UnityGameFramework.Runtime;
 namespace SSRPG
 {
     /// <summary>
-    /// 玩家回合，战斗单位移动状态
+    /// 技能释放状态
     /// </summary>
-    public class BattleUnitMoveState : FsmState<ProcedureBattle>
+    public class SkillReleaseState : FsmState<ProcedureBattle>
     {
         private GridMap m_GridMap = null;
+        private bool m_EndAction = false;
+        private int m_SkillId = 0;
         private BattleUnit m_ActiveBattleUnit = null;
-        private List<GridData> m_CanMoveList = null;
-        private bool m_EndMove = false;
+        private List<GridData> m_CanReleaseList = null;
 
         protected override void OnEnter(IFsm<ProcedureBattle> fsm)
         {
             base.OnEnter(fsm);
 
-            Log.Info("进入移动状态。");
+            Log.Info("进入技能释放状态。");
 
             GameEntry.Event.Subscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
 
             m_GridMap = GameEntry.Battle.GridMap;
+            m_SkillId = GameEntry.Battle.ActionArg;
             m_ActiveBattleUnit = GameEntry.Battle.ActiveBattleUnit;
-            m_CanMoveList = m_GridMap.Data.GetCanMoveGrids(m_ActiveBattleUnit);
-            m_GridMap.ShowMoveArea(m_CanMoveList);
+            m_CanReleaseList = m_GridMap.Data.GetSkillReleaseRange(m_ActiveBattleUnit, m_SkillId);
+            m_GridMap.ShowAttackArea(m_CanReleaseList);
         }
 
         protected override void OnUpdate(IFsm<ProcedureBattle> fsm, float elapseSeconds, float realElapseSeconds)
@@ -37,13 +39,13 @@ namespace SSRPG
 
             if (m_ActiveBattleUnit == null)
             {
-                if (m_EndMove)
+                if (m_EndAction)
                 {
-                    ChangeState<PlayerActionState>(fsm);
+                    ChangeState<BattleUnitEndActionState>(fsm);
                 }
                 else
                 {
-                    ChangeState<PlayerSelectState>(fsm);
+                    ChangeState<PlayerActionState>(fsm);
                 }
             }
         }
@@ -52,35 +54,28 @@ namespace SSRPG
         {
             base.OnLeave(fsm, isShutdown);
 
-            m_EndMove = false;
+            m_EndAction = false;
+            m_CanReleaseList = null;
             m_ActiveBattleUnit = null;
             m_GridMap.HideTilemapEffect();
 
             GameEntry.Event.Unsubscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
-
-            Log.Info("离开移动状态。");
         }
 
         private void OnPointGridMap(object sender, GameEventArgs e)
         {
             PointGridMapEventArgs ne = (PointGridMapEventArgs)e;
             GridUnit gridUnit = ne.gridData.GridUnit;
-            if (m_CanMoveList.Contains(ne.gridData))
+            if (m_CanReleaseList.Contains(ne.gridData)) 
             {
-                m_ActiveBattleUnit.Move(ne.gridData.GridPos);
-                m_EndMove = true;
-
-                Log.Info("移动到：{0}", ne.gridData.GridPos);
-            }
-            else if (gridUnit != null && gridUnit.Data.GridUnitType == GridUnitType.BattleUnit)
-            {
-                if (gridUnit == m_ActiveBattleUnit)
+                if (gridUnit == null || gridUnit.Data.GridUnitType != GridUnitType.BattleUnit)
                 {
-                    m_EndMove = true;
+                    return;
                 }
-                else
+
+                if (GameEntry.Skill.RequestReleaseSkill(m_SkillId, m_ActiveBattleUnit.Id, ne.gridData.GridUnit.Id))
                 {
-                    GameEntry.Battle.SelectBattleUnit = gridUnit as BattleUnit;
+                    m_EndAction = true;
                 }
             }
             m_ActiveBattleUnit = null;

@@ -144,6 +144,12 @@ namespace SSRPG
             return canAttackList;
         }
 
+        public List<GridData> GetSkillReleaseRange(BattleUnit battleUnit, int skillId)
+        {
+            var cfg = GameEntry.Cfg.Tables.TblBattleUnitSkill.Get(skillId);
+            return GetCanAttackGrids(battleUnit.Data.GridPos, cfg.ReleaseRange);
+        }
+
         private List<GridData> GetCanAttackGrids(Vector2Int pos, int atkRange)
         {
             List<GridData> canAttackList = new List<GridData>();
