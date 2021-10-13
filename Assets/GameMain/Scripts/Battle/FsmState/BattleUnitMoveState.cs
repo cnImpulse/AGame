@@ -13,7 +13,6 @@ namespace SSRPG
     public class BattleUnitMoveState : FsmState<ProcedureBattle>
     {
         private GridMap m_GridMap = null;
-
         private BattleUnit m_ActiveBattleUnit = null;
         private List<GridData> m_CanMoveList = null;
         private bool m_EndMove = false;
@@ -26,12 +25,8 @@ namespace SSRPG
 
             GameEntry.Event.Subscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
 
-            if (m_GridMap == null)
-            {
-                m_GridMap = fsm.Owner.gridMap;
-            }
-
-            m_ActiveBattleUnit = fsm.GetData("ActiveBattleUnit").GetValue() as BattleUnit;
+            m_GridMap = GameEntry.Battle.GridMap;
+            m_ActiveBattleUnit = GameEntry.Battle.ActiveBattleUnit;
             m_CanMoveList = m_GridMap.Data.GetCanMoveGrids(m_ActiveBattleUnit);
             m_GridMap.ShowMoveArea(m_CanMoveList);
         }
@@ -48,7 +43,7 @@ namespace SSRPG
                 }
                 else
                 {
-                    ChangeState<SelectBattleUnitState>(fsm);
+                    ChangeState<PlayerSelectState>(fsm);
                 }
             }
         }
@@ -69,12 +64,17 @@ namespace SSRPG
         private void OnPointGridMap(object sender, GameEventArgs e)
         {
             PointGridMapEventArgs ne = (PointGridMapEventArgs)e;
+            GridUnit gridUnit = ne.gridData.GridUnit;
             if (m_CanMoveList.Contains(ne.gridData))
             {
                 m_ActiveBattleUnit.Move(ne.gridData.GridPos);
                 m_EndMove = true;
 
                 Log.Info("移动到：{0}", ne.gridData.GridPos);
+            }
+            else if (gridUnit != null && gridUnit.Data.GridUnitType == GridUnitType.BattleUnit)
+            {
+                GameEntry.Battle.SelectBattleUnit = gridUnit as BattleUnit;
             }
             m_ActiveBattleUnit = null;
         }

@@ -10,7 +10,7 @@ namespace SSRPG
     /// <summary>
     /// 玩家回合，选择战斗单位状态
     /// </summary>
-    public class SelectBattleUnitState : FsmState<ProcedureBattle>
+    public class PlayerSelectState : FsmState<ProcedureBattle>
     {
         private int m_EffectId = 0;
         private BattleUnit m_SelectBattleUnit = null;
@@ -22,6 +22,8 @@ namespace SSRPG
             Log.Info("进入选择状态。");
 
             GameEntry.Event.Subscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
+
+            SelectBattleUnit(GameEntry.Battle.SelectBattleUnit);
         }
 
         protected override void OnUpdate(IFsm<ProcedureBattle> fsm, float elapseSeconds, float realElapseSeconds)
@@ -35,10 +37,7 @@ namespace SSRPG
 
             if (m_SelectBattleUnit != null && m_SelectBattleUnit.CanAction)
             {
-                VarObject data = new VarObject();
-                data.Value = m_SelectBattleUnit;
-
-                fsm.SetData("ActiveBattleUnit", data);
+                GameEntry.Battle.ActiveBattleUnit = m_SelectBattleUnit;
                 ChangeState<BattleUnitMoveState>(fsm);
             }
         }
@@ -67,14 +66,19 @@ namespace SSRPG
 
         private void SelectBattleUnit(BattleUnit battleUnit)
         {
-            m_SelectBattleUnit = battleUnit;
+            if (battleUnit == null)
+            {
+                return;
+            }
 
+            m_SelectBattleUnit = battleUnit;
             ShowSelectEffect(battleUnit.transform.position);
         }
 
         private void UnSelectBattleUnit()
         {
             m_SelectBattleUnit = null;
+            GameEntry.Battle.SelectBattleUnit = null;
             HideSelectEffect();
         }
 

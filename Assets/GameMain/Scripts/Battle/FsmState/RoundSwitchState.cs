@@ -44,7 +44,7 @@ namespace SSRPG
             }
             else
             {
-                ChangeState<SelectBattleUnitState>(fsm);
+                ChangeState<PlayerSelectState>(fsm);
             }
         }
 

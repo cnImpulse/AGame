@@ -7,6 +7,8 @@ namespace SSRPG
     {
         public bool AutoBattle = true;
 
+        public BattleUnit SelectBattleUnit = null;
+        public BattleUnit ActiveBattleUnit = null;
         public GridMap GridMap
         {
             get;

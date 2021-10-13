@@ -84,7 +84,7 @@ namespace SSRPG
 
         private void InitBattleFsm()
         {
-            m_BattleFsm = GameEntry.Fsm.CreateFsm(this, new RoundSwitchState(), new SelectBattleUnitState(),
+            m_BattleFsm = GameEntry.Fsm.CreateFsm(this, new RoundSwitchState(), new PlayerSelectState(),
                 new BattleUnitMoveState(), new BattleUnitActionState(), new BattleUnitAttackState(),
                 new AutoActionState(), new BattleUnitEndActionState());
         }

@@ -34,7 +34,7 @@ namespace SSRPG
                 m_GridMap = fsm.Owner.gridMap;
             }
 
-            m_ActiveBattleUnit = fsm.GetData("ActiveBattleUnit").GetValue() as BattleUnit;
+            m_ActiveBattleUnit = GameEntry.Battle.ActiveBattleUnit;
             GameEntry.UI.OpenUIForm(UIFormId.ActionForm, this);
         }
 
@@ -44,7 +44,7 @@ namespace SSRPG
 
             if (m_ActiveBattleUnit == null)
             {
-                ChangeState<SelectBattleUnitState>(fsm);
+                ChangeState<PlayerSelectState>(fsm);
             }
 
             if (m_ActionType == ActionType.Attack)

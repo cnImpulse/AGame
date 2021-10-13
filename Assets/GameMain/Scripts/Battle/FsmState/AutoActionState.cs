@@ -32,10 +32,7 @@ namespace SSRPG
                 }
             }
 
-            VarObject data = new VarObject();
-            data.Value = m_ActiveBattleUnit;
-            fsm.SetData("ActiveBattleUnit", data);
-
+            GameEntry.Battle.ActiveBattleUnit = m_ActiveBattleUnit;
             BattleUnit attackTarget = FindAttackTarget();
             if (attackTarget != null && m_ActiveBattleUnit != null)
             {

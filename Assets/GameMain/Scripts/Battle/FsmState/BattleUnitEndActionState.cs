@@ -20,7 +20,7 @@ namespace SSRPG
 
             Log.Info("进入行动结束状态");
 
-            m_ActiveBattleUnit = fsm.GetData("ActiveBattleUnit").GetValue() as BattleUnit;
+            m_ActiveBattleUnit = GameEntry.Battle.ActiveBattleUnit;
             m_ActiveBattleUnit.EndAction();
         }
 
@@ -40,7 +40,7 @@ namespace SSRPG
                 }
                 else
                 {
-                    ChangeState<SelectBattleUnitState>(fsm);
+                    ChangeState<PlayerSelectState>(fsm);
                 }
             }
         }
@@ -50,7 +50,7 @@ namespace SSRPG
             base.OnLeave(fsm, isShutdown);
 
             m_ActiveBattleUnit = null;
-            fsm.RemoveData("ActiveBattleUnit");
+            GameEntry.Battle.ActiveBattleUnit = null;
         }
     }
 }
