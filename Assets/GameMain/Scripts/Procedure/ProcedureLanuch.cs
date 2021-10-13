@@ -18,7 +18,6 @@ namespace SSRPG
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
 
-            // 后面需要插入一个资源加载流程
             ChangeState<ProcedurePreload>(procedureOwner);
         }
     }
