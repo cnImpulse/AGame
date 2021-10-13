@@ -12,10 +12,6 @@ namespace SSRPG
         public static readonly string[] DataTableNames = new string[]
         {
             "Entity",
-            "GridMap",
-            "BattleUnit",
-            "BattleUnitSkill",
-            "UIForm",
             "Effect",
         };
 

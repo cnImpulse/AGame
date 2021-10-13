@@ -1,9 +1,0 @@
-#	界面配置表			
-#	Id		AssetName	UIGroupName
-#	int		string	string
-#	界面编号	策划备注	资源名称	界面组名称
-	1	弹出框	DialogForm	Default
-	100	主菜单	MenuForm	Default
-	200	战斗界面	BattleForm	Default
-	201	战斗结束界面	BattleEndForm	Default
-	300	行动指令列表	ActionForm	Default
