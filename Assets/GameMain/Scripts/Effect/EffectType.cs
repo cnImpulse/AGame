@@ -3,6 +3,12 @@ namespace SSRPG
     public enum EffectType
     {
         None,
-        SelectType = 100,
+        SelectGridUnit = 100,
+    }
+
+    public enum UIEffectType
+    {
+        None,
+        BattleInfo = 100,
     }
 }

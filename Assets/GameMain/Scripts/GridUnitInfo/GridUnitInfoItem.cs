@@ -5,28 +5,26 @@ using UnityGameFramework.Runtime;
 
 namespace SSRPG
 {
-    public class GridUnitInfoItem : MonoBehaviour
+    public class GridUnitInfoItem : UIItemTemplate
     {
         private RectTransform m_InfoList = null;
         private Text m_NameText = null;
         private Text m_HpText = null;
+        private Text m_MpText = null;
 
         private Canvas m_ParentCanvas = null;
         private GridUnit m_Owner = null;
 
-        public Entity Owner
-        {
-            get
-            {
-                return m_Owner;
-            }
-        }
+        public Entity Owner => m_Owner;
 
         private void Awake()
         {
-            m_InfoList = transform.Find("m_InfoList").GetComponent<RectTransform>();
-            m_NameText = m_InfoList.Find("m_NameText").GetComponent<Text>();
-            m_HpText   = m_InfoList.Find("m_HpText").GetComponent<Text>();
+            base.Init();
+
+            m_InfoList = GetChild<RectTransform>("m_InfoList");
+            m_NameText = GetChild<Text>("m_NameText");
+            m_HpText = GetChild<Text>("m_HpText");
+            m_MpText = GetChild<Text>("m_MpText");
         }
 
         public void Init(GridUnit owner, Canvas parentCanvas)
@@ -52,7 +50,7 @@ namespace SSRPG
             }
 
             RefreshPos();
-            RefreshHp();
+            RefreshAttr();
 
             return true;
         }
@@ -70,9 +68,14 @@ namespace SSRPG
             }
         }
 
-        private void RefreshHp()
+        private void RefreshAttr()
         {
-            m_HpText.text = string.Format("{0} / {1}", m_Owner.Data.MaxHP, m_Owner.Data.HP);
+            m_HpText.text = string.Format("HP: {0} / {1}", m_Owner.Data.MaxHP, m_Owner.Data.HP);
+            if (m_Owner.Data.GridUnitType == GridUnitType.BattleUnit)
+            {
+                var battleUnit = m_Owner as BattleUnit;
+                //m_MpText.text = string.Format("MP: {0} / {1}", battleUnit.Data.MaxMP, battleUnit.Data.MP);
+            }
         }
 
         public void Reset()

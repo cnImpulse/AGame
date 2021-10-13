@@ -141,7 +141,7 @@ namespace SSRPG
 
         public IEnumerator BattleUnitAutoAction(BattleUnit battleUnit, BattleUnit attackTarget, List<GridData> path)
         {
-            int effectId = GameEntry.Effect.CreatEffect(EffectType.SelectType, battleUnit.transform.position);
+            int effectId = GameEntry.Effect.CreatEffect(EffectType.SelectGridUnit, battleUnit.transform.position);
             yield return new WaitForSeconds(1.5f);
             GameEntry.Effect.DestoryEffect(effectId);
 

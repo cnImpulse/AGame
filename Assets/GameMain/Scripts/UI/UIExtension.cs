@@ -33,16 +33,9 @@ namespace SSRPG
 
         public static int? OpenUIForm(this UIComponent uiComponent, int uiFormId, object userData = null)
         {
-            IDataTable<DRUIForm> dtUIForm = GameEntry.DataTable.GetDataTable<DRUIForm>();
-            DRUIForm drUIForm = dtUIForm.GetDataRow(uiFormId);
-            if (drUIForm == null)
-            {
-                Log.Warning("Can not load UI form '{0}' from data table.", uiFormId.ToString());
-                return null;
-            }
-
-            string assetName = AssetUtl.GetUIFormAsset(drUIForm.AssetName);
-            return uiComponent.OpenUIForm(assetName, drUIForm.UIGroupName, userData);
+            var cfg = GameEntry.Cfg.Tables.TblUIForm.Get(uiFormId);
+            string assetName = AssetUtl.GetUIFormAsset(cfg.AssetName);
+            return uiComponent.OpenUIForm(assetName, cfg.UIGroup, userData);
         }
     }
 }

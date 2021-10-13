@@ -46,6 +46,11 @@ namespace SSRPG
             return entityId;
         }
 
+        public int CreatUIEffect(UIEffectType type, Vector3 position)
+        {
+            return 0;
+        }
+
         /// <summary>
         /// 销毁特效
         /// </summary>
@@ -76,7 +81,7 @@ namespace SSRPG
 
         private void OnCreatEffect(object sender, GameFrameworkEventArgs e)
         {
-            ShowEntitySuccessEventArgs ne = (ShowEntitySuccessEventArgs)e;
+            var ne = (ShowEntitySuccessEventArgs)e;
             if (ne.EntityLogicType != typeof(EffectBase))
             {
                 return;

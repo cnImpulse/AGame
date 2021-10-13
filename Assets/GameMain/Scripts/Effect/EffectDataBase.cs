@@ -1,6 +1,4 @@
 using UnityEngine;
-using GameFramework;
-using UnityGameFramework.Runtime;
 
 namespace SSRPG
 {
@@ -17,7 +15,7 @@ namespace SSRPG
         /// <summary>
         /// 实体位置。
         /// </summary>
-        public UnityEngine.Vector3 Position
+        public Vector3 Position
         {
             get
             {
