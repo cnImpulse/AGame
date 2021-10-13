@@ -11,45 +11,40 @@ using System.Collections.Generic;
 
 
 
-namespace cfg.UI
+namespace cfg.Effect
 {
 
 /// <summary>
 /// 
 /// </summary>
-public sealed partial class UIForm :  Bright.Config.BeanBase 
+public sealed partial class EffectRes :  Bright.Config.BeanBase 
 {
-    public UIForm(ByteBuf _buf) 
+    public EffectRes(ByteBuf _buf) 
     {
         Id = _buf.ReadInt();
         Name = _buf.ReadString();
-        UIGroup = _buf.ReadString();
         AssetName = _buf.ReadString();
     }
 
-    public static UIForm DeserializeUIForm(ByteBuf _buf)
+    public static EffectRes DeserializeEffectRes(ByteBuf _buf)
     {
-        return new UI.UIForm(_buf);
+        return new Effect.EffectRes(_buf);
     }
 
     /// <summary>
-    /// 界面编号
+    /// 特效编号
     /// </summary>
     public int Id { get; private set; }
     /// <summary>
-    /// 界面名
+    /// 特效名
     /// </summary>
     public string Name { get; private set; }
-    /// <summary>
-    /// 界面组
-    /// </summary>
-    public string UIGroup { get; private set; }
     /// <summary>
     /// 资源名
     /// </summary>
     public string AssetName { get; private set; }
 
-    public const int ID = -260084206;
+    public const int ID = 674971954;
     public override int GetTypeId() => ID;
 
     public  void Resolve(Dictionary<string, object> _tables)
@@ -65,7 +60,6 @@ public sealed partial class UIForm :  Bright.Config.BeanBase
         return "{ "
         + "Id:" + Id + ","
         + "Name:" + Name + ","
-        + "UIGroup:" + UIGroup + ","
         + "AssetName:" + AssetName + ","
         + "}";
     }

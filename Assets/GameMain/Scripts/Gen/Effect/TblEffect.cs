@@ -9,34 +9,34 @@
 using Bright.Serialization;
 using System.Collections.Generic;
 
-namespace cfg.UI
+namespace cfg.Effect
 {
    
-    public sealed class TblUIForm
+    public sealed class TblEffect
     {
-        private readonly Dictionary<int, UI.UIFormRes> _dataMap;
-        private readonly List<UI.UIFormRes> _dataList;
+        private readonly Dictionary<int, Effect.EffectRes> _dataMap;
+        private readonly List<Effect.EffectRes> _dataList;
         
-        public TblUIForm(ByteBuf _buf)
+        public TblEffect(ByteBuf _buf)
         {
-            _dataMap = new Dictionary<int, UI.UIFormRes>();
-            _dataList = new List<UI.UIFormRes>();
+            _dataMap = new Dictionary<int, Effect.EffectRes>();
+            _dataList = new List<Effect.EffectRes>();
             
             for(int n = _buf.ReadSize() ; n > 0 ; --n)
             {
-                UI.UIFormRes _v;
-                _v = UI.UIFormRes.DeserializeUIFormRes(_buf);
+                Effect.EffectRes _v;
+                _v = Effect.EffectRes.DeserializeEffectRes(_buf);
                 _dataList.Add(_v);
                 _dataMap.Add(_v.Id, _v);
             }
         }
 
-        public Dictionary<int, UI.UIFormRes> DataMap => _dataMap;
-        public List<UI.UIFormRes> DataList => _dataList;
+        public Dictionary<int, Effect.EffectRes> DataMap => _dataMap;
+        public List<Effect.EffectRes> DataList => _dataList;
 
-        public UI.UIFormRes GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
-        public UI.UIFormRes Get(int key) => _dataMap[key];
-        public UI.UIFormRes this[int key] => _dataMap[key];
+        public Effect.EffectRes GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
+        public Effect.EffectRes Get(int key) => _dataMap[key];
+        public Effect.EffectRes this[int key] => _dataMap[key];
 
         public void Resolve(Dictionary<string, object> _tables)
         {

@@ -1,5 +1,0 @@
-#	特效表		
-#	Id		AssetName
-#	int		string
-#	特效编号	策划备注	资源名称
-	100	选择特效	SelectEffect

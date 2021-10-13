@@ -12,48 +12,47 @@ using System.Collections.Generic;
 namespace cfg.Battle
 {
    
-public sealed class TblBattleUnitSkill
-{
-    private readonly Dictionary<int, Battle.BattleUnitSkill> _dataMap;
-    private readonly List<Battle.BattleUnitSkill> _dataList;
-    
-    public TblBattleUnitSkill(ByteBuf _buf)
+    public sealed class TblBattleUnitSkill
     {
-        _dataMap = new Dictionary<int, Battle.BattleUnitSkill>();
-        _dataList = new List<Battle.BattleUnitSkill>();
+        private readonly Dictionary<int, Battle.BattleUnitSkill> _dataMap;
+        private readonly List<Battle.BattleUnitSkill> _dataList;
         
-        for(int n = _buf.ReadSize() ; n > 0 ; --n)
+        public TblBattleUnitSkill(ByteBuf _buf)
         {
-            Battle.BattleUnitSkill _v;
-            _v = Battle.BattleUnitSkill.DeserializeBattleUnitSkill(_buf);
-            _dataList.Add(_v);
-            _dataMap.Add(_v.Id, _v);
+            _dataMap = new Dictionary<int, Battle.BattleUnitSkill>();
+            _dataList = new List<Battle.BattleUnitSkill>();
+            
+            for(int n = _buf.ReadSize() ; n > 0 ; --n)
+            {
+                Battle.BattleUnitSkill _v;
+                _v = Battle.BattleUnitSkill.DeserializeBattleUnitSkill(_buf);
+                _dataList.Add(_v);
+                _dataMap.Add(_v.Id, _v);
+            }
         }
-    }
 
-    public Dictionary<int, Battle.BattleUnitSkill> DataMap => _dataMap;
-    public List<Battle.BattleUnitSkill> DataList => _dataList;
+        public Dictionary<int, Battle.BattleUnitSkill> DataMap => _dataMap;
+        public List<Battle.BattleUnitSkill> DataList => _dataList;
 
-    public Battle.BattleUnitSkill GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
-    public Battle.BattleUnitSkill Get(int key) => _dataMap[key];
-    public Battle.BattleUnitSkill this[int key] => _dataMap[key];
+        public Battle.BattleUnitSkill GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
+        public Battle.BattleUnitSkill Get(int key) => _dataMap[key];
+        public Battle.BattleUnitSkill this[int key] => _dataMap[key];
 
-    public void Resolve(Dictionary<string, object> _tables)
-    {
-        foreach(var v in _dataList)
+        public void Resolve(Dictionary<string, object> _tables)
         {
-            v.Resolve(_tables);
+            foreach(var v in _dataList)
+            {
+                v.Resolve(_tables);
+            }
         }
-    }
 
-    public void TranslateText(System.Func<string, string, string> translator)
-    {
-        foreach(var v in _dataList)
+        public void TranslateText(System.Func<string, string, string> translator)
         {
-            v.TranslateText(translator);
+            foreach(var v in _dataList)
+            {
+                v.TranslateText(translator);
+            }
         }
+
     }
-
-}
-
 }

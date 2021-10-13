@@ -5,6 +5,7 @@
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
+.cache.meta
 Assets/AssetStoreTools*
 
 # Visual Studio cache directory

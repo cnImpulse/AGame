@@ -42,14 +42,8 @@ namespace SSRPG
                 return;
             }
 
-            DREntity drEntity = GameEntry.DataTable.GetDataRow<DREntity>(entityType);
-            if (drEntity == null)
-            {
-                Log.Warning("Can not load entity id '{0}' from data table.", data.TypeId.ToString());
-                return;
-            }
-
-            entityComponent.ShowEntity(data.Id, logicType, AssetUtl.GetEntityAsset(drEntity.AssetName), entityGroup, data);
+            var cfg = GameEntry.Cfg.Tables.TblEntity.Get(entityType);
+            entityComponent.ShowEntity(data.Id, logicType, AssetUtl.GetEntityAsset(cfg.AssetName), entityGroup, data);
         }
 
         public static void ShowGridMap(this EntityComponent entityComponent, GridMapData data)
@@ -70,15 +64,8 @@ namespace SSRPG
                 return;
             }
 
-            IDataTable<DREffect> dtEffect = GameEntry.DataTable.GetDataTable<DREffect>();
-            DREffect drEffect = dtEffect.GetDataRow(data.TypeId);
-            if (drEffect == null)
-            {
-                Log.Warning("Can not load effect id '{0}' from data table.", data.TypeId.ToString());
-                return;
-            }
-
-            entityComponent.ShowEntity(data.Id, typeof(EffectBase), AssetUtl.GetEffectAsset(drEffect.AssetName), "Effect", data);
+            var cfg = GameEntry.Cfg.Tables.TblEffect.Get(data.TypeId);
+            entityComponent.ShowEntity(data.Id, typeof(EffectBase), AssetUtl.GetEffectAsset(cfg.AssetName), "Effect", data);
         }
 
         public static int GenerateSerialId(this EntityComponent entityComponent)

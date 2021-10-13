@@ -12,48 +12,47 @@ using System.Collections.Generic;
 namespace cfg.Battle
 {
    
-public sealed class TblBattleUnit
-{
-    private readonly Dictionary<int, Battle.BattleUnit> _dataMap;
-    private readonly List<Battle.BattleUnit> _dataList;
-    
-    public TblBattleUnit(ByteBuf _buf)
+    public sealed class TblBattleUnit
     {
-        _dataMap = new Dictionary<int, Battle.BattleUnit>();
-        _dataList = new List<Battle.BattleUnit>();
+        private readonly Dictionary<int, Battle.BattleUnit> _dataMap;
+        private readonly List<Battle.BattleUnit> _dataList;
         
-        for(int n = _buf.ReadSize() ; n > 0 ; --n)
+        public TblBattleUnit(ByteBuf _buf)
         {
-            Battle.BattleUnit _v;
-            _v = Battle.BattleUnit.DeserializeBattleUnit(_buf);
-            _dataList.Add(_v);
-            _dataMap.Add(_v.Id, _v);
+            _dataMap = new Dictionary<int, Battle.BattleUnit>();
+            _dataList = new List<Battle.BattleUnit>();
+            
+            for(int n = _buf.ReadSize() ; n > 0 ; --n)
+            {
+                Battle.BattleUnit _v;
+                _v = Battle.BattleUnit.DeserializeBattleUnit(_buf);
+                _dataList.Add(_v);
+                _dataMap.Add(_v.Id, _v);
+            }
         }
-    }
 
-    public Dictionary<int, Battle.BattleUnit> DataMap => _dataMap;
-    public List<Battle.BattleUnit> DataList => _dataList;
+        public Dictionary<int, Battle.BattleUnit> DataMap => _dataMap;
+        public List<Battle.BattleUnit> DataList => _dataList;
 
-    public Battle.BattleUnit GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
-    public Battle.BattleUnit Get(int key) => _dataMap[key];
-    public Battle.BattleUnit this[int key] => _dataMap[key];
+        public Battle.BattleUnit GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
+        public Battle.BattleUnit Get(int key) => _dataMap[key];
+        public Battle.BattleUnit this[int key] => _dataMap[key];
 
-    public void Resolve(Dictionary<string, object> _tables)
-    {
-        foreach(var v in _dataList)
+        public void Resolve(Dictionary<string, object> _tables)
         {
-            v.Resolve(_tables);
+            foreach(var v in _dataList)
+            {
+                v.Resolve(_tables);
+            }
         }
-    }
 
-    public void TranslateText(System.Func<string, string, string> translator)
-    {
-        foreach(var v in _dataList)
+        public void TranslateText(System.Func<string, string, string> translator)
         {
-            v.TranslateText(translator);
+            foreach(var v in _dataList)
+            {
+                v.TranslateText(translator);
+            }
         }
+
     }
-
-}
-
 }
