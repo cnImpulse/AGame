@@ -20,7 +20,7 @@ namespace SSRPG
 
         private static ByteBuf LoadByteBuf(string file)
         {
-            return new ByteBuf(File.ReadAllBytes($"{Application.dataPath}/GameMain/GameData/CfgData/{file}.bin"));
+            return new ByteBuf(File.ReadAllBytes($"{Application.dataPath}/GameMain/GameData/CfgData/{file}.bytes"));
         }
     }
 }

@@ -2,12 +2,12 @@
 <UnityGameFramework>
   <ResourceBuilder>
     <Settings>
-      <InternalResourceVersion>0</InternalResourceVersion>
-      <Platforms>32</Platforms>
+      <InternalResourceVersion>3</InternalResourceVersion>
+      <Platforms>36</Platforms>
       <AssetBundleCompression>1</AssetBundleCompression>
       <CompressionHelperTypeName>UnityGameFramework.Runtime.DefaultCompressionHelper</CompressionHelperTypeName>
       <AdditionalCompressionSelected>False</AdditionalCompressionSelected>
-      <ForceRebuildAssetBundleSelected>False</ForceRebuildAssetBundleSelected>
+      <ForceRebuildAssetBundleSelected>True</ForceRebuildAssetBundleSelected>
       <BuildEventHandlerTypeName>
       </BuildEventHandlerTypeName>
       <OutputDirectory>/Users/guoxuan/Game/AB</OutputDirectory>

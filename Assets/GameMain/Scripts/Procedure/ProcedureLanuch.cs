@@ -18,7 +18,7 @@ namespace SSRPG
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
 
-            ChangeState<ProcedurePreload>(procedureOwner);
+            ChangeState<ProcedureInitResources>(procedureOwner);
         }
     }
 }
