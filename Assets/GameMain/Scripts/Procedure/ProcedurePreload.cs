@@ -25,7 +25,10 @@ namespace SSRPG
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
 
-            ChangeState<ProcedureMenu>(procedureOwner);
+            if (GameEntry.Cfg.EndLoad)
+            {
+                ChangeState<ProcedureMenu>(procedureOwner);
+            }
         }
 
         private void PreloadResources()

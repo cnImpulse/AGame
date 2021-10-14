@@ -4,6 +4,7 @@ using GameFramework;
 using GameFramework.Fsm;
 using GameFramework.Event;
 using GameFramework.Procedure;
+using GameFramework.Resource;
 using UnityGameFramework.Runtime;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 
@@ -45,7 +46,7 @@ namespace SSRPG
             Log.Info("进入战斗准备阶段。");
 
             InitBattleFsm();
-            InitGridMap();
+            InitBattle();
             SelectPlayerBattleUnit();
         }
 
@@ -89,16 +90,21 @@ namespace SSRPG
                 new SkillReleaseState(), new AutoActionState(), new BattleUnitEndActionState());
         }
 
-        private void InitGridMap()
+        private void InitBattle()
         {
             m_BattleEnd = false;
 
             int battleId = 2;
             string path = AssetUtl.GetBattleDataPath(battleId);
-            m_BattleData = AssetUtl.LoadJsonData<BattleData>(path);
+            GameEntry.Resource.LoadAsset(path, new LoadAssetCallbacks(OnLoadAssetSuccess));
+        }
 
-            GridMapData gridMapData = new GridMapData(m_BattleData.mapId);
-            GameEntry.Entity.ShowGridMap(gridMapData);
+        private void OnLoadAssetSuccess(string assetName, object asset, float duration, object userData)
+        {
+            TextAsset textAsset = asset as TextAsset;
+            m_BattleData = Newtonsoft.Json.JsonConvert.DeserializeObject<BattleData>(textAsset.text);
+
+            GameEntry.Entity.ShowGridMap(m_BattleData.mapId);
         }
 
         private void InitBattleUnit(int mapEntityId)

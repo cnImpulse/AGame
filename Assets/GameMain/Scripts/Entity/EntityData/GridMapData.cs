@@ -20,11 +20,8 @@ namespace SSRPG
         [SerializeField]
         private Dictionary<int, GridData> m_GridList = null;
 
-        public GridMapData(int typeId) : base(typeId)
+        public GridMapData(MapData mapData) : base(mapData.MapId)
         {
-            string path = AssetUtl.GetMapDataPath(typeId);
-            MapData mapData = AssetUtl.LoadJsonData<MapData>(path);
-
             m_Width = mapData.Width;
             m_Height = mapData.Height;
             m_GridList = mapData.GridList;

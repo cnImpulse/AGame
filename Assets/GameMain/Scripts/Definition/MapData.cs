@@ -6,6 +6,7 @@ namespace SSRPG
 {
     public class MapData
     {
+        public int MapId = 0;
         public int Width = 0;
         public int Height = 0;
         public Dictionary<int, GridData> GridList = null;

@@ -31,14 +31,6 @@ namespace SSRPG
             return Utility.Text.Format("Assets/GameMain/GameData/BattleData/BattleData_{0}.json", battleId);
         }
 
-        public static T LoadJsonData<T>(string path)
-        {
-            StreamReader sr = new StreamReader(path);
-            string json = sr.ReadLine();
-
-            return JsonConvert.DeserializeObject<T>(json);
-        }
-
         public static void SaveData<T>(string path, T data)
         {
             if (path == null || data == null)

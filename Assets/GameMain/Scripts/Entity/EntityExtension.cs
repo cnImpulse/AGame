@@ -1,11 +1,19 @@
 ﻿using System;
-using GameFramework.DataTable;
+using UnityEngine;
+using GameFramework;
+using GameFramework.Resource;
 using UnityGameFramework.Runtime;
 
 namespace SSRPG
 {
     public static class EntityExtension
     {
+        public enum EntityType
+        {
+            GridMap = 10000,
+            BattleUnit = 20000,
+        }
+
         // 关于 EntityId 的约定：
         // 0 为无效
         // 正值用于和服务器通信的实体（如玩家角色、NPC、怪等，服务器只产生正值）
@@ -46,11 +54,6 @@ namespace SSRPG
             entityComponent.ShowEntity(data.Id, logicType, AssetUtl.GetEntityAsset(cfg.AssetName), entityGroup, data);
         }
 
-        public static void ShowGridMap(this EntityComponent entityComponent, GridMapData data)
-        {
-            entityComponent.ShowEntity(typeof(GridMap), "GridMap", data, 10000);
-        }
-
         public static void ShowBattleUnit(this EntityComponent entityComponent, BattleUnitData data)
         {
             entityComponent.ShowEntity(typeof(BattleUnit), "BattleUnit", data, 20000);
@@ -71,6 +74,23 @@ namespace SSRPG
         public static int GenerateSerialId(this EntityComponent entityComponent)
         {
             return --s_SerialId;
+        }
+
+        // 重构-----------------
+
+        public static void ShowGridMap(this EntityComponent entityComponent, int mapId)
+        {
+            string path = AssetUtl.GetMapDataPath(mapId);
+            GameEntry.Resource.LoadAsset(path, typeof(TextAsset), new LoadAssetCallbacks(OnLoadMapDataSuccess));
+        }
+
+        private static void OnLoadMapDataSuccess(string assetName, object asset, float duration, object userData)
+        {
+            TextAsset textAsset = asset as TextAsset;
+            MapData mapData = Utility.Json.ToObject<MapData>(textAsset.text);
+
+            GridMapData gridMapData = new GridMapData(mapData);
+            GameEntry.Entity.ShowEntity(typeof(GridMap), "GridMap", gridMapData, (int)EntityType.GridMap);
         }
     }
 }

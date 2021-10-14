@@ -166,6 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 762959218b2be4a47a119a944e4cdbda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EndLoad: 0
 --- !u!1 &214348149
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,6 +595,10 @@ PrefabInstance:
     - target: {fileID: 11499388, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_EditorResourceMode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11499388, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_JsonHelperTypeName
+      value: SSRPG.NewtonsoftJsonHelper
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
