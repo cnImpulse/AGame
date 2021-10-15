@@ -18,6 +18,12 @@ namespace {{namespace}}
         public {{table.full_name}} {{table.name}} {get; }
         {{~end~}}
 
+        public static readonly string[] Assets = {
+            {{~for table in tables ~}}
+            "{{table.output_data_file}}",
+            {{~end~}}
+        };
+
         public {{name}}(System.Func<string, ByteBuf> loader)
         {
             var tables = new System.Collections.Generic.Dictionary<string, object>();

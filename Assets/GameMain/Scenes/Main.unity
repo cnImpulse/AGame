@@ -948,8 +948,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 310705351
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!4 &2023754289 stripped
 Transform:

@@ -23,8 +23,8 @@ namespace SSRPG
 
         private void Awake()
         {
-            enemy_1 = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAsset("enemy_1"));
-            player = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAsset("player"));
+            enemy_1 = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAssetPath("enemy_1"));
+            player = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAssetPath("player"));
             tilemap = GetComponent<Tilemap>();
         }
 

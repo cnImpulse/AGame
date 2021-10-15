@@ -4,6 +4,7 @@ using GameFramework.Procedure;
 using UnityGameFramework.Runtime;
 using System.Collections.Generic;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
+using UnityEngine.Tilemaps;
 
 namespace SSRPG
 {

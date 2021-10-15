@@ -17,8 +17,8 @@ namespace SSRPG
 
         private void Awake()
         {
-            empty = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAsset("empty"));
-            wall = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAsset("wall"));
+            empty = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAssetPath("empty"));
+            wall = AssetDatabase.LoadAssetAtPath<Tile>(AssetUtl.GetTileAssetPath("wall"));
             tilemap = GetComponent<Tilemap>();
         }
 

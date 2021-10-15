@@ -51,7 +51,7 @@ namespace SSRPG
             }
 
             var cfg = GameEntry.Cfg.Tables.TblEntity.Get(entityType);
-            entityComponent.ShowEntity(data.Id, logicType, AssetUtl.GetEntityAsset(cfg.AssetName), entityGroup, data);
+            entityComponent.ShowEntity(data.Id, logicType, AssetUtl.GetEntityAssetPath(cfg.AssetName), entityGroup, data);
         }
 
         public static void ShowBattleUnit(this EntityComponent entityComponent, BattleUnitData data)
@@ -68,7 +68,7 @@ namespace SSRPG
             }
 
             var cfg = GameEntry.Cfg.Tables.TblEffect.Get(data.TypeId);
-            entityComponent.ShowEntity(data.Id, typeof(EffectBase), AssetUtl.GetEffectAsset(cfg.AssetName), "Effect", data);
+            entityComponent.ShowEntity(data.Id, typeof(EffectBase), AssetUtl.GetEffectAssetPath(cfg.AssetName), "Effect", data);
         }
 
         public static int GenerateSerialId(this EntityComponent entityComponent)
@@ -81,16 +81,15 @@ namespace SSRPG
         public static void ShowGridMap(this EntityComponent entityComponent, int mapId)
         {
             string path = AssetUtl.GetMapDataPath(mapId);
-            GameEntry.Resource.LoadAsset(path, typeof(TextAsset), new LoadAssetCallbacks(OnLoadMapDataSuccess));
-        }
+            GameEntry.Resource.LoadAsset(path, typeof(TextAsset),
+                (assetName, asset, duration, userData) =>
+                {
+                    TextAsset textAsset = asset as TextAsset;
+                    MapData mapData = Utility.Json.ToObject<MapData>(textAsset.text);
 
-        private static void OnLoadMapDataSuccess(string assetName, object asset, float duration, object userData)
-        {
-            TextAsset textAsset = asset as TextAsset;
-            MapData mapData = Utility.Json.ToObject<MapData>(textAsset.text);
-
-            GridMapData gridMapData = new GridMapData(mapData);
-            GameEntry.Entity.ShowEntity(typeof(GridMap), "GridMap", gridMapData, (int)EntityType.GridMap);
+                    GridMapData gridMapData = new GridMapData(mapData);
+                    entityComponent.ShowEntity(typeof(GridMap), "GridMap", gridMapData, (int)EntityType.GridMap);
+                });
         }
     }
 }

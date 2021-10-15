@@ -20,6 +20,7 @@ namespace SSRPG
 
         public void LoadTables()
         {
+            Log.Info(cfg.Tables.Assets.Length);
             for (int i = 0; i < cfg.Tables.Assets.Length; ++i)
             {
                 GameEntry.Resource.LoadAsset($"Assets/GameMain/GameData/CfgData/{cfg.Tables.Assets[i]}.bytes",

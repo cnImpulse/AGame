@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 using Bright.Serialization;
 
+
 namespace cfg
 {
     public sealed class Tables
@@ -18,8 +19,13 @@ namespace cfg
         public Entity.TblEntity TblEntity {get; }
         public Effect.TblEffect TblEffect {get; }
 
-        public static readonly string[] Assets = { "battle_tblbattleunit", "battle_tblbattleunitskill", "ui_tbluiform",
-            "entity_tblentity", "effect_tbleffect"};
+        public static readonly string[] Assets = {
+            "battle_tblbattleunit",
+            "battle_tblbattleunitskill",
+            "ui_tbluiform",
+            "entity_tblentity",
+            "effect_tbleffect",
+        };
 
         public Tables(System.Func<string, ByteBuf> loader)
         {

@@ -96,10 +96,10 @@ namespace SSRPG
 
             int battleId = 2;
             string path = AssetUtl.GetBattleDataPath(battleId);
-            GameEntry.Resource.LoadAsset(path, new LoadAssetCallbacks(OnLoadAssetSuccess));
+            GameEntry.Resource.LoadAsset(path, OnLoadBattleDataSuccess);
         }
 
-        private void OnLoadAssetSuccess(string assetName, object asset, float duration, object userData)
+        private void OnLoadBattleDataSuccess(string assetName, object asset, float duration, object userData)
         {
             TextAsset textAsset = asset as TextAsset;
             m_BattleData = Newtonsoft.Json.JsonConvert.DeserializeObject<BattleData>(textAsset.text);
