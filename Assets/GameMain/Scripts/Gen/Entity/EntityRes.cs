@@ -24,6 +24,7 @@ public sealed partial class EntityRes :  Bright.Config.BeanBase
         Id = _buf.ReadInt();
         Name = _buf.ReadString();
         AssetName = _buf.ReadString();
+        Priority = _buf.ReadInt();
     }
 
     public static EntityRes DeserializeEntityRes(ByteBuf _buf)
@@ -43,6 +44,10 @@ public sealed partial class EntityRes :  Bright.Config.BeanBase
     /// 资源名
     /// </summary>
     public string AssetName { get; private set; }
+    /// <summary>
+    /// 资源加载优先级
+    /// </summary>
+    public int Priority { get; private set; }
 
     public const int ID = -1578301070;
     public override int GetTypeId() => ID;
@@ -61,6 +66,7 @@ public sealed partial class EntityRes :  Bright.Config.BeanBase
         + "Id:" + Id + ","
         + "Name:" + Name + ","
         + "AssetName:" + AssetName + ","
+        + "Priority:" + Priority + ","
         + "}";
     }
     }

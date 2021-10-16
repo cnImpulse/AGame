@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using GameFramework.Event;
 using UnityGameFramework.Runtime;
 
@@ -14,11 +15,30 @@ namespace SSRPG
         public BattleUnit SelectBattleUnit = null;
         [NonSerialized]
         public BattleUnit ActiveBattleUnit = null;
+        [NonSerialized]
+        public CampType ActiveCampType = CampType.None;
 
         public GridMap GridMap
         {
             get;
             private set;
+        }
+
+        public bool NeedRoundSwitch
+        {
+            get
+            {
+                List<BattleUnit> battleUnits = GridMap.GetBattleUnitList(ActiveCampType);
+                foreach (var battleUnit in battleUnits)
+                {
+                    if (battleUnit.CanAction)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
         }
 
         private void Start()

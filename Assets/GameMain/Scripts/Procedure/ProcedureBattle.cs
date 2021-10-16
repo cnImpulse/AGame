@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using GameFramework;
-using GameFramework.Fsm;
 using GameFramework.Event;
+using GameFramework.Fsm;
 using GameFramework.Procedure;
-using GameFramework.Resource;
 using UnityGameFramework.Runtime;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 
@@ -12,14 +11,13 @@ namespace SSRPG
 {
     public class ProcedureBattle : ProcedureBase
     {
-        private BattleData m_BattleData = null;
         private bool m_BattleEnd = false;
+        private BattleData m_BattleData = null;
         private BattleForm m_BattleForm = null;
 
         private IFsm<ProcedureBattle> m_BattleFsm = null;
 
-        public GridMap gridMap;
-        public CampType activeCamp = CampType.None;
+        public GridMap gridMap = null;
 
         public void StartBattle()
         {
@@ -39,15 +37,15 @@ namespace SSRPG
         {
             base.OnEnter(procedureOwner);
 
-            GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntitySuccess);
+            Log.Info("进入战斗准备阶段。");
+
+            GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnGirdMapSuccess);
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
             GameEntry.Event.Subscribe(GridUnitDeadEventArgs.EventId, OnGridUnitDead);
 
-            Log.Info("进入战斗准备阶段。");
-
             InitBattleFsm();
-            InitBattle();
-            SelectPlayerBattleUnit();
+            InitBattle(2);
+            InitBattleUnitSelect();
         }
 
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)
@@ -68,7 +66,6 @@ namespace SSRPG
             GameEntry.Fsm.DestroyFsm(m_BattleFsm);
             
             gridMap = null;
-            activeCamp = default;
             m_BattleEnd = false;
             m_BattleData = null;
 
@@ -78,7 +75,7 @@ namespace SSRPG
                 m_BattleForm = null;
             }
 
-            GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntitySuccess);
+            GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, OnGirdMapSuccess);
             GameEntry.Event.Unsubscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
             GameEntry.Event.Unsubscribe(GridUnitDeadEventArgs.EventId, OnGridUnitDead);
         }
@@ -90,21 +87,15 @@ namespace SSRPG
                 new SkillReleaseState(), new AutoActionState(), new BattleUnitEndActionState());
         }
 
-        private void InitBattle()
+        private void InitBattle(int battleId)
         {
-            m_BattleEnd = false;
-
-            int battleId = 2;
             string path = AssetUtl.GetBattleDataPath(battleId);
-            GameEntry.Resource.LoadAsset(path, OnLoadBattleDataSuccess);
-        }
-
-        private void OnLoadBattleDataSuccess(string assetName, object asset, float duration, object userData)
-        {
-            TextAsset textAsset = asset as TextAsset;
-            m_BattleData = Newtonsoft.Json.JsonConvert.DeserializeObject<BattleData>(textAsset.text);
-
-            GameEntry.Entity.ShowGridMap(m_BattleData.mapId);
+            GameEntry.Resource.LoadAsset(path, (assetName, asset, duration, userData) =>
+            {
+                TextAsset textAsset = asset as TextAsset;
+                m_BattleData = Utility.Json.ToObject<BattleData>(textAsset.text);
+                GameEntry.Entity.ShowGridMap(m_BattleData.mapId);
+            });
         }
 
         private void InitBattleUnit(int mapEntityId)
@@ -132,7 +123,7 @@ namespace SSRPG
             }
         }
 
-        private void SelectPlayerBattleUnit()
+        private void InitBattleUnitSelect()
         {
             GameEntry.UI.OpenUIForm(UIFormId.BattleForm, this);
         }
@@ -148,7 +139,7 @@ namespace SSRPG
             m_BattleForm = (BattleForm)ne.UIForm.Logic;
         }
 
-        private void OnShowEntitySuccess(object sender, GameEventArgs e)
+        private void OnGirdMapSuccess(object sender, GameEventArgs e)
         {
             ShowEntitySuccessEventArgs ne = (ShowEntitySuccessEventArgs)e;
 
@@ -183,20 +174,6 @@ namespace SSRPG
                 }
             }
             GameEntry.Entity.HideEntity(ne.gridUnit);
-        }
-
-        public bool NeedRoundSwitch()
-        {
-            List<BattleUnit> battleUnits = gridMap.GetBattleUnitList(activeCamp);
-            foreach (var battleUnit in battleUnits)
-            {
-                if (battleUnit.CanAction)
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
     }
 }

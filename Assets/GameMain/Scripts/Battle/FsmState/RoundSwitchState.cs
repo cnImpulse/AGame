@@ -52,7 +52,7 @@ namespace SSRPG
         {
             base.OnLeave(fsm, isShutdown);
 
-            fsm.Owner.activeCamp = m_ActiveCamp;
+            GameEntry.Battle.ActiveCampType = m_ActiveCamp;
         }
     }
 }

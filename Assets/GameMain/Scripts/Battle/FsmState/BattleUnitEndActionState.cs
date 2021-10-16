@@ -28,7 +28,7 @@ namespace SSRPG
         {
             base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
 
-            if (fsm.Owner.NeedRoundSwitch())
+            if (GameEntry.Battle.NeedRoundSwitch)
             {
                 ChangeState<RoundSwitchState>(fsm);
             }

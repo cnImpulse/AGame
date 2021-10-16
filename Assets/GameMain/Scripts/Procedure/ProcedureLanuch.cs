@@ -1,5 +1,5 @@
-using GameFramework;
 using GameFramework.Procedure;
+using GameFramework.Resource;
 using UnityGameFramework.Runtime;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 
@@ -18,7 +18,16 @@ namespace SSRPG
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
 
-            ChangeState<ProcedureInitResources>(procedureOwner);
+            if (GameEntry.Base.EditorResourceMode)
+            {
+                // 编辑器模式
+                ChangeState<ProcedurePreload>(procedureOwner);
+            }
+            else if (GameEntry.Resource.ResourceMode == ResourceMode.Package)
+            {
+                // 单机模式
+                ChangeState<ProcedureInitResources>(procedureOwner);
+            }
         }
     }
 }

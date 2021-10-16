@@ -1,10 +1,5 @@
-﻿using GameFramework;
-using GameFramework.Event;
-using GameFramework.Procedure;
-using UnityGameFramework.Runtime;
-using System.Collections.Generic;
+﻿using GameFramework.Procedure;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
-using UnityEngine.Tilemaps;
 
 namespace SSRPG
 {
@@ -17,11 +12,6 @@ namespace SSRPG
             PreloadResources();
         }
 
-        protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
-        {
-            base.OnLeave(procedureOwner, isShutdown);
-        }
-
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
@@ -30,6 +20,11 @@ namespace SSRPG
             {
                 ChangeState<ProcedureMenu>(procedureOwner);
             }
+        }
+
+        protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
+        {
+            base.OnLeave(procedureOwner, isShutdown);
         }
 
         private void PreloadResources()

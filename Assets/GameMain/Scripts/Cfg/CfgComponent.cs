@@ -8,6 +8,8 @@ namespace SSRPG
 {
     public class CfgComponent : GameFrameworkComponent
     {
+        private Dictionary<string, ByteBuf> ByteBufList = new Dictionary<string, ByteBuf>();
+
         public bool EndLoad = false;
 
         public cfg.Tables Tables
@@ -16,24 +18,12 @@ namespace SSRPG
             private set;
         }
 
-        private Dictionary<string, ByteBuf> ByteBufList = new Dictionary<string, ByteBuf>();
-
         public void LoadTables()
         {
-            Log.Info(cfg.Tables.Assets.Length);
             for (int i = 0; i < cfg.Tables.Assets.Length; ++i)
             {
                 GameEntry.Resource.LoadAsset($"Assets/GameMain/GameData/CfgData/{cfg.Tables.Assets[i]}.bytes",
                     new LoadAssetCallbacks(OnAssetLoadScuess));
-            }
-        }
-
-        private void Update()
-        {
-            if (ByteBufList.Count == cfg.Tables.Assets.Length && EndLoad == false)
-            {
-                Tables = new cfg.Tables(LoadByteBuf);
-                EndLoad = true;
             }
         }
 
@@ -46,6 +36,12 @@ namespace SSRPG
         {
             TextAsset textAsset = asset as TextAsset;
             ByteBufList.Add(textAsset.name, new ByteBuf(textAsset.bytes));
+
+            if (!EndLoad && ByteBufList.Count == cfg.Tables.Assets.Length)
+            {
+                Tables = new cfg.Tables(LoadByteBuf);
+                EndLoad = true;
+            }
         }
     }
 }

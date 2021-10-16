@@ -6,13 +6,13 @@ namespace SSRPG
 {
     public class ProcedureInitResources : ProcedureBase
     {
-        private bool m_InitResourcesComplete = false;
+        private bool m_InitResourcesEnd = false;
 
         protected override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
 
-            m_InitResourcesComplete = false;
+            m_InitResourcesEnd = false;
             GameEntry.Resource.InitResources(OnInitResourcesComplete);
         }
 
@@ -20,7 +20,7 @@ namespace SSRPG
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
 
-            if (!m_InitResourcesComplete)
+            if (!m_InitResourcesEnd)
             {
                 return;
             }
@@ -30,7 +30,7 @@ namespace SSRPG
 
         private void OnInitResourcesComplete()
         {
-            m_InitResourcesComplete = true;
+            m_InitResourcesEnd = true;
             Log.Info("资源初始化完成。");
         }
     }

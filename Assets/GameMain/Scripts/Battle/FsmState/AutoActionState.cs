@@ -24,7 +24,7 @@ namespace SSRPG
             Log.Info("进入自动行动状态。");
 
             m_GridMap = GameEntry.Battle.GridMap;
-            foreach (var battleUnit in m_GridMap.GetBattleUnitList(fsm.Owner.activeCamp))
+            foreach (var battleUnit in m_GridMap.GetBattleUnitList(GameEntry.Battle.ActiveCampType))
             {
                 if (battleUnit.CanAction)
                 {

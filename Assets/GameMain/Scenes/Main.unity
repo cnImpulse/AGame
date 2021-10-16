@@ -211,9 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24b8512c476e141659100d7cf23fec0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  empty: {fileID: 11400000, guid: 6d7baee81b3724123926ba74dc577bc8, type: 2}
-  wall: {fileID: 11400000, guid: 8c5e673ced8e6410bbc940a07b6ddd1c, type: 2}
-  streak: {fileID: 11400000, guid: 32ee94de5cbe648328cd2130fadd134c, type: 2}
   m_Template: {fileID: 11414536, guid: 96d2e77dd9853514da336717bd5627c0, type: 3}
   m_InstanceRoot: {fileID: 1987051833}
   m_InstancePoolCapacity: 16
@@ -594,7 +591,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11499388, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_EditorResourceMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11499388, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_JsonHelperTypeName
