@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using GameFramework;
 using GameFramework.Event;
 using GameFramework.Fsm;
@@ -17,13 +16,13 @@ namespace SSRPG
 
         private IFsm<ProcedureBattle> m_BattleFsm = null;
 
-        public GridMap gridMap = null;
+        public GridMap GridMap = null;
 
         public void StartBattle()
         {
             Log.Info("战斗开始。");
 
-            GameEntry.Battle.InitBattle(gridMap);
+            GameEntry.Battle.InitBattle(GridMap);
             m_BattleFsm.Start<RoundSwitchState>();
         }
 
@@ -39,12 +38,12 @@ namespace SSRPG
 
             Log.Info("进入战斗准备阶段。");
 
-            GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnGirdMapSuccess);
+            GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnShowGirdMapSuccess);
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
             GameEntry.Event.Subscribe(GridUnitDeadEventArgs.EventId, OnGridUnitDead);
 
             InitBattleFsm();
-            InitBattle(2);
+            InitBattle(GameEntry.Battle.BattleId);
             InitBattleUnitSelect();
         }
 
@@ -62,10 +61,10 @@ namespace SSRPG
         {
             base.OnLeave(procedureOwner, isShutdown);
 
-            GameEntry.Entity.HideEntity(gridMap);
+            GameEntry.Entity.HideEntity(GridMap);
             GameEntry.Fsm.DestroyFsm(m_BattleFsm);
             
-            gridMap = null;
+            GridMap = null;
             m_BattleEnd = false;
             m_BattleData = null;
 
@@ -75,7 +74,7 @@ namespace SSRPG
                 m_BattleForm = null;
             }
 
-            GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, OnGirdMapSuccess);
+            GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, OnShowGirdMapSuccess);
             GameEntry.Event.Unsubscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
             GameEntry.Event.Unsubscribe(GridUnitDeadEventArgs.EventId, OnGridUnitDead);
         }
@@ -94,29 +93,29 @@ namespace SSRPG
             {
                 TextAsset textAsset = asset as TextAsset;
                 m_BattleData = Utility.Json.ToObject<BattleData>(textAsset.text);
-                GameEntry.Entity.ShowGridMap(m_BattleData.mapId);
+                GameEntry.Entity.ShowGridMap(m_BattleData.MapId);
             });
         }
 
         private void InitBattleUnit(int mapEntityId)
         {
             // 加载敌人
-            for (int i = 0; i < m_BattleData.enemyIds.Count; ++i)
+            for (int i = 0; i < m_BattleData.EnemyIdList.Count; ++i)
             {
-                int typeId = m_BattleData.enemyIds[i] + Random.Range(1, 6);
-                Vector2Int pos = m_BattleData.enemyPos[i];
+                int typeId = m_BattleData.EnemyIdList[i] + Random.Range(1, 6);
+                Vector2Int pos = m_BattleData.EnemyPosList[i];
 
                 BattleUnitData battleUnitData = new BattleUnitData(typeId, mapEntityId, pos, CampType.Enemy);
                 GameEntry.Entity.ShowBattleUnit(battleUnitData);
             }
 
             // 加载玩家战棋
-            int posCount = m_BattleData.playerBrithPos.Count;
-            int playerCount = m_BattleData.maxPlayerBattleUnit;
+            int posCount = m_BattleData.PlayerBrithPos.Count;
+            int playerCount = m_BattleData.MaxPlayerBattleUnit;
             for (int i = 0; i < Mathf.Min(posCount, playerCount); ++i)
             {
                 int typeId = 10000 + Random.Range(1, 6);
-                Vector2Int pos = m_BattleData.playerBrithPos[i];
+                Vector2Int pos = m_BattleData.PlayerBrithPos[i];
 
                 BattleUnitData battleUnitData = new BattleUnitData(typeId, mapEntityId, pos, CampType.Player);
                 GameEntry.Entity.ShowBattleUnit(battleUnitData);
@@ -139,14 +138,13 @@ namespace SSRPG
             m_BattleForm = (BattleForm)ne.UIForm.Logic;
         }
 
-        private void OnGirdMapSuccess(object sender, GameEventArgs e)
+        private void OnShowGirdMapSuccess(object sender, GameEventArgs e)
         {
             ShowEntitySuccessEventArgs ne = (ShowEntitySuccessEventArgs)e;
-
             if (ne.EntityLogicType == typeof(GridMap))
             {
-                gridMap = ne.Entity.Logic as GridMap;
-                InitBattleUnit(gridMap.Id);
+                GridMap = ne.Entity.Logic as GridMap;
+                InitBattleUnit(GridMap.Id);
             }
         }
 
@@ -156,7 +154,7 @@ namespace SSRPG
 
             if (ne.gridUnit.Data.GridUnitType == GridUnitType.BattleUnit)
             {
-                var battleUnitList = gridMap.GetBattleUnitList(ne.gridUnit.Data.CampType);
+                var battleUnitList = GridMap.GetBattleUnitList(ne.gridUnit.Data.CampType);
                 if (battleUnitList.Count == 0)
                 {
                     m_BattleEnd = true;

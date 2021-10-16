@@ -24,8 +24,8 @@ namespace SSRPG
             m_DamageRate    = cfg.DamageRate;
             m_ReleaseRange  = cfg.ReleaseRange;
 
-            m_Caster        = GameEntry.Entity.GetGameEntity<BattleUnit>(casterId).Data;
-            m_Target        = GameEntry.Entity.GetGameEntity<BattleUnit>(targetId).Data;
+            m_Caster        = GameEntry.Entity.GetEntityLogic<BattleUnit>(casterId).Data;
+            m_Target        = GameEntry.Entity.GetEntityLogic<BattleUnit>(targetId).Data;
         }
 
         public bool Release()

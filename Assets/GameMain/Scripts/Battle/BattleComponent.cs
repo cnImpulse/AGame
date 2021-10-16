@@ -7,6 +7,7 @@ namespace SSRPG
 {
     public class BattleComponent : GameFrameworkComponent
     {
+        public int BattleId = 2;
         public bool AutoBattle = true;
 
         [NonSerialized]
@@ -56,7 +57,7 @@ namespace SSRPG
         {
             var ne = (GridUnitDamageEventArgs)e;
 
-            GridUnit gridUnit = GameEntry.Entity.GetGameEntity<GridUnit>(ne.DamageInfo.TargetId);
+            GridUnit gridUnit = GameEntry.Entity.GetEntityLogic<GridUnit>(ne.DamageInfo.TargetId);
             gridUnit.BeAttack(ne.DamageInfo.DamageHP);
         }
 

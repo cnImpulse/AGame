@@ -6,10 +6,10 @@ namespace SSRPG
 {
     public class BattleData
     {
-        public int mapId = 0;
-        public int maxPlayerBattleUnit = 1;
-        public List<Vector2Int> playerBrithPos = new List<Vector2Int>();
-        public List<int> enemyIds = new List<int>();
-        public List<Vector2Int> enemyPos = new List<Vector2Int>();
+        public int MapId = 0;
+        public int MaxPlayerBattleUnit = 1;
+        public List<Vector2Int> PlayerBrithPos = new List<Vector2Int>();
+        public List<int> EnemyIdList = new List<int>();
+        public List<Vector2Int> EnemyPosList = new List<Vector2Int>();
     }
 }

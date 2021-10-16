@@ -1,8 +1,6 @@
-using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using Newtonsoft.Json;
 
 namespace SSRPG
 {
@@ -39,8 +37,8 @@ namespace SSRPG
             BoundsInt bounds = tilemap.cellBounds;
             int width = bounds.size.x, height = bounds.size.y;
 
-            battleData.mapId = mapId;
-            battleData.maxPlayerBattleUnit = maxPlayerBattleUnit;
+            battleData.MapId = mapId;
+            battleData.MaxPlayerBattleUnit = maxPlayerBattleUnit;
             for (int i = bounds.xMin; i <= bounds.xMax; ++i)
             {
                 for (int j = bounds.yMin; j <= bounds.yMax; ++j)
@@ -51,12 +49,12 @@ namespace SSRPG
                     Tile tile = tilemap.GetTile<Tile>(pos);
                     if (tile == enemy_1)
                     {
-                        battleData.enemyIds.Add(10000);
-                        battleData.enemyPos.Add((Vector2Int)pos);
+                        battleData.EnemyIdList.Add(10000);
+                        battleData.EnemyPosList.Add((Vector2Int)pos);
                     }
                     else if (tile == player)
                     {
-                        battleData.playerBrithPos.Add((Vector2Int)pos);
+                        battleData.PlayerBrithPos.Add((Vector2Int)pos);
                     }
                 }
             }
