@@ -31,6 +31,11 @@ namespace SSRPG
             return Utility.Text.Format("Assets/GameMain/GameData/BattleData/BattleData_{0}.json", battleId);
         }
 
+        public static string GetSceneAssetPath(string assetName)
+        {
+            return Utility.Text.Format("Assets/GameMain/Scenes/{0}.unity", assetName);
+        }
+
         public static void SaveData<T>(string path, T data)
         {
             if (path == null || data == null)

@@ -7,13 +7,8 @@ namespace SSRPG
 {
     public class ProcedureMenu : ProcedureBase
     {
-        private bool m_StartGame = false;
+        private MenuOption m_MenuOption = MenuOption.None;
         private MenuForm m_MenuForm = null;
-
-        public void StartGame()
-        {
-            m_StartGame = true;
-        }
 
         protected override void OnEnter(ProcedureOwner procedureOwner)
         {
@@ -23,7 +18,6 @@ namespace SSRPG
 
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
 
-            m_StartGame = false;
             GameEntry.UI.OpenUIForm(UIFormId.MenuForm, this);
         }
 
@@ -31,9 +25,19 @@ namespace SSRPG
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
 
-            if (m_StartGame)
+            if (m_MenuOption == MenuOption.None)
+            {
+                return;
+            }
+
+            if (m_MenuOption == MenuOption.StartGame)
             {
                 ChangeState<ProcedureBattle>(procedureOwner);
+            }
+            else if (m_MenuOption == MenuOption.BattleEditor)
+            {
+                procedureOwner.SetData<VarInt32>("NextSceneId", (int)SceneType.BattleEditor);
+                ChangeState<ProcedureChangeScene>(procedureOwner);
             }
         }
 
@@ -41,13 +45,19 @@ namespace SSRPG
         {
             base.OnLeave(procedureOwner, isShutdown);
 
-            GameEntry.Event.Unsubscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
-
+            m_MenuOption = MenuOption.None;
             if (m_MenuForm != null)
             {
                 m_MenuForm.Close(isShutdown);
                 m_MenuForm = null;
             }
+
+            GameEntry.Event.Unsubscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
+        }
+
+        public void SetMenuOption(MenuOption menuOption)
+        {
+            m_MenuOption = menuOption;
         }
 
         private void OnOpenUIFormSuccess(object sender, GameEventArgs e)

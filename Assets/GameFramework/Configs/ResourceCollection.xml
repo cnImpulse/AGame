@@ -2,74 +2,44 @@
 <UnityGameFramework>
   <ResourceCollection>
     <Resources>
-      <Resource Name="Animations/select" LoadType="0" Packed="False" />
-      <Resource Name="Animations/streak" LoadType="0" Packed="False" />
-      <Resource Name="Editor/BattleData" LoadType="0" Packed="False" />
-      <Resource Name="Editor/UIEditor" LoadType="0" Packed="False" />
-      <Resource Name="Effect/SelectEffect" LoadType="0" Packed="False" />
-      <Resource Name="Entities/BattleUnit" LoadType="0" Packed="False" />
-      <Resource Name="Entities/GridMap" LoadType="0" Packed="False" />
-      <Resource Name="GameData/BattleData/BattleData_1" LoadType="0" Packed="False" />
-      <Resource Name="GameData/BattleData/BattleData_2" LoadType="0" Packed="False" />
-      <Resource Name="GameData/CfgData/battle_tblbattleunit" LoadType="0" Packed="False" />
-      <Resource Name="GameData/CfgData/battle_tblbattleunitskill" LoadType="0" Packed="False" />
-      <Resource Name="GameData/CfgData/effect_tbleffect" LoadType="0" Packed="False" />
-      <Resource Name="GameData/CfgData/entity_tblentity" LoadType="0" Packed="False" />
-      <Resource Name="GameData/CfgData/ui_tbluiform" LoadType="0" Packed="False" />
-      <Resource Name="GameData/MapData/MapData_1" LoadType="0" Packed="False" />
-      <Resource Name="GameData/MapData/MapData_2" LoadType="0" Packed="False" />
-      <Resource Name="Scenes/Main" LoadType="0" Packed="False" />
-      <Resource Name="Textures/default" LoadType="0" Packed="False" />
-      <Resource Name="Textures/select" LoadType="0" Packed="False" />
-      <Resource Name="Textures/streak" LoadType="0" Packed="False" />
-      <Resource Name="Tilemap/empty" LoadType="0" Packed="False" />
-      <Resource Name="Tilemap/enemy_1" LoadType="0" Packed="False" />
-      <Resource Name="Tilemap/MapPalette" LoadType="0" Packed="False" />
-      <Resource Name="Tilemap/player" LoadType="0" Packed="False" />
-      <Resource Name="Tilemap/streak" LoadType="0" Packed="False" />
-      <Resource Name="Tilemap/wall" LoadType="0" Packed="False" />
-      <Resource Name="UI/UIForms/ActionForm" LoadType="0" Packed="False" />
-      <Resource Name="UI/UIForms/BattleEndForm" LoadType="0" Packed="False" />
-      <Resource Name="UI/UIForms/BattleForm" LoadType="0" Packed="False" />
-      <Resource Name="UI/UIForms/MenuForm" LoadType="0" Packed="False" />
-      <Resource Name="UI/UIItems/SkillBtnItem" LoadType="0" Packed="False" />
-      <Resource Name="UI/UITemplate/Button" LoadType="0" Packed="False" />
+      <Resource Name="Battle" LoadType="0" Packed="False" />
+      <Resource Name="GameData" LoadType="0" Packed="False" />
+      <Resource Name="Scene" LoadType="0" Packed="False" />
     </Resources>
     <Assets>
-      <Asset Guid="077c51062b67943b29ee1bd0dc0c435c" ResourceName="Editor/UIEditor" />
-      <Asset Guid="0e5621b8e5d6442a6becaf55da88b00d" ResourceName="Tilemap/MapPalette" />
-      <Asset Guid="0f886a9127bae4c818e73b1689effaa9" ResourceName="UI/UIForms/BattleForm" />
-      <Asset Guid="15c8f1529119140559ed53035fb47293" ResourceName="GameData/CfgData/ui_tbluiform" />
-      <Asset Guid="1e2338cba4e0749a19ada5ed59f90d19" ResourceName="GameData/MapData/MapData_2" />
-      <Asset Guid="21cc87b0f0b3a4dda94b391b4aeda656" ResourceName="Tilemap/player" />
-      <Asset Guid="250f06ec44ba4f845ae1d3fb749d59fa" ResourceName="Animations/select" />
-      <Asset Guid="2ac9ca2f49cc5481391411174afcbeed" ResourceName="GameData/BattleData/BattleData_2" />
-      <Asset Guid="2cda990e2423bbf4892e6590ba056729" ResourceName="Scenes/Main" />
-      <Asset Guid="318e52028bafe6742b579b41646deaf1" ResourceName="Animations/streak" />
-      <Asset Guid="32ee94de5cbe648328cd2130fadd134c" ResourceName="Tilemap/streak" />
-      <Asset Guid="3515c8cd8ad7e4000bef6bf155fd625c" ResourceName="Textures/streak" />
-      <Asset Guid="3bdcf52b0cfde45e4a31ae66caa4848a" ResourceName="UI/UIItems/SkillBtnItem" />
-      <Asset Guid="4e35c4ad1cee54c528ccd3ae609386f9" ResourceName="Tilemap/enemy_1" />
-      <Asset Guid="5f3a9964316a842e9bb3561516ed81e8" ResourceName="GameData/BattleData/BattleData_1" />
-      <Asset Guid="5fd1ce6d814ac4095b355dd07b7eba83" ResourceName="Textures/default" />
-      <Asset Guid="66bd5e5fbb401463f93e464429ea6643" ResourceName="GameData/MapData/MapData_1" />
-      <Asset Guid="6d7baee81b3724123926ba74dc577bc8" ResourceName="Tilemap/empty" />
-      <Asset Guid="6f3e3e9e0eb324c8b84164785b0c51a7" ResourceName="UI/UIForms/MenuForm" />
-      <Asset Guid="72f0db7712dbc420ea254866b3754459" ResourceName="Editor/BattleData" />
-      <Asset Guid="78ba797f8e9a249ad95eb099558801f1" ResourceName="UI/UIForms/ActionForm" />
-      <Asset Guid="7b8ece4ec9dc245aa9a19566dd873097" ResourceName="Effect/SelectEffect" />
-      <Asset Guid="89f1ffb69e82243a1836c94ed9274a80" ResourceName="Entities/GridMap" />
-      <Asset Guid="8c5e673ced8e6410bbc940a07b6ddd1c" ResourceName="Tilemap/wall" />
-      <Asset Guid="abf2294d9a5e94d7e8ad3ccd127c17cd" ResourceName="GameData/CfgData/battle_tblbattleunit" />
-      <Asset Guid="ad979fab98a90e44ba315831bc9d02a2" ResourceName="Animations/streak" />
-      <Asset Guid="b788c77d4ff874a249eae1d6817672b8" ResourceName="UI/UITemplate/Button" />
-      <Asset Guid="be78392097dce4371acd5ebe3ebb3666" ResourceName="GameData/CfgData/entity_tblentity" />
-      <Asset Guid="d2462ea44740945ed9056651266d16e9" ResourceName="Entities/BattleUnit" />
-      <Asset Guid="e5f6f5190a6dc41cba87b0b91af8bb64" ResourceName="GameData/CfgData/battle_tblbattleunitskill" />
-      <Asset Guid="ebd8396e21776493abf826a03a8e37fd" ResourceName="UI/UIForms/BattleEndForm" />
-      <Asset Guid="f05d9a4a4495d6b47acc2dffa1e87ece" ResourceName="Animations/select" />
-      <Asset Guid="f3c136183efae4d31aaca77707a03812" ResourceName="Textures/select" />
-      <Asset Guid="fdaa63a4d2da94fe0afa15eb7a9125d5" ResourceName="GameData/CfgData/effect_tbleffect" />
+      <Asset Guid="0e5621b8e5d6442a6becaf55da88b00d" ResourceName="Battle" />
+      <Asset Guid="0f886a9127bae4c818e73b1689effaa9" ResourceName="Battle" />
+      <Asset Guid="15c8f1529119140559ed53035fb47293" ResourceName="GameData" />
+      <Asset Guid="1e2338cba4e0749a19ada5ed59f90d19" ResourceName="GameData" />
+      <Asset Guid="21cc87b0f0b3a4dda94b391b4aeda656" ResourceName="Battle" />
+      <Asset Guid="250f06ec44ba4f845ae1d3fb749d59fa" ResourceName="Battle" />
+      <Asset Guid="2ac9ca2f49cc5481391411174afcbeed" ResourceName="GameData" />
+      <Asset Guid="2cda990e2423bbf4892e6590ba056729" ResourceName="Scene" />
+      <Asset Guid="318e52028bafe6742b579b41646deaf1" ResourceName="Battle" />
+      <Asset Guid="32ee94de5cbe648328cd2130fadd134c" ResourceName="Battle" />
+      <Asset Guid="3515c8cd8ad7e4000bef6bf155fd625c" ResourceName="Battle" />
+      <Asset Guid="3bdcf52b0cfde45e4a31ae66caa4848a" ResourceName="Battle" />
+      <Asset Guid="4e35c4ad1cee54c528ccd3ae609386f9" ResourceName="Battle" />
+      <Asset Guid="5f3a9964316a842e9bb3561516ed81e8" ResourceName="GameData" />
+      <Asset Guid="5fd1ce6d814ac4095b355dd07b7eba83" ResourceName="Battle" />
+      <Asset Guid="66bd5e5fbb401463f93e464429ea6643" ResourceName="GameData" />
+      <Asset Guid="6d7baee81b3724123926ba74dc577bc8" ResourceName="Battle" />
+      <Asset Guid="6f3e3e9e0eb324c8b84164785b0c51a7" ResourceName="Battle" />
+      <Asset Guid="78ba797f8e9a249ad95eb099558801f1" ResourceName="Battle" />
+      <Asset Guid="7b8ece4ec9dc245aa9a19566dd873097" ResourceName="Battle" />
+      <Asset Guid="7ff9ecbf392da417984019909aac9dd9" ResourceName="Scene" />
+      <Asset Guid="89f1ffb69e82243a1836c94ed9274a80" ResourceName="Battle" />
+      <Asset Guid="8c5e673ced8e6410bbc940a07b6ddd1c" ResourceName="Battle" />
+      <Asset Guid="abf2294d9a5e94d7e8ad3ccd127c17cd" ResourceName="GameData" />
+      <Asset Guid="ad979fab98a90e44ba315831bc9d02a2" ResourceName="Battle" />
+      <Asset Guid="b788c77d4ff874a249eae1d6817672b8" ResourceName="Battle" />
+      <Asset Guid="be78392097dce4371acd5ebe3ebb3666" ResourceName="GameData" />
+      <Asset Guid="d2462ea44740945ed9056651266d16e9" ResourceName="Battle" />
+      <Asset Guid="e5f6f5190a6dc41cba87b0b91af8bb64" ResourceName="GameData" />
+      <Asset Guid="ebd8396e21776493abf826a03a8e37fd" ResourceName="Battle" />
+      <Asset Guid="f05d9a4a4495d6b47acc2dffa1e87ece" ResourceName="Battle" />
+      <Asset Guid="f3c136183efae4d31aaca77707a03812" ResourceName="Battle" />
+      <Asset Guid="fdaa63a4d2da94fe0afa15eb7a9125d5" ResourceName="GameData" />
     </Assets>
   </ResourceCollection>
 </UnityGameFramework>

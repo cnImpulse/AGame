@@ -18,6 +18,7 @@ namespace cfg
         public UI.TblUIForm TblUIForm {get; }
         public Entity.TblEntity TblEntity {get; }
         public Effect.TblEffect TblEffect {get; }
+        public Scene.TblScene TblScene {get; }
 
         public static readonly string[] Assets = {
             "battle_tblbattleunit",
@@ -25,6 +26,7 @@ namespace cfg
             "ui_tbluiform",
             "entity_tblentity",
             "effect_tbleffect",
+            "scene_tblscene",
         };
 
         public Tables(System.Func<string, ByteBuf> loader)
@@ -40,12 +42,15 @@ namespace cfg
             tables.Add("Entity.TblEntity", TblEntity);
             TblEffect = new Effect.TblEffect(loader("effect_tbleffect")); 
             tables.Add("Effect.TblEffect", TblEffect);
+            TblScene = new Scene.TblScene(loader("scene_tblscene")); 
+            tables.Add("Scene.TblScene", TblScene);
 
             TblBattleUnit.Resolve(tables); 
             TblBattleUnitSkill.Resolve(tables); 
             TblUIForm.Resolve(tables); 
             TblEntity.Resolve(tables); 
             TblEffect.Resolve(tables); 
+            TblScene.Resolve(tables); 
         }
 
         public void TranslateText(System.Func<string, string, string> translator)
@@ -55,6 +60,7 @@ namespace cfg
             TblUIForm.TranslateText(translator); 
             TblEntity.TranslateText(translator); 
             TblEffect.TranslateText(translator); 
+            TblScene.TranslateText(translator); 
         }
     }
 }

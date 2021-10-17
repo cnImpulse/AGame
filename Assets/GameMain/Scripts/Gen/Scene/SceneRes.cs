@@ -10,33 +10,33 @@ using Bright.Serialization;
 using System.Collections.Generic;
 
 
-namespace cfg.Entity
+namespace cfg.Scene
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public sealed partial class EntityRes :  Bright.Config.BeanBase 
+    public sealed partial class SceneRes :  Bright.Config.BeanBase 
     {
-        public EntityRes(ByteBuf _buf) 
+        public SceneRes(ByteBuf _buf) 
         {
             Id = _buf.ReadInt();
             Name = _buf.ReadString();
             AssetName = _buf.ReadString();
-            Priority = _buf.ReadInt();
+            ProcedureType = _buf.ReadString();
         }
 
-        public static EntityRes DeserializeEntityRes(ByteBuf _buf)
+        public static SceneRes DeserializeSceneRes(ByteBuf _buf)
         {
-            return new Entity.EntityRes(_buf);
+            return new Scene.SceneRes(_buf);
         }
 
         /// <summary>
-        /// 实体编号
+        /// 场景编号
         /// </summary>
         public int Id { get; private set; }
         /// <summary>
-        /// 实体名
+        /// 场景名
         /// </summary>
         public string Name { get; private set; }
         /// <summary>
@@ -44,11 +44,11 @@ namespace cfg.Entity
         /// </summary>
         public string AssetName { get; private set; }
         /// <summary>
-        /// 资源加载优先级
+        /// 对应的处理流程
         /// </summary>
-        public int Priority { get; private set; }
+        public string ProcedureType { get; private set; }
 
-        public const int ID = -1578301070;
+        public const int ID = 1440068566;
         public override int GetTypeId() => ID;
 
         public  void Resolve(Dictionary<string, object> _tables)
@@ -65,7 +65,7 @@ namespace cfg.Entity
             + "Id:" + Id + ","
             + "Name:" + Name + ","
             + "AssetName:" + AssetName + ","
-            + "Priority:" + Priority + ","
+            + "ProcedureType:" + ProcedureType + ","
             + "}";
         }
     }
