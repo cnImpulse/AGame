@@ -32,11 +32,11 @@ namespace cfg.UI
         }
 
         /// <summary>
-        /// 界面编号
+        /// 编号
         /// </summary>
         public int Id { get; private set; }
         /// <summary>
-        /// 界面名
+        /// 名字
         /// </summary>
         public string Name { get; private set; }
         /// <summary>

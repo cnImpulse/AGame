@@ -32,11 +32,11 @@ namespace cfg.Entity
         }
 
         /// <summary>
-        /// 实体编号
+        /// 编号
         /// </summary>
         public int Id { get; private set; }
         /// <summary>
-        /// 实体名
+        /// 名字
         /// </summary>
         public string Name { get; private set; }
         /// <summary>
@@ -44,7 +44,7 @@ namespace cfg.Entity
         /// </summary>
         public string AssetName { get; private set; }
         /// <summary>
-        /// 资源加载优先级
+        /// 优先级
         /// </summary>
         public int Priority { get; private set; }
 

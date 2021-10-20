@@ -31,11 +31,11 @@ namespace cfg.Effect
         }
 
         /// <summary>
-        /// 特效编号
+        /// 编号
         /// </summary>
         public int Id { get; private set; }
         /// <summary>
-        /// 特效名
+        /// 名字
         /// </summary>
         public string Name { get; private set; }
         /// <summary>

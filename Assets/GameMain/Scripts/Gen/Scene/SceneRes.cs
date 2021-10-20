@@ -32,11 +32,11 @@ namespace cfg.Scene
         }
 
         /// <summary>
-        /// 场景编号
+        /// 编号
         /// </summary>
         public int Id { get; private set; }
         /// <summary>
-        /// 场景名
+        /// 名字
         /// </summary>
         public string Name { get; private set; }
         /// <summary>

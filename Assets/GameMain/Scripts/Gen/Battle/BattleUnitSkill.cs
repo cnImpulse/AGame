@@ -34,15 +34,15 @@ namespace cfg.Battle
         }
 
         /// <summary>
-        /// 技能编号
+        /// 编号
         /// </summary>
         public int Id { get; private set; }
         /// <summary>
-        /// 技能名
+        /// 名字
         /// </summary>
         public string Name { get; private set; }
         /// <summary>
-        /// 技能描述
+        /// 描述
         /// </summary>
         public string Desc { get; private set; }
         /// <summary>

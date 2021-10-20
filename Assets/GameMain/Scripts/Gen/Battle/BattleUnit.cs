@@ -37,15 +37,15 @@ namespace cfg.Battle
         }
 
         /// <summary>
-        /// 战斗单位编号
+        /// 编号
         /// </summary>
         public int Id { get; private set; }
         /// <summary>
-        /// 战斗单名字
+        /// 名字
         /// </summary>
         public string Name { get; private set; }
         /// <summary>
-        /// 战斗单位简介
+        /// 描述
         /// </summary>
         public string Desc { get; private set; }
         /// <summary>
