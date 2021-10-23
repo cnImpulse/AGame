@@ -9,7 +9,7 @@ namespace SSRPG
     /// <summary>
     /// 网格地图。
     /// </summary>
-    public class GridMap : Entity, IPointerDownHandler
+    public class GridMap : Entity, IPointerDownHandler, IBeginDragHandler, IDragHandler, IDropHandler
     {
         public static TileBase empty = null, wall = null, streak = null;
 
@@ -95,19 +95,46 @@ namespace SSRPG
             UnRegisterGridUnit(gridUnit);
         }
 
-        private void RefreshMap()
+        public void SetGridData(Vector2Int position, GridType gridType)
         {
+            var gridData = m_Data.GetGridData(position);
+            gridData.GridType = gridType;
+            RefreshGrid(gridData);
+        }
+
+        public void RefreshGrid(GridData gridData)
+        {
+            TileBase tile = empty;
+            if (gridData.GridType == GridType.Wall)
+            {
+                tile = wall;
+            }
+
+            m_Tilemap.SetTile((Vector3Int)gridData.GridPos, tile);
+        }
+
+        public void RefreshMap()
+        {
+            m_Tilemap.ClearAllTiles();
             foreach(var gridData in m_Data.GridList.Values)
             {
+                RefreshGrid(gridData);
+            }
+            box.size = m_Tilemap.localBounds.size;
+        }
+
+        public void RefreshPreview(List<GridData> gridList, GridType gridType)
+        {
+            RefreshMap();
+            foreach (var gridData in gridList)
+            {
                 TileBase tile = empty;
-                if (gridData.GridType == GridType.Wall)
+                if (gridType == GridType.Wall)
                 {
                     tile = wall;
                 }
-
                 m_Tilemap.SetTile((Vector3Int)gridData.GridPos, tile);
             }
-            box.size = m_Tilemap.localBounds.size;
         }
 
         public Vector3 GridPosToWorldPos(Vector2Int gridPos)
@@ -211,13 +238,45 @@ namespace SSRPG
             return gridUnitList;
         }
 
+        private GridData GetGridDataByWorldPos(Vector3 worldPosition)
+        {
+            Vector2Int gridPos = (Vector2Int)m_Tilemap.WorldToCell(worldPosition);
+            return m_Data.GetGridData(gridPos);
+        }
+
         public void OnPointerDown(PointerEventData eventData)
         {
-            Vector2Int gridPos = (Vector2Int)m_Tilemap.WorldToCell(eventData.pointerPressRaycast.worldPosition);
-            GridData gridData = m_Data.GetGridData(gridPos);
+            var gridData = GetGridDataByWorldPos(eventData.pointerCurrentRaycast.worldPosition);
             if (gridData != null)
             {
-                GameEntry.Event.Fire(this, PointGridMapEventArgs.Create(gridData));
+                GameEntry.Event.Fire(this, PointerDownGridMapEventArgs.Create(gridData));
+            }
+        }
+
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            var gridData = GetGridDataByWorldPos(eventData.pointerCurrentRaycast.worldPosition);
+            if (gridData != null)
+            {
+                GameEntry.Event.Fire(this, PointerDragBeginGridMapEventArgs.Create(gridData));
+            }
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+            var gridData = GetGridDataByWorldPos(eventData.pointerCurrentRaycast.worldPosition);
+            if (gridData != null)
+            {
+                GameEntry.Event.Fire(this, PointerDragGridMapEventArgs.Create(gridData));
+            }
+        }
+
+        public void OnDrop(PointerEventData eventData)
+        {
+            var gridData = GetGridDataByWorldPos(eventData.pointerCurrentRaycast.worldPosition);
+            if (gridData != null)
+            {
+                GameEntry.Event.Fire(this, PointerDropGridMapEventArgs.Create(gridData));
             }
         }
     }

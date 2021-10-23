@@ -24,7 +24,7 @@ namespace SSRPG
 
             Log.Info("进入攻击状态。");
 
-            GameEntry.Event.Subscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
+            GameEntry.Event.Subscribe(PointerDownGridMapEventArgs.EventId, OnPointGridMap);
 
             m_GridMap = GameEntry.Battle.GridMap;
             m_ActiveBattleUnit = GameEntry.Battle.ActiveBattleUnit;
@@ -58,12 +58,12 @@ namespace SSRPG
             m_ActiveBattleUnit = null;
             m_GridMap.HideTilemapEffect();
 
-            GameEntry.Event.Unsubscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
+            GameEntry.Event.Unsubscribe(PointerDownGridMapEventArgs.EventId, OnPointGridMap);
         }
 
         private void OnPointGridMap(object sender, GameEventArgs e)
         {
-            PointGridMapEventArgs ne = (PointGridMapEventArgs)e;
+            PointerDownGridMapEventArgs ne = (PointerDownGridMapEventArgs)e;
             if (m_CanAttackList.Contains(ne.gridData)) 
             {
                 if (ne.gridData.GridUnit == null)

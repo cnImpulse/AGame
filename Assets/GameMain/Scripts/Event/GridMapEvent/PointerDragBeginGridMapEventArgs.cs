@@ -5,13 +5,13 @@ using GameFramework.Event;
 namespace SSRPG
 {
     /// <summary>
-    /// 网格地图点击事件
+    /// 网格地图拖动开始事件
     /// </summary>
-    public class PointGridMapEventArgs : GameEventArgs
+    public class PointerDragBeginGridMapEventArgs : GameEventArgs
     {
-        public static readonly int EventId = typeof(PointGridMapEventArgs).GetHashCode();
+        public static readonly int EventId = typeof(PointerDragBeginGridMapEventArgs).GetHashCode();
 
-        public PointGridMapEventArgs()
+        public PointerDragBeginGridMapEventArgs()
         {
             gridData = null;
         }
@@ -25,7 +25,7 @@ namespace SSRPG
         }
 
         /// <summary>
-        /// 点击的网格数据
+        /// 网格单元数据
         /// </summary>
         public GridData gridData
         {
@@ -33,9 +33,9 @@ namespace SSRPG
             private set;
         }
 
-        public static PointGridMapEventArgs Create(GridData gridData)
+        public static PointerDragBeginGridMapEventArgs Create(GridData gridData)
         {
-            PointGridMapEventArgs e = ReferencePool.Acquire<PointGridMapEventArgs>();
+            PointerDragBeginGridMapEventArgs e = ReferencePool.Acquire<PointerDragBeginGridMapEventArgs>();
             e.gridData = gridData;
             return e;
         }

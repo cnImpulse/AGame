@@ -25,7 +25,7 @@ namespace SSRPG
 
             Log.Info("进入行动指令选择状态。");
 
-            GameEntry.Event.Subscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
+            GameEntry.Event.Subscribe(PointerDownGridMapEventArgs.EventId, OnPointGridMap);
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
 
             m_GridMap = GameEntry.Battle.GridMap;
@@ -69,7 +69,7 @@ namespace SSRPG
                 m_Form = null;
             }
 
-            GameEntry.Event.Unsubscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
+            GameEntry.Event.Unsubscribe(PointerDownGridMapEventArgs.EventId, OnPointGridMap);
             GameEntry.Event.Unsubscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
         }
 
@@ -84,7 +84,7 @@ namespace SSRPG
 
         private void OnPointGridMap(object sender, GameEventArgs e)
         {
-            PointGridMapEventArgs ne = (PointGridMapEventArgs)e;
+            PointerDownGridMapEventArgs ne = (PointerDownGridMapEventArgs)e;
 
             // tocode
         }

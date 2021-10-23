@@ -28,6 +28,24 @@ namespace SSRPG
             Name = "GridMap";
         }
 
+        public GridMapData(int mapId) : base(mapId)
+        {
+            m_Width = 18;
+            m_Height = 10;
+            Name = "GridMap";
+
+            m_GridList = new Dictionary<int, GridData>();
+            for (int x = -m_Width / 2; x < m_Width / 2; ++x)
+            {
+                for (int y = -m_Height / 2; y < m_Height / 2; ++y)
+                {
+                    var pos = new Vector2Int(x, y);
+                    int index = GridMapUtl.GetGridIndex(m_Width, pos);
+                    m_GridList[index] = new GridData(pos, GridType.Normal);
+                }
+            }
+        }
+
         /// <summary>
         /// 地图宽。
         /// </summary>
@@ -218,6 +236,26 @@ namespace SSRPG
             }
 
             return neighbors;
+        }
+
+        public List<GridData> GetBoxGridList(Vector2Int start, Vector2Int end)
+        {
+            var leftLower = new Vector2Int(Mathf.Min(start.x, end.x), Mathf.Min(start.y, end.y));
+            var rightTop = new Vector2Int(Mathf.Max(start.x, end.x), Mathf.Max(start.y, end.y));
+
+            var gridList = new List<GridData>();
+            for (int x = leftLower.x; x <= rightTop.x; ++x)
+            {
+                for (int y = leftLower.y; y <= rightTop.y; ++y)
+                {
+                    var gridData = GetGridData(new Vector2Int(x, y));
+                    if (gridData != null)
+                    {
+                        gridList.Add(gridData);
+                    }
+                }
+            }
+            return gridList;
         }
     }
 }

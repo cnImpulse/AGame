@@ -31,7 +31,11 @@ namespace SSRPG
         /// <summary>
         /// 网格类型
         /// </summary>
-        public GridType GridType => m_GridType;
+        public GridType GridType
+        {
+            get => m_GridType;
+            set => m_GridType = value;
+        }
 
         /// <summary>
         /// 占据的网格单位

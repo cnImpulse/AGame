@@ -24,7 +24,7 @@ namespace SSRPG
 
             Log.Info("进入技能释放状态。");
 
-            GameEntry.Event.Subscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
+            GameEntry.Event.Subscribe(PointerDownGridMapEventArgs.EventId, OnPointGridMap);
 
             m_GridMap = GameEntry.Battle.GridMap;
             m_SkillId = GameEntry.Battle.ActionArg;
@@ -59,12 +59,12 @@ namespace SSRPG
             m_ActiveBattleUnit = null;
             m_GridMap.HideTilemapEffect();
 
-            GameEntry.Event.Unsubscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
+            GameEntry.Event.Unsubscribe(PointerDownGridMapEventArgs.EventId, OnPointGridMap);
         }
 
         private void OnPointGridMap(object sender, GameEventArgs e)
         {
-            PointGridMapEventArgs ne = (PointGridMapEventArgs)e;
+            PointerDownGridMapEventArgs ne = (PointerDownGridMapEventArgs)e;
             GridUnit gridUnit = ne.gridData.GridUnit;
             if (m_CanReleaseList.Contains(ne.gridData)) 
             {

@@ -76,7 +76,17 @@ namespace SSRPG
             });
         }
 
+        public static void ShowGridMap(this EntityComponent entityComponent, GridMapData data)
+        {
+            entityComponent.ShowEntity<GridMap>("GridMap", data, EntityType.GridMap);
+        }
+
         public static void ShowBattleUnit(this EntityComponent entityComponent, BattleUnitData data)
+        {
+            entityComponent.ShowEntity<BattleUnit>("BattleUnit", data, EntityType.BattleUnit);
+        }
+
+        public static void ShowBattleEditor(this EntityComponent entityComponent, BattleUnitData data)
         {
             entityComponent.ShowEntity<BattleUnit>("BattleUnit", data, EntityType.BattleUnit);
         }

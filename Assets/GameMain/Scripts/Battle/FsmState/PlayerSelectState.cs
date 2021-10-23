@@ -21,7 +21,7 @@ namespace SSRPG
 
             Log.Info("进入选择状态。");
 
-            GameEntry.Event.Subscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
+            GameEntry.Event.Subscribe(PointerDownGridMapEventArgs.EventId, OnPointGridMap);
 
             SelectBattleUnit(GameEntry.Battle.SelectBattleUnit);
         }
@@ -48,12 +48,12 @@ namespace SSRPG
 
             UnSelectBattleUnit();
 
-            GameEntry.Event.Unsubscribe(PointGridMapEventArgs.EventId, OnPointGridMap);
+            GameEntry.Event.Unsubscribe(PointerDownGridMapEventArgs.EventId, OnPointGridMap);
         }
 
         private void OnPointGridMap(object sender, GameEventArgs e)
         {
-            PointGridMapEventArgs ne = (PointGridMapEventArgs)e;
+            PointerDownGridMapEventArgs ne = (PointerDownGridMapEventArgs)e;
             GridUnit gridUnit = ne.gridData.GridUnit;
             if (gridUnit == null || gridUnit.Data.GridUnitType != GridUnitType.BattleUnit)
             {
