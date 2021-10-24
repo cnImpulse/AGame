@@ -34,13 +34,6 @@ namespace SSRPG
             base.OnShow(userData);
 
             m_Data = userData as GridUnitData;
-            if (m_Data == null)
-            {
-                Log.Error("GridUnit object data is invalid.");
-                return;
-            }
-
-            GameEntry.Entity.AttachEntity(Entity, m_Data.ParentId);
         }
 
         protected override void OnHide(bool isShutdown, object userData)
@@ -57,11 +50,6 @@ namespace SSRPG
             base.OnAttachTo(parentEntity, parentTransform, userData);
 
             m_GridMap = parentEntity as GridMap;
-            if (m_GridMap == null)
-            {
-                return;
-            }
-
             transform.position = m_GridMap.GridPosToWorldPos(m_Data.GridPos);
             GameEntry.GridUnitInfo.ShowGridUnitInfo(this);
         }

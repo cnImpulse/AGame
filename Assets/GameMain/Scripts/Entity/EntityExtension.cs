@@ -84,11 +84,6 @@ namespace SSRPG
             entityComponent.ShowEntity<BattleUnit>("BattleUnit", data, EntityType.BattleUnit);
         }
 
-        public static void ShowBattleEditor(this EntityComponent entityComponent, BattleUnitData data)
-        {
-            entityComponent.ShowEntity<BattleUnit>("BattleUnit", data, EntityType.BattleUnit);
-        }
-
         public static int GenerateSerialId(this EntityComponent entityComponent)
         {
             return --s_SerialId;

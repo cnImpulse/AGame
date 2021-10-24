@@ -105,14 +105,7 @@ namespace SSRPG
                 int typeId = enemy.Value;
                 Vector2Int position = m_BattleData.gridMapData.IndexToGridPos(enemy.Key);
                 BattleUnitData battleUnitData = new BattleUnitData(typeId, gridMap.Id, position, CampType.Enemy);
-
-                GridData gridData = gridMap.Data.GetGridData(battleUnitData.GridPos);
-                if (gridData == null || gridData.GridType != GridType.Normal)
-                {
-                    return;
-                }
-
-                GameEntry.Entity.ShowBattleUnit(battleUnitData);
+                gridMap.RegisterBattleUnit(battleUnitData);
             }
 
             // 加载玩家战棋
@@ -124,14 +117,7 @@ namespace SSRPG
                 Vector2Int pos = m_BattleData.playerBrithList[i];
 
                 BattleUnitData battleUnitData = new BattleUnitData(typeId, gridMap.Id, pos, CampType.Player);
-
-                GridData gridData = gridMap.Data.GetGridData(battleUnitData.GridPos);
-                if (gridData == null || gridData.GridType != GridType.Normal)
-                {
-                    return;
-                }
-
-                GameEntry.Entity.ShowBattleUnit(battleUnitData);
+                gridMap.RegisterBattleUnit(battleUnitData);
             }
         }
 

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.EventSystems;
+using GameFramework.Event;
 using UnityGameFramework.Runtime;
 
 namespace SSRPG
@@ -42,11 +43,8 @@ namespace SSRPG
             base.OnShow(userData);
 
             m_Data = userData as GridMapData;
-            if (m_Data == null)
-            {
-                Log.Error("GridMap object data is invalid.");
-                return;
-            }
+
+            GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntityScuess);
 
             GameEntry.Resource.LoadAsset(AssetUtl.GetTileAssetPath("empty"), typeof(TileBase),
                 (assetName, asset, duration, userData) => { empty = asset as TileBase; });
@@ -67,19 +65,17 @@ namespace SSRPG
 
             m_Tilemap.ClearAllTiles();
             HideTilemapEffect();
+
+            GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntityScuess);
         }
 
         protected override void OnAttached(EntityLogic childEntity, Transform parentTransform, object userData)
         {
             base.OnAttached(childEntity, parentTransform, userData);
 
-            GridUnit gridUnit = childEntity as GridUnit;
-            if (gridUnit == null)
-            {
-                return;
-            }
-
-            RegisterGridUnit(gridUnit);
+            var gridUnit = childEntity as GridUnit;
+            m_GridUnitList.Add(gridUnit.Id, gridUnit);
+            Data.GetGridData(gridUnit.Data.GridPos).OnGridUnitEnter(gridUnit);
         }
 
         protected override void OnDetached(EntityLogic childEntity, object userData)
@@ -148,28 +144,27 @@ namespace SSRPG
         }
 
         /// <summary>
-        /// 注册网格单位实体
+        /// 注册战斗单位实体
         /// </summary>
         /// <param name="gridUnit">网格单位</param>
         /// <returns>注册结果</returns>
-        private bool RegisterGridUnit(GridUnit gridUnit)
+        public bool RegisterBattleUnit(BattleUnitData battleUnitData)
         {
-            GridData gridData = m_Data.GetGridData(gridUnit.Data.GridPos);
+            GridData gridData = m_Data.GetGridData(battleUnitData.GridPos);
             if (gridData == null || gridData.GridType != GridType.Normal)
             {
-                Log.Warning("注册网格单位失败!");
+                Log.Warning("注册战斗单位失败!");
                 return false;
             }
 
-            m_GridUnitList.Add(gridUnit.Id, gridUnit);
-            gridData.OnGridUnitEnter(gridUnit);
+            GameEntry.Entity.ShowBattleUnit(battleUnitData);
             return true;
         }
 
         /// <summary>
         /// 注销网格单位实体
         /// </summary>
-        public bool UnRegisterGridUnit(GridUnit gridUnit)
+        private bool UnRegisterGridUnit(GridUnit gridUnit)
         {
             if (gridUnit == null || !m_GridUnitList.ContainsKey(gridUnit.Id))
             {
@@ -257,6 +252,19 @@ namespace SSRPG
             {
                 GameEntry.Event.Fire(this, PointerDownGridMapEventArgs.Create(gridData));
             }
+        }
+
+        public void OnShowEntityScuess(object sender, GameEventArgs e)
+        {
+            var ne = (ShowEntitySuccessEventArgs)e;
+
+            var gridUnit = ne.Entity.Logic as GridUnit;
+            if (gridUnit == null || gridUnit.Data.ParentId != Id) 
+            {
+                return;
+            }
+
+            GameEntry.Entity.AttachEntity(gridUnit.Id, Id);
         }
     }
 }
