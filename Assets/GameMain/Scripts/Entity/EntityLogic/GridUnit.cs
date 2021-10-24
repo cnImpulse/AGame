@@ -38,9 +38,10 @@ namespace SSRPG
 
         protected override void OnHide(bool isShutdown, object userData)
         {
+            GameEntry.Entity.DetachEntity(Id);
+
             m_Data = null;
             m_GridMap = null;
-            GameEntry.Entity.DetachEntity(Id);
 
             base.OnHide(isShutdown, userData);
         }

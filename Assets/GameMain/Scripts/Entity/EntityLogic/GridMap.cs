@@ -56,17 +56,12 @@ namespace SSRPG
 
         protected override void OnHide(bool isShutdown, object userData)
         {
-            base.OnHide(isShutdown, userData);
-
-            foreach (var gridUnit in m_GridUnitList.Values)
-            {
-                GameEntry.Entity.HideEntity(gridUnit);
-            }
-
             m_Tilemap.ClearAllTiles();
             HideTilemapEffect();
 
             GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntityScuess);
+
+            base.OnHide(isShutdown, userData);
         }
 
         protected override void OnAttached(EntityLogic childEntity, Transform parentTransform, object userData)
@@ -82,13 +77,9 @@ namespace SSRPG
         {
             base.OnDetached(childEntity, userData);
 
-            GridUnit gridUnit = childEntity as GridUnit;
-            if (gridUnit == null)
-            {
-                return;
-            }
-
-            UnRegisterGridUnit(gridUnit);
+            var gridUnit = childEntity as GridUnit;
+            m_GridUnitList.Remove(gridUnit.Id);
+            Data.GetGridData(gridUnit.Data.GridPos).OnGridUnitLeave();
         }
 
         public void SetGridData(Vector2Int position, GridType gridType)
@@ -164,16 +155,15 @@ namespace SSRPG
         /// <summary>
         /// 注销网格单位实体
         /// </summary>
-        private bool UnRegisterGridUnit(GridUnit gridUnit)
+        public bool UnRegisterGridUnit(GridUnit gridUnit)
         {
             if (gridUnit == null || !m_GridUnitList.ContainsKey(gridUnit.Id))
             {
+                Log.Warning("注销网格单位失败!");
                 return false;
             }
 
-            m_GridUnitList.Remove(gridUnit.Id);
-            gridUnit.GridData.OnGridUnitLeave();
-
+            GameEntry.Entity.HideEntity(gridUnit);
             return true;
         }
 

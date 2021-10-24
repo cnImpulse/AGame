@@ -151,18 +151,20 @@ namespace SSRPG
         {
             GridUnitDeadEventArgs ne = (GridUnitDeadEventArgs)e;
 
-            if (ne.gridUnit.Data.GridUnitType == GridUnitType.BattleUnit)
+            GridUnitData data = ne.gridUnit.Data;
+            gridMap.UnRegisterGridUnit(ne.gridUnit);
+            if (data.GridUnitType == GridUnitType.BattleUnit)
             {
-                var battleUnitList = gridMap.GetBattleUnitList(ne.gridUnit.Data.CampType);
+                var battleUnitList = gridMap.GetBattleUnitList(data.CampType);
                 if (battleUnitList.Count == 0)
                 {
                     m_BattleEnd = true;
                     BattleResultInfo info = null;
-                    if (ne.gridUnit.Data.CampType == CampType.Player)
+                    if (data.CampType == CampType.Player)
                     {
                         info = new BattleResultInfo(CampType.Enemy);
                     }
-                    else if(ne.gridUnit.Data.CampType == CampType.Enemy)
+                    else if(data.CampType == CampType.Enemy)
                     {
                         info = new BattleResultInfo(CampType.Player);
                     }
@@ -170,7 +172,6 @@ namespace SSRPG
                     GameEntry.Fsm.DestroyFsm(m_BattleFsm);
                 }
             }
-            GameEntry.Entity.HideEntity(ne.gridUnit);
         }
     }
 }

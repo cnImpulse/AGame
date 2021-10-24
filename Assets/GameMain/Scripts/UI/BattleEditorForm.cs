@@ -15,6 +15,8 @@ namespace SSRPG
         private Toggle m_Erase = null;
         private Toggle m_Fill = null;
 
+        private Button m_ReturnBtn = null;
+
         public EditMode EditMode
         {
             get
@@ -46,6 +48,9 @@ namespace SSRPG
             m_Paint = GetChild<Toggle>("m_Paint");
             m_Erase = GetChild<Toggle>("m_Erase");
             m_Fill = GetChild<Toggle>("m_Fill");
+
+            m_ReturnBtn = GetChild<Button>("m_ReturnBtn");
+            m_ReturnBtn.onClick.AddListener(OnClickReturnBtn);
         }
 
         protected override void OnOpen(object userData)
@@ -53,6 +58,11 @@ namespace SSRPG
             base.OnOpen(userData);
 
             m_Owner = userData as ProcedureBattleEditor;
+        }
+
+        private void OnClickReturnBtn()
+        {
+            m_Owner.ReturnMenuForm();
         }
     }
 }

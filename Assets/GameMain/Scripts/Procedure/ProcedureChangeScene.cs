@@ -9,7 +9,7 @@ namespace SSRPG
     public enum SceneType
     {
         None,
-        Main = 1,
+        Menu = 1,
         BattleEditor = 2,
     }
 

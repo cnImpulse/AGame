@@ -17,6 +17,7 @@ namespace SSRPG
     public class ProcedureBattleEditor : ProcedureBase
     {
         private BattleEditorForm m_Form = null;
+        private bool m_Return = false;
 
         private GridMap m_GridMap = null;
         private BattleData m_BattleData = null;
@@ -39,6 +40,14 @@ namespace SSRPG
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
 
+            if (m_Return)
+            {
+                procedureOwner.SetData<VarInt32>("NextSceneId", (int)SceneType.Menu);
+                ChangeState<ProcedureChangeScene>(procedureOwner);
+                return;
+            }
+
+            // 后面绘制逻辑改为放到状态机里面
             if (m_GridMap == null || m_Form.EditMode != EditMode.Fill)
             {
                 return;
@@ -64,6 +73,7 @@ namespace SSRPG
             string path = AssetUtl.GetBattleDataPath(1);
             AssetUtl.SaveData(path, m_BattleData);
 
+            m_Return = false;
             if (m_Form != null)
             {
                 m_Form.Close(isShutdown);
@@ -75,6 +85,11 @@ namespace SSRPG
             GameEntry.Event.Unsubscribe(PointerDownGridMapEventArgs.EventId, OnPointerDownGridMap);
 
             base.OnLeave(procedureOwner, isShutdown);
+        }
+
+        public void ReturnMenuForm()
+        {
+            m_Return = true;
         }
 
         private void InitBattleEditor()

@@ -1,4 +1,5 @@
 ﻿using GameFramework.Procedure;
+using UnityGameFramework.Runtime;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 
 namespace SSRPG
@@ -18,7 +19,8 @@ namespace SSRPG
 
             if (GameEntry.Cfg.EndLoad)
             {
-                ChangeState<ProcedureMenu>(procedureOwner);
+                procedureOwner.SetData<VarInt32>("NextSceneId", (int)SceneType.Menu);
+                ChangeState<ProcedureChangeScene>(procedureOwner);
             }
         }
 
