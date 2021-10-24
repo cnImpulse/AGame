@@ -9,7 +9,7 @@ namespace SSRPG
     /// <summary>
     /// 网格地图。
     /// </summary>
-    public class GridMap : Entity, IPointerDownHandler, IBeginDragHandler, IDragHandler, IDropHandler
+    public class GridMap : Entity, IPointerDownHandler
     {
         public static TileBase empty = null, wall = null, streak = null;
 
@@ -142,6 +142,11 @@ namespace SSRPG
             return m_Tilemap.GetCellCenterWorld((Vector3Int)gridPos);
         }
 
+        public Vector2Int WorldPosToGridPos(Vector3 worldPosition)
+        {
+            return (Vector2Int)m_Tilemap.WorldToCell(worldPosition);
+        }
+
         /// <summary>
         /// 注册网格单位实体
         /// </summary>
@@ -250,33 +255,6 @@ namespace SSRPG
             if (gridData != null)
             {
                 GameEntry.Event.Fire(this, PointerDownGridMapEventArgs.Create(gridData));
-            }
-        }
-
-        public void OnBeginDrag(PointerEventData eventData)
-        {
-            var gridData = GetGridDataByWorldPos(eventData.pointerCurrentRaycast.worldPosition);
-            if (gridData != null)
-            {
-                GameEntry.Event.Fire(this, PointerDragBeginGridMapEventArgs.Create(gridData));
-            }
-        }
-
-        public void OnDrag(PointerEventData eventData)
-        {
-            var gridData = GetGridDataByWorldPos(eventData.pointerCurrentRaycast.worldPosition);
-            if (gridData != null)
-            {
-                GameEntry.Event.Fire(this, PointerDragGridMapEventArgs.Create(gridData));
-            }
-        }
-
-        public void OnDrop(PointerEventData eventData)
-        {
-            var gridData = GetGridDataByWorldPos(eventData.pointerCurrentRaycast.worldPosition);
-            if (gridData != null)
-            {
-                GameEntry.Event.Fire(this, PointerDropGridMapEventArgs.Create(gridData));
             }
         }
     }

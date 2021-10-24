@@ -40,7 +40,7 @@ namespace SSRPG
                 for (int y = -m_Height / 2; y < m_Height / 2; ++y)
                 {
                     var pos = new Vector2Int(x, y);
-                    int index = GridMapUtl.GetGridIndex(m_Width, pos);
+                    int index = GetGridIndex(pos);
                     m_GridList[index] = new GridData(pos, GridType.Normal);
                 }
             }
@@ -63,7 +63,7 @@ namespace SSRPG
 
         public int GetGridIndex(Vector2Int gridPos)
         {
-            return gridPos.y * Width + gridPos.x;
+            return gridPos.x + gridPos.y * 100000;
         }
 
         public GridData GetGridData(Vector2Int gridPos)

@@ -1,4 +1,5 @@
-﻿using GameFramework.Event;
+﻿using UnityEngine;
+using GameFramework.Event;
 using GameFramework.Procedure;
 using UnityGameFramework.Runtime;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
@@ -29,9 +30,6 @@ namespace SSRPG
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
             GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnShowGirdMapSuccess);
             GameEntry.Event.Subscribe(PointerDownGridMapEventArgs.EventId, OnPointerDownGridMap);
-            GameEntry.Event.Subscribe(PointerDragBeginGridMapEventArgs.EventId, OnBeginDragGridMap);
-            GameEntry.Event.Subscribe(PointerDragGridMapEventArgs.EventId, OnDragGridMap);
-            GameEntry.Event.Subscribe(PointerDropGridMapEventArgs.EventId, OnDropGridMap);
 
             GameEntry.UI.OpenUIForm(UIFormId.BattleEditorForm, this);
             CreatGridMap();
@@ -40,6 +38,25 @@ namespace SSRPG
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
+
+            if (m_GridMap == null || m_Form.EditMode != EditMode.Fill)
+            {
+                return;
+            }
+
+            var gridPos = m_GridMap.WorldPosToGridPos(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            if (Input.GetMouseButtonDown(0))
+            {
+                OnBeginDragGridMap(gridPos);
+            }
+            else if (Input.GetMouseButton(0))
+            {
+                OnDragGridMap(gridPos);
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                OnDropGridMap(gridPos);
+            }
         }
 
         protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
@@ -53,9 +70,6 @@ namespace SSRPG
             GameEntry.Event.Unsubscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
             GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, OnShowGirdMapSuccess);
             GameEntry.Event.Unsubscribe(PointerDownGridMapEventArgs.EventId, OnPointerDownGridMap);
-            GameEntry.Event.Unsubscribe(PointerDragBeginGridMapEventArgs.EventId, OnBeginDragGridMap);
-            GameEntry.Event.Unsubscribe(PointerDragGridMapEventArgs.EventId, OnDragGridMap);
-            GameEntry.Event.Unsubscribe(PointerDropGridMapEventArgs.EventId, OnDropGridMap);
 
             base.OnLeave(procedureOwner, isShutdown);
         }
@@ -110,42 +124,35 @@ namespace SSRPG
             }
         }
 
-        private GridData dragStart = null;
-
-        private void OnBeginDragGridMap(object sender, GameEventArgs e)
+        private Vector2Int dragStart = default;
+        private void OnBeginDragGridMap(Vector2Int gridPos)
         {
-            var ne = (PointerDragBeginGridMapEventArgs)e;
+            dragStart = gridPos;
+        }
 
-            if (m_Form.EditMode != EditMode.Fill)
+        private Vector2Int lastPos = default;
+        private void OnDragGridMap(Vector2Int gridPos)
+        {
+            if (lastPos == gridPos)
             {
                 return;
             }
 
-            dragStart = ne.gridData;
-        }
-
-        private void OnDragGridMap(object sender, GameEventArgs e)
-        {
-            var ne = (PointerDragGridMapEventArgs)e;
-
-            var dragEnd = ne.gridData;
-            var gridList = m_GridMap.Data.GetBoxGridList(dragStart.GridPos, dragEnd.GridPos);
+            lastPos = gridPos;
+            var gridList = m_GridMap.Data.GetBoxGridList(dragStart, gridPos);
             m_GridMap.RefreshPreview(gridList, GridType.Wall);
         }
 
-        private void OnDropGridMap(object sender, GameEventArgs e)
+        private void OnDropGridMap(Vector2Int gridPos)
         {
-            var ne = (PointerDropGridMapEventArgs)e;
-
-            var dragEnd = ne.gridData;
-            var gridList = m_GridMap.Data.GetBoxGridList(dragStart.GridPos, dragEnd.GridPos);
+            var gridList = m_GridMap.Data.GetBoxGridList(dragStart, gridPos);
             foreach (var grid in gridList)
             {
                 grid.GridType = GridType.Wall;
             }
 
             m_GridMap.RefreshMap();
-            dragStart = null;
+            dragStart = default;
         }
     }
 }
