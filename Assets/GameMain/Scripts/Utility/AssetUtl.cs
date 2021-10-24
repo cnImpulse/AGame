@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using GameFramework;
+using UnityGameFramework.Runtime;
 using Newtonsoft.Json;
 
 namespace SSRPG
@@ -21,9 +22,9 @@ namespace SSRPG
             return Utility.Text.Format("Assets/GameMain/Tilemap/{0}.asset", assetName);
         }
 
-        public static string GetMapDataPath(int mapId)
+        public static string GetGridMapDataPath(int mapId)
         {
-            return Utility.Text.Format("Assets/GameMain/GameData/MapData/MapData_{0}.json", mapId);
+            return Utility.Text.Format("Assets/GameMain/GameData/GridMapData/GridMapData_{0}.json", mapId);
         }
 
         public static string GetBattleDataPath(int battleId)
@@ -49,6 +50,8 @@ namespace SSRPG
             sw.Write(json);
             sw.Close();
             sw.Dispose();
+
+            Log.Info("保存数据成功!");
         }
 
         #region UI

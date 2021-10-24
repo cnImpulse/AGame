@@ -1,74 +1,61 @@
 using System;
 using UnityEngine;
-using GameFramework.DataTable;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace SSRPG
 {
     [Serializable]
+    [JsonObject(MemberSerialization.OptIn)]
     public class GridMapData : EntityData
     {
         public static Vector2Int[] s_DirArray4 = { Vector2Int.down, Vector2Int.up, Vector2Int.left, Vector2Int.right };
         public static Vector2Int[] s_Dir2Array4 = { Vector2Int.one, new Vector2Int(1, -1), new Vector2Int(-1, -1), new Vector2Int(-1, 1) };
 
-        [SerializeField]
-        private int m_Width = 0;
-
-        [SerializeField]
-        private int m_Height = 0;
-
-        [SerializeField]
+        [JsonProperty]
         private Dictionary<int, GridData> m_GridList = null;
 
-        public GridMapData(MapData mapData) : base(mapData.MapId)
+        [JsonConstructor]
+        private GridMapData(int mapId) : base(mapId)
         {
-            m_Width = mapData.Width;
-            m_Height = mapData.Height;
-            m_GridList = mapData.GridList;
             Name = "GridMap";
         }
 
-        public GridMapData(int mapId) : base(mapId)
+        public GridMapData(int width, int height, int mapId) : base(mapId)
         {
-            m_Width = 18;
-            m_Height = 10;
             Name = "GridMap";
-
             m_GridList = new Dictionary<int, GridData>();
-            for (int x = -m_Width / 2; x < m_Width / 2; ++x)
+            for (int x = -width / 2; x < width / 2; ++x)
             {
-                for (int y = -m_Height / 2; y < m_Height / 2; ++y)
+                for (int y = -height / 2; y < height / 2; ++y)
                 {
                     var pos = new Vector2Int(x, y);
-                    int index = GetGridIndex(pos);
+                    int index = GridPosToIndex(pos);
                     m_GridList[index] = new GridData(pos, GridType.Normal);
                 }
             }
         }
 
         /// <summary>
-        /// 地图宽。
-        /// </summary>
-        public int Width => m_Width;
-
-        /// <summary>
-        /// 地图高。
-        /// </summary>
-        public int Height => m_Height;
-
-        /// <summary>
         /// 获得网格数据列表
         /// </summary>
         public Dictionary<int, GridData> GridList => m_GridList;
 
-        public int GetGridIndex(Vector2Int gridPos)
+        private static readonly int maxWidth = 100000;
+
+        public int GridPosToIndex(Vector2Int gridPos)
         {
-            return gridPos.x + gridPos.y * 100000;
+            return gridPos.x + gridPos.y * maxWidth;
+        }
+
+        public Vector2Int IndexToGridPos(int index)
+        {
+            return new Vector2Int(index % maxWidth, index / maxWidth);
         }
 
         public GridData GetGridData(Vector2Int gridPos)
         {
-            int gridIndex = GetGridIndex(gridPos);
+            int gridIndex = GridPosToIndex(gridPos);
             return GetGridData(gridIndex);
         }
 

@@ -19,7 +19,7 @@ namespace SSRPG
         private BattleEditorForm m_Form = null;
 
         private GridMap m_GridMap = null;
-        private GridMapData m_EditData => m_GridMap.Data;
+        private BattleData m_BattleData = null;
 
         protected override void OnEnter(ProcedureOwner procedureOwner)
         {
@@ -32,7 +32,7 @@ namespace SSRPG
             GameEntry.Event.Subscribe(PointerDownGridMapEventArgs.EventId, OnPointerDownGridMap);
 
             GameEntry.UI.OpenUIForm(UIFormId.BattleEditorForm, this);
-            CreatGridMap();
+            InitBattleEditor();
         }
 
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)
@@ -61,6 +61,9 @@ namespace SSRPG
 
         protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
         {
+            string path = AssetUtl.GetBattleDataPath(1);
+            AssetUtl.SaveData(path, m_BattleData);
+
             if (m_Form != null)
             {
                 m_Form.Close(isShutdown);
@@ -74,10 +77,14 @@ namespace SSRPG
             base.OnLeave(procedureOwner, isShutdown);
         }
 
-        private void CreatGridMap()
+        private void InitBattleEditor()
         {
-            GridMapData gridMapData = new GridMapData(1);
+            GridMapData gridMapData = new GridMapData(18, 10, 1);
             GameEntry.Entity.ShowGridMap(gridMapData);
+
+            m_BattleData = new BattleData(gridMapData);
+            m_BattleData.playerBrithList.Add(new Vector2Int(0, 0));
+            m_BattleData.enemyList.Add(gridMapData.GridPosToIndex(new Vector2Int(2, 2)), 10001);
         }
 
         private void OnOpenUIFormSuccess(object sender, GameEventArgs e)

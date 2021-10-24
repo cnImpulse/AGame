@@ -1,21 +1,26 @@
 using System;
 using UnityEngine;
 using UnityGameFramework.Runtime;
+using Newtonsoft.Json;
 
 namespace SSRPG
 {
     [Serializable]
+    [JsonObject(MemberSerialization.OptIn)]
     public class GridData
     {
+        [JsonProperty]
         [SerializeField]
         private Vector2Int m_GridPos;
 
+        [JsonProperty]
         [SerializeField]
         private GridType m_GridType;
 
         [SerializeField]
         private GridUnit m_GridUnit;
 
+        [JsonConstructor]
         public GridData(Vector2Int gridPos, GridType gridType)
         {
             m_GridPos = gridPos;

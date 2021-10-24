@@ -9,7 +9,7 @@ namespace SSRPG
     /// <summary>
     /// 网格单位。
     /// </summary>
-    public class GridUnit : Entity
+    public abstract class GridUnit : Entity
     {
         [SerializeField]
         private GridUnitData m_Data;
@@ -45,11 +45,11 @@ namespace SSRPG
 
         protected override void OnHide(bool isShutdown, object userData)
         {
-            base.OnHide(isShutdown, userData);
-
             m_Data = null;
             m_GridMap = null;
             GameEntry.Entity.DetachEntity(Id);
+
+            base.OnHide(isShutdown, userData);
         }
 
         protected override void OnAttachTo(EntityLogic parentEntity, Transform parentTransform, object userData)

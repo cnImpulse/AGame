@@ -157,6 +157,7 @@ namespace SSRPG
             GridData gridData = m_Data.GetGridData(gridUnit.Data.GridPos);
             if (gridData == null || gridData.GridType != GridType.Normal)
             {
+                Log.Warning("注册网格单位失败!");
                 return false;
             }
 

@@ -1,20 +1,24 @@
 ﻿using System;
 using UnityEngine;
+using Newtonsoft.Json;
 
 namespace SSRPG
 {
     [Serializable]
+    [JsonObject(MemberSerialization.OptIn)]
     public abstract class EntityData
     {
         [SerializeField]
         private int m_Id = 0;
 
+        [JsonProperty]
         [SerializeField]
         private int m_TypeId = 0;
 
         [SerializeField]
         private string m_Name = "";
 
+        [JsonConstructor]
         public EntityData(int typeId)
         {
             m_Id = GameEntry.Entity.GenerateSerialId();

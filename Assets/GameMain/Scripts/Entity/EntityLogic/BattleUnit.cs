@@ -55,10 +55,10 @@ namespace SSRPG
 
         protected override void OnHide(bool isShutdown, object userData)
         {
-            base.OnHide(isShutdown, userData);
-
             m_Data = null;
-            GameEntry.Event.Unsubscribe(RoundSwitchEventArgs.EventId, OnRoundSwitch);
+            // GameEntry.Event.Unsubscribe(RoundSwitchEventArgs.EventId, OnRoundSwitch);
+
+            base.OnHide(isShutdown, userData);
         }
 
         //-----------------------------------------

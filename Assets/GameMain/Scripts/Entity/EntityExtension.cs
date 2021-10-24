@@ -65,13 +65,11 @@ namespace SSRPG
 
         public static void ShowGridMap(this EntityComponent entityComponent, int mapId)
         {
-            string path = AssetUtl.GetMapDataPath(mapId);
+            string path = AssetUtl.GetGridMapDataPath(mapId);
             GameEntry.Resource.LoadAsset(path, typeof(TextAsset), (assetName, asset, duration, userData) =>
             {
                 TextAsset textAsset = asset as TextAsset;
-                MapData mapData = Utility.Json.ToObject<MapData>(textAsset.text);
-
-                GridMapData gridMapData = new GridMapData(mapData);
+                GridMapData gridMapData = Utility.Json.ToObject<GridMapData>(textAsset.text);
                 entityComponent.ShowEntity<GridMap>("GridMap", gridMapData, EntityType.GridMap);
             });
         }

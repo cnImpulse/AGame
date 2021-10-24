@@ -16,13 +16,13 @@ namespace SSRPG
 
         private IFsm<ProcedureBattle> m_BattleFsm = null;
 
-        public GridMap GridMap = null;
+        public GridMap gridMap = null;
 
         public void StartBattle()
         {
             Log.Info("战斗开始。");
 
-            GameEntry.Battle.InitBattle(GridMap);
+            GameEntry.Battle.InitBattle(gridMap);
             m_BattleFsm.Start<RoundSwitchState>();
         }
 
@@ -61,10 +61,10 @@ namespace SSRPG
         {
             base.OnLeave(procedureOwner, isShutdown);
 
-            GameEntry.Entity.HideEntity(GridMap);
+            GameEntry.Entity.HideEntity(gridMap);
             GameEntry.Fsm.DestroyFsm(m_BattleFsm);
             
-            GridMap = null;
+            gridMap = null;
             m_BattleEnd = false;
             m_BattleData = null;
 
@@ -93,31 +93,44 @@ namespace SSRPG
             {
                 TextAsset textAsset = asset as TextAsset;
                 m_BattleData = Utility.Json.ToObject<BattleData>(textAsset.text);
-                GameEntry.Entity.ShowGridMap(m_BattleData.MapId);
+                GameEntry.Entity.ShowGridMap(m_BattleData.gridMapData);
             });
         }
 
-        private void InitBattleUnit(int mapEntityId)
+        private void InitBattleUnit()
         {
             // 加载敌人
-            for (int i = 0; i < m_BattleData.EnemyIdList.Count; ++i)
+            foreach (var enemy in m_BattleData.enemyList)
             {
-                int typeId = m_BattleData.EnemyIdList[i] + Random.Range(1, 6);
-                Vector2Int pos = m_BattleData.EnemyPosList[i];
+                int typeId = enemy.Value;
+                Vector2Int position = m_BattleData.gridMapData.IndexToGridPos(enemy.Key);
+                BattleUnitData battleUnitData = new BattleUnitData(typeId, gridMap.Id, position, CampType.Enemy);
 
-                BattleUnitData battleUnitData = new BattleUnitData(typeId, mapEntityId, pos, CampType.Enemy);
+                GridData gridData = gridMap.Data.GetGridData(battleUnitData.GridPos);
+                if (gridData == null || gridData.GridType != GridType.Normal)
+                {
+                    return;
+                }
+
                 GameEntry.Entity.ShowBattleUnit(battleUnitData);
             }
 
             // 加载玩家战棋
-            int posCount = m_BattleData.PlayerBrithPos.Count;
-            int playerCount = m_BattleData.MaxPlayerBattleUnit;
+            int posCount = m_BattleData.playerBrithList.Count;
+            int playerCount = m_BattleData.maxPlayerBattleUnit;
             for (int i = 0; i < Mathf.Min(posCount, playerCount); ++i)
             {
                 int typeId = 10000 + Random.Range(1, 6);
-                Vector2Int pos = m_BattleData.PlayerBrithPos[i];
+                Vector2Int pos = m_BattleData.playerBrithList[i];
 
-                BattleUnitData battleUnitData = new BattleUnitData(typeId, mapEntityId, pos, CampType.Player);
+                BattleUnitData battleUnitData = new BattleUnitData(typeId, gridMap.Id, pos, CampType.Player);
+
+                GridData gridData = gridMap.Data.GetGridData(battleUnitData.GridPos);
+                if (gridData == null || gridData.GridType != GridType.Normal)
+                {
+                    return;
+                }
+
                 GameEntry.Entity.ShowBattleUnit(battleUnitData);
             }
         }
@@ -143,8 +156,8 @@ namespace SSRPG
             ShowEntitySuccessEventArgs ne = (ShowEntitySuccessEventArgs)e;
             if (ne.EntityLogicType == typeof(GridMap))
             {
-                GridMap = ne.Entity.Logic as GridMap;
-                InitBattleUnit(GridMap.Id);
+                gridMap = ne.Entity.Logic as GridMap;
+                InitBattleUnit();
             }
         }
 
@@ -154,7 +167,7 @@ namespace SSRPG
 
             if (ne.gridUnit.Data.GridUnitType == GridUnitType.BattleUnit)
             {
-                var battleUnitList = GridMap.GetBattleUnitList(ne.gridUnit.Data.CampType);
+                var battleUnitList = gridMap.GetBattleUnitList(ne.gridUnit.Data.CampType);
                 if (battleUnitList.Count == 0)
                 {
                     m_BattleEnd = true;
