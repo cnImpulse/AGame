@@ -51,6 +51,10 @@ namespace SSRPG
             sw.Close();
             sw.Dispose();
 
+#if UNITY_EDITOR
+            UnityEditor.AssetDatabase.Refresh();
+#endif
+
             Log.Info("保存数据成功!");
         }
 

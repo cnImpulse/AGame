@@ -103,8 +103,8 @@ namespace SSRPG
             foreach (var enemy in m_BattleData.enemyList)
             {
                 int typeId = enemy.Value;
-                Vector2Int position = m_BattleData.gridMapData.IndexToGridPos(enemy.Key);
-                BattleUnitData battleUnitData = new BattleUnitData(typeId, gridMap.Id, position, CampType.Enemy);
+                var gridData = gridMap.Data.GetGridData(enemy.Key);
+                BattleUnitData battleUnitData = new BattleUnitData(typeId, gridMap.Id, gridData.GridPos, CampType.Enemy);
                 gridMap.RegisterBattleUnit(battleUnitData);
             }
 

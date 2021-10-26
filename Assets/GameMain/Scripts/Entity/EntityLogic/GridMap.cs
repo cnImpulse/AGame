@@ -142,7 +142,7 @@ namespace SSRPG
         public bool RegisterBattleUnit(BattleUnitData battleUnitData)
         {
             GridData gridData = m_Data.GetGridData(battleUnitData.GridPos);
-            if (gridData == null || gridData.GridType != GridType.Normal)
+            if (gridData == null || !gridData.CanArrive())
             {
                 Log.Warning("注册战斗单位失败!");
                 return false;

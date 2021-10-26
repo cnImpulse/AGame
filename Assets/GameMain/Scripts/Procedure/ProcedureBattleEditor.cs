@@ -3,6 +3,7 @@ using GameFramework.Event;
 using GameFramework.Procedure;
 using UnityGameFramework.Runtime;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
+using System.Collections.Generic;
 
 namespace SSRPG
 {
@@ -70,10 +71,11 @@ namespace SSRPG
 
         protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
         {
-            string path = AssetUtl.GetBattleDataPath(1);
-            AssetUtl.SaveData(path, m_BattleData);
+            SaveBattleData();
 
             m_Return = false;
+            m_GridMap = null;
+            m_BattleData = null;
             if (m_Form != null)
             {
                 m_Form.Close(isShutdown);
@@ -96,10 +98,35 @@ namespace SSRPG
         {
             GridMapData gridMapData = new GridMapData(18, 10, 1);
             GameEntry.Entity.ShowGridMap(gridMapData);
-
             m_BattleData = new BattleData(gridMapData);
-            m_BattleData.playerBrithList.Add(new Vector2Int(0, 0));
-            m_BattleData.enemyList.Add(gridMapData.GridPosToIndex(new Vector2Int(2, 2)), 10001);
+        }
+
+        private void SaveBattleData()
+        {
+            var enemyList = m_GridMap.GetBattleUnitList(CampType.Enemy);
+            foreach (var enemy in enemyList)
+            {
+                m_BattleData.enemyList.Add(m_GridMap.Data.GridPosToIndex(enemy.Data.GridPos), enemy.Data.TypeId);
+            }
+
+            var gridList = new List<GridData>();
+            foreach (var gridData in m_BattleData.gridMapData.GridList.Values)
+            {
+                if (gridData.CanArrive())
+                {
+                    gridList.Add(gridData);
+                }
+            }
+
+            m_BattleData.maxPlayerBattleUnit = enemyList.Count;
+            for (int i=0; i<m_BattleData.maxPlayerBattleUnit; ++i)
+            {
+                int index = Random.Range(0, gridList.Count - 1);
+                m_BattleData.playerBrithList.Add(gridList[index].GridPos);
+            }
+
+            string path = AssetUtl.GetBattleDataPath(1);
+            AssetUtl.SaveData(path, m_BattleData);
         }
 
         private void OnOpenUIFormSuccess(object sender, GameEventArgs e)
@@ -138,11 +165,19 @@ namespace SSRPG
 
             if (m_Form.EditMode == EditMode.Paint)
             {
-                m_GridMap.SetGridData(ne.gridData.GridPos, GridType.Wall);
+                var data = new BattleUnitData(m_Form.SelectedBattleUnitId, m_GridMap.Id, ne.gridData.GridPos, CampType.Enemy);
+                m_GridMap.RegisterBattleUnit(data);
             }
             else if (m_Form.EditMode == EditMode.Erase)
             {
-                m_GridMap.SetGridData(ne.gridData.GridPos, GridType.Normal);
+                if (ne.gridData.GridUnit != null)
+                {
+                    m_GridMap.UnRegisterGridUnit(ne.gridData.GridUnit);
+                }
+                else
+                {
+                    m_GridMap.SetGridData(ne.gridData.GridPos, GridType.Normal);
+                }
             }
         }
 

@@ -48,11 +48,6 @@ namespace SSRPG
             return gridPos.x + gridPos.y * maxWidth;
         }
 
-        public Vector2Int IndexToGridPos(int index)
-        {
-            return new Vector2Int(index % maxWidth, index / maxWidth);
-        }
-
         public GridData GetGridData(Vector2Int gridPos)
         {
             int gridIndex = GridPosToIndex(gridPos);

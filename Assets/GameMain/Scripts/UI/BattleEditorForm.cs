@@ -15,6 +15,8 @@ namespace SSRPG
         private Toggle m_Erase = null;
         private Toggle m_Fill = null;
 
+        private Dropdown m_BattleUnitList = null;
+
         private Button m_ReturnBtn = null;
 
         public EditMode EditMode
@@ -40,6 +42,14 @@ namespace SSRPG
             }
         }
 
+        public int SelectedBattleUnitId
+        {
+            get
+            {
+                return int.Parse(m_BattleUnitList.captionText.text);
+            }
+        }
+
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
@@ -48,6 +58,8 @@ namespace SSRPG
             m_Paint = GetChild<Toggle>("m_Paint");
             m_Erase = GetChild<Toggle>("m_Erase");
             m_Fill = GetChild<Toggle>("m_Fill");
+
+            m_BattleUnitList = GetChild<Dropdown>("m_BattleUnitList");
 
             m_ReturnBtn = GetChild<Button>("m_ReturnBtn");
             m_ReturnBtn.onClick.AddListener(OnClickReturnBtn);
@@ -58,6 +70,20 @@ namespace SSRPG
             base.OnOpen(userData);
 
             m_Owner = userData as ProcedureBattleEditor;
+
+            InitBattleUnitList();
+        }
+
+        private void InitBattleUnitList()
+        {
+            m_BattleUnitList.ClearOptions();
+            var battleUnitTbl = GameEntry.Cfg.Tables.TblBattleUnit.DataList;
+            List<string> battleUnitList = new List<string>();
+            foreach (var cfg in battleUnitTbl)
+            {
+                battleUnitList.Add(cfg.Id.ToString());
+            }
+            m_BattleUnitList.AddOptions(battleUnitList);
         }
 
         private void OnClickReturnBtn()

@@ -64,6 +64,7 @@ namespace SSRPG
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)m_ParentCanvas.transform, screenPosition,
                 m_ParentCanvas.worldCamera, out position))
             {
+                m_InfoList.localScale = Vector3.one * (5 / Camera.main.orthographicSize);
                 m_InfoList.localPosition = position;
             }
         }
