@@ -11,6 +11,7 @@ namespace SSRPG
         None,
         Menu = 1,
         BattleEditor = 2,
+        Battle = 3,
     }
 
     public class ProcedureChangeScene : ProcedureBase

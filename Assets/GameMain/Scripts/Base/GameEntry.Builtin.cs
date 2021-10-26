@@ -18,7 +18,7 @@ namespace SSRPG
         }
 
         /// <summary>
-        /// 获取配置组件。
+        /// 获取全局配置组件。
         /// </summary>
         public static ConfigComponent Config
         {

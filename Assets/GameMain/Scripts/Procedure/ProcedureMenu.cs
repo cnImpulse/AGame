@@ -32,7 +32,8 @@ namespace SSRPG
 
             if (m_MenuOption == MenuOption.StartGame)
             {
-                ChangeState<ProcedureBattle>(procedureOwner);
+                procedureOwner.SetData<VarInt32>("NextSceneId", (int)SceneType.Battle);
+                ChangeState<ProcedureChangeScene>(procedureOwner);
             }
             else if (m_MenuOption == MenuOption.BattleEditor)
             {

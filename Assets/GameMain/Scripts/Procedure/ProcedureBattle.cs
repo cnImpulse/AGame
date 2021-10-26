@@ -110,13 +110,10 @@ namespace SSRPG
 
             // 加载玩家战棋
             int posCount = m_BattleData.playerBrithList.Count;
-            int playerCount = m_BattleData.maxPlayerBattleUnit;
-            for (int i = 0; i < Mathf.Min(posCount, playerCount); ++i)
+            foreach(var position in m_BattleData.playerBrithList)
             {
                 int typeId = 10000 + Random.Range(1, 6);
-                Vector2Int pos = m_BattleData.playerBrithList[i];
-
-                BattleUnitData battleUnitData = new BattleUnitData(typeId, gridMap.Id, pos, CampType.Player);
+                BattleUnitData battleUnitData = new BattleUnitData(typeId, gridMap.Id, position, CampType.Player);
                 gridMap.RegisterBattleUnit(battleUnitData);
             }
         }

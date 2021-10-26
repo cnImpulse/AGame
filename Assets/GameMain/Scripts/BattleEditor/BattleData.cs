@@ -7,7 +7,7 @@ namespace SSRPG
     public class BattleData
     {
         public int maxPlayerBattleUnit = 0;
-        public List<Vector2Int> playerBrithList = null;
+        public HashSet<Vector2Int> playerBrithList = null;
         public Dictionary<int, int> enemyList = null;
         public GridMapData gridMapData = null;
 
@@ -19,8 +19,8 @@ namespace SSRPG
         public BattleData(GridMapData gridMapData)
         {
             this.gridMapData = gridMapData;
-            maxPlayerBattleUnit = 2;
-            playerBrithList = new List<Vector2Int>();
+            maxPlayerBattleUnit = 4;
+            playerBrithList = new HashSet<Vector2Int>();
             enemyList = new Dictionary<int, int>();
         }
     }
