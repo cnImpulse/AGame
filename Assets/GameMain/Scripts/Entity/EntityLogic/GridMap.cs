@@ -12,7 +12,7 @@ namespace SSRPG
     /// </summary>
     public class GridMap : Entity, IPointerDownHandler
     {
-        public static TileBase empty = null, wall = null, streak = null;
+        public static TileBase empty = null, wall = null, streak = null, brith = null;
 
         private Tilemap m_Tilemap = null, m_GridMapEffect = null;
         private BoxCollider2D box = null;
@@ -50,6 +50,8 @@ namespace SSRPG
                 (assetName, asset, duration, userData) => { empty = asset as TileBase; });
             GameEntry.Resource.LoadAsset(AssetUtl.GetTileAssetPath("wall"), typeof(TileBase),
                 (assetName, asset, duration, userData) => { wall = asset as TileBase; });
+            GameEntry.Resource.LoadAsset(AssetUtl.GetTileAssetPath("brith"), typeof(TileBase),
+                (assetName, asset, duration, userData) => { brith = asset as TileBase; });
             GameEntry.Resource.LoadAsset(AssetUtl.GetTileAssetPath("streak"), typeof(TileBase),
                 (assetName, asset, duration, userData) => { streak = asset as TileBase; RefreshMap(); });
         }
@@ -177,6 +179,11 @@ namespace SSRPG
         {
             m_GridMapEffect.color = Color.red;
             ShowTilemapEffect(gridDatas, streak);
+        }
+
+        public void SetTilemapEffect(GridData gridData, TileBase tile)
+        {
+            m_GridMapEffect.SetTile((Vector3Int)gridData.GridPos, tile);
         }
 
         private void ShowTilemapEffect(List<GridData> gridDatas, TileBase tile)

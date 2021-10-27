@@ -118,13 +118,6 @@ namespace SSRPG
                 }
             }
 
-            m_BattleData.maxPlayerBattleUnit = enemyList.Count;
-            for (int i=0; i<m_BattleData.maxPlayerBattleUnit; ++i)
-            {
-                int index = Random.Range(0, gridList.Count - 1);
-                m_BattleData.playerBrithList.Add(gridList[index].GridPos);
-            }
-
             string path = AssetUtl.GetBattleDataPath(1);
             AssetUtl.SaveData(path, m_BattleData);
         }
@@ -165,8 +158,16 @@ namespace SSRPG
 
             if (m_Form.EditMode == EditMode.Paint)
             {
-                var data = new BattleUnitData(m_Form.SelectedBattleUnitId, m_GridMap.Id, ne.gridData.GridPos, CampType.Enemy);
-                m_GridMap.RegisterBattleUnit(data);
+                if (m_Form.SelectedBattleUnitId == 1)
+                {
+                    m_GridMap.SetTilemapEffect(ne.gridData, GridMap.brith);
+                    m_BattleData.playerBrithList.Add(ne.gridData.GridPos);
+                }
+                else
+                {
+                    var data = new BattleUnitData(m_Form.SelectedBattleUnitId, m_GridMap.Id, ne.gridData.GridPos, CampType.Enemy);
+                    m_GridMap.RegisterBattleUnit(data);
+                }
             }
             else if (m_Form.EditMode == EditMode.Erase)
             {
