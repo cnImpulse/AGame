@@ -31,21 +31,22 @@ namespace SSRPG
                 return;
             }
 
+            SceneType sceneType = SceneType.None;
             if (m_MenuOption == MenuOption.CreatGame)
             {
-                procedureOwner.SetData<VarInt32>("NextSceneId", (int)SceneType.Main);
-                ChangeState<ProcedureChangeScene>(procedureOwner);
+                sceneType = SceneType.Main;
             }
             else if (m_MenuOption == MenuOption.BattleTest)
             {
-                procedureOwner.SetData<VarInt32>("NextSceneId", (int)SceneType.Battle);
-                ChangeState<ProcedureChangeScene>(procedureOwner);
+                sceneType = SceneType.Battle;
             }
             else if (m_MenuOption == MenuOption.BattleEditor)
             {
-                procedureOwner.SetData<VarInt32>("NextSceneId", (int)SceneType.BattleEditor);
-                ChangeState<ProcedureChangeScene>(procedureOwner);
+                sceneType = SceneType.BattleEditor;
             }
+
+            procedureOwner.SetData<VarInt32>("NextSceneId", (int)sceneType);
+            ChangeState<ProcedureChangeScene>(procedureOwner);
         }
 
         protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
