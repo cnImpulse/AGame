@@ -7,6 +7,8 @@
         MenuForm = 100,
         SaveForm = 101,
 
+        StoryForm = 1001,
+
         BattleForm = 200,
         BattleEndForm = 201,
 
