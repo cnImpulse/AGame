@@ -29,8 +29,8 @@ namespace SSRPG
             {
                 return;
             }
-
-            if (m_MenuOption == MenuOption.StartGame)
+            
+            if (m_MenuOption == MenuOption.BattleTest)
             {
                 procedureOwner.SetData<VarInt32>("NextSceneId", (int)SceneType.Battle);
                 ChangeState<ProcedureChangeScene>(procedureOwner);

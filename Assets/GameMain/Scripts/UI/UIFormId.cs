@@ -5,6 +5,7 @@
         None,
 
         MenuForm = 100,
+        SaveForm = 101,
 
         BattleForm = 200,
         BattleEndForm = 201,

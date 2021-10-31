@@ -50,6 +50,12 @@ namespace SSRPG
             gameObject.GetOrAddComponent<GraphicRaycaster>();
 
             InitChildList();
+
+            var m_CloseBtn = GetChild<Button>("m_CloseBtn");
+            if (m_CloseBtn != null)
+            {
+                m_CloseBtn.onClick.AddListener(Close);
+            }
         }
 
         private void InitChildList()
