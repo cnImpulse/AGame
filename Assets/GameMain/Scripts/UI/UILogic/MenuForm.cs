@@ -6,7 +6,7 @@ namespace SSRPG
     public enum MenuOption
     {
         None,
-        StartGame,
+        CreatGame,
         BattleTest,
         BattleEditor,
     }
@@ -46,7 +46,7 @@ namespace SSRPG
 
         public void OnClickStartGame()
         {
-            GameEntry.UI.OpenUIForm(UIFormId.SaveForm, this);
+            GameEntry.UI.OpenUIForm(UIFormId.SaveForm, m_ProcedureMenu);
         }
 
         public void OnClickOptionBtn(MenuOption menuOption)

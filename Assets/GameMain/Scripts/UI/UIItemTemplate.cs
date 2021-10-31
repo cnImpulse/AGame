@@ -14,7 +14,7 @@ namespace SSRPG
             InitChildList();
         }
 
-        protected virtual void Init()
+        public void Init()
         {
             InitChildList();
         }

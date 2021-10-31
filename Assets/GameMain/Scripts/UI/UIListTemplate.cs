@@ -34,10 +34,19 @@ namespace SSRPG
         public void AddItem(int index)
         {
             var item = Instantiate(m_ItemTemplate, transform);
+            item.Init();
             item.name = string.Format("Item_{0}", index);
 
             m_ItemList.Add(index, item);
             m_OnShowItem(index);
+        }
+
+        public void AddItems(int count, int startIndex = 1)
+        {
+            for (int i = 0; i < count; ++i)
+            {
+                AddItem(startIndex + i);
+            }
         }
 
         public UIItemTemplate GetItem(int index)

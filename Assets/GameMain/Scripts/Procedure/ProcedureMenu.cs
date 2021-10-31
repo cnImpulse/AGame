@@ -9,6 +9,7 @@ namespace SSRPG
     {
         private MenuOption m_MenuOption = MenuOption.None;
         private MenuForm m_MenuForm = null;
+        private int m_MenuSerialId = 0;
 
         protected override void OnEnter(ProcedureOwner procedureOwner)
         {
@@ -18,7 +19,7 @@ namespace SSRPG
 
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
 
-            GameEntry.UI.OpenUIForm(UIFormId.MenuForm, this);
+            m_MenuSerialId = (int)GameEntry.UI.OpenUIForm(UIFormId.MenuForm, this);
         }
 
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)
@@ -29,8 +30,13 @@ namespace SSRPG
             {
                 return;
             }
-            
-            if (m_MenuOption == MenuOption.BattleTest)
+
+            if (m_MenuOption == MenuOption.CreatGame)
+            {
+                procedureOwner.SetData<VarInt32>("NextSceneId", (int)SceneType.Main);
+                ChangeState<ProcedureChangeScene>(procedureOwner);
+            }
+            else if (m_MenuOption == MenuOption.BattleTest)
             {
                 procedureOwner.SetData<VarInt32>("NextSceneId", (int)SceneType.Battle);
                 ChangeState<ProcedureChangeScene>(procedureOwner);
@@ -64,7 +70,7 @@ namespace SSRPG
         private void OnOpenUIFormSuccess(object sender, GameEventArgs e)
         {
             OpenUIFormSuccessEventArgs ne = (OpenUIFormSuccessEventArgs)e;
-            if (ne.UserData != this)
+            if (ne.UIForm.SerialId != m_MenuSerialId)
             {
                 return;
             }

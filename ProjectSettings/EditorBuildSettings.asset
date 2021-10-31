@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/GameMain/Scenes/BattleEditor.unity
     guid: 7ff9ecbf392da417984019909aac9dd9
   - enabled: 1
+    path: Assets/GameMain/Scenes/Main.unity
+    guid: 2b14e7ab3ade84f2083fda2652d7942b
+  - enabled: 1
     path: Assets/GameMain/Scenes/Menu.unity
     guid: 56557d5a9c51743fbac737e24b8a2552
   - enabled: 1

@@ -10,8 +10,9 @@ namespace SSRPG
     {
         None,
         Menu = 1,
-        BattleEditor = 2,
-        Battle = 3,
+        Main = 2,
+        BattleEditor = 3,
+        Battle = 4,
     }
 
     public class ProcedureChangeScene : ProcedureBase
@@ -37,6 +38,10 @@ namespace SSRPG
             // 隐藏所有实体
             GameEntry.Entity.HideAllLoadingEntities();
             GameEntry.Entity.HideAllLoadedEntities();
+
+            // 关闭所有界面
+            GameEntry.UI.CloseAllLoadingUIForms();
+            GameEntry.UI.CloseAllLoadedUIForms();
 
             // 卸载所有场景
             string[] loadedSceneAssetNames = GameEntry.Scene.GetLoadedSceneAssetNames();
