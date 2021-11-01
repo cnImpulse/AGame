@@ -38,8 +38,14 @@ namespace SSRPG
 
         private void PlayStory()
         {
-            if (m_StoryQueue == null || m_StoryQueue.Count == 0)
+            if (m_StoryQueue.Count == 0)
             {
+                List<int> rewardIdList = new List<int>();
+                rewardIdList.Add(20001);
+                rewardIdList.Add(20002);
+                rewardIdList.Add(20003);
+                GameEntry.UI.OpenUIForm(UIFormId.RewardForm, rewardIdList);
+                Close();
                 return;
             }
 

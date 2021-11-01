@@ -41,7 +41,7 @@ namespace SSRPG
             m_OnShowItem(index);
         }
 
-        public void AddItems(int count, int startIndex = 1)
+        public void AddItems(int count, int startIndex = 0)
         {
             for (int i = 0; i < count; ++i)
             {

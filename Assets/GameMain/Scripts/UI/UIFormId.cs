@@ -6,6 +6,7 @@
 
         MenuForm = 100,
         SaveForm = 101,
+        RewardForm = 102,
 
         StoryForm = 1001,
 
