@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using UnityGameFramework.Runtime;
 
 namespace SSRPG
@@ -11,9 +12,11 @@ namespace SSRPG
     {
         private Dictionary<string, Transform> m_ChildList = null;
 
-        private const float FadeTime = 0.3f;
+        protected float FadeTime = 0.3f;
         private Canvas m_CachedCanvas = null;
-        private CanvasGroup m_CanvasGroup = null;
+        protected CanvasGroup m_CanvasGroup = null;
+
+        public UnityAction OnCloseForm = null;
 
         public void Close()
         {
@@ -110,6 +113,11 @@ namespace SSRPG
 
         protected override void OnClose(bool isShutdown, object userData)
         {
+            if (OnCloseForm != null)
+            {
+                OnCloseForm();
+            }
+
             base.OnClose(isShutdown, userData);
         }
 

@@ -58,6 +58,15 @@ namespace SSRPG
             private set;
         }
 
+        /// <summary>
+        /// 游戏提示组件
+        /// </summary>
+        public static GameTipsComponent GameTips
+        {
+            get;
+            private set;
+        }
+
         private static void InitCustomComponents()
         {
             Cfg             = UnityGameFramework.Runtime.GameEntry.GetComponent<CfgComponent>();
@@ -66,6 +75,7 @@ namespace SSRPG
             Effect          = UnityGameFramework.Runtime.GameEntry.GetComponent<EffectComponent>();
             Navigator       = UnityGameFramework.Runtime.GameEntry.GetComponent<NavigatorComponent>();
             GridUnitInfo    = UnityGameFramework.Runtime.GameEntry.GetComponent<GridUnitInfoComponent>();
+            GameTips        = UnityGameFramework.Runtime.GameEntry.GetComponent<GameTipsComponent>();
         }
     }
 }

@@ -54,6 +54,11 @@ namespace SSRPG
             return m_ItemList[index];
         }
 
+        public Dictionary<int, UIItemTemplate> GetAllItems()
+        {
+            return m_ItemList;
+        }
+
         public void RemoveItem(int index)
         {
             if (m_ItemList.TryGetValue(index, out var item))

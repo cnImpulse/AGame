@@ -9,6 +9,7 @@
         RewardForm = 102,
 
         StoryForm = 1001,
+        TipsForm = 1002,
 
         BattleForm = 200,
         BattleEndForm = 201,
