@@ -32,7 +32,7 @@ namespace SSRPG
             }
 
             SceneType sceneType = SceneType.None;
-            if (m_MenuOption == MenuOption.CreatGame)
+            if (m_MenuOption == MenuOption.StartGame)
             {
                 sceneType = SceneType.Main;
             }

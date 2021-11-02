@@ -6,7 +6,7 @@ namespace SSRPG
     public enum MenuOption
     {
         None,
-        CreatGame,
+        StartGame,
         BattleTest,
         BattleEditor,
     }

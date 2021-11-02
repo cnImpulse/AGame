@@ -31,6 +31,7 @@ namespace SSRPG
             m_SelectedRewardId = 0;
             m_RewardDataList = userData as List<int>;
 
+            m_RewardList.InitList();
             m_RewardList.AddItems(m_RewardDataList.Count);
             GameEntry.GameTips.PlayTips("选择一个角色作为开山弟子。");
         }
@@ -59,6 +60,7 @@ namespace SSRPG
                 return;
             }
 
+            GameEntry.Event.Fire(this, EnsureRewardEventArgs.Create(m_SelectedRewardId));
             Close();
         }
 

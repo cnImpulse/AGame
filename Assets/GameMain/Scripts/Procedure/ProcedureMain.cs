@@ -12,14 +12,16 @@ namespace SSRPG
             base.OnEnter(procedureOwner);
 
             Log.Info("游戏主流程。");
-
-            GameEntry.UI.OpenUIForm(UIFormId.StoryForm);
         }
 
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
 
+            if (!GameEntry.Save.SaveData.EndFirstGuide) 
+            {
+                ChangeState<ProcedureCreat>(procedureOwner);
+            }
         }
 
         protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)

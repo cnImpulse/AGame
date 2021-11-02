@@ -37,14 +37,22 @@ namespace SSRPG
             var m_SaveTip = item.GetChild<Text>("m_SaveTip");
 
             m_SaveIndex.text = string.Format("存档{0}: ", index);
-            m_SaveTip.text = string.Format("空存档");
+            if (GameEntry.Save.HasSave(index))
+            {
+                m_SaveTip.text = "存档存在";
+            }
+            else
+            {
+                m_SaveTip.text = "空存档";
+            }
 
             m_SaveBtn.onClick.AddListener(() => { OnClickSaveItem(index); });
         }
 
         private void OnClickSaveItem(int index)
         {
-            m_Owner.SetMenuOption(MenuOption.CreatGame);
+            GameEntry.Save.InitSaveData(index);
+            m_Owner.SetMenuOption(MenuOption.StartGame);
         }
     }
 }

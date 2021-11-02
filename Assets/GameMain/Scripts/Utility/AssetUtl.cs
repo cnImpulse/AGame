@@ -39,11 +39,6 @@ namespace SSRPG
 
         public static void SaveData<T>(string path, T data)
         {
-            if (path == null || data == null)
-            {
-                return;
-            }
-
             string json = JsonConvert.SerializeObject(data);
             FileInfo file = new FileInfo(path);
             StreamWriter sw = file.CreateText();
@@ -58,11 +53,28 @@ namespace SSRPG
             Log.Info("保存数据成功!");
         }
 
+        public static T ReadData<T>(string path)
+        {
+            StreamReader sr = new StreamReader(path);
+            string json = sr.ReadLine();
+
+            return Utility.Json.ToObject<T>(json);
+        }
+
         #region UI
 
         public static string GetUIFormAsset(string assetName)
         {
             return Utility.Text.Format("Assets/GameMain/UI/UIForms/{0}.prefab", assetName);
+        }
+
+        #endregion
+
+        #region SaveData
+
+        public static string GetSaveDataPath(int index)
+        {
+            return Utility.Text.Format(GameEntry.Resource.ReadWritePath + "SaveData_{0}.json", index);
         }
 
         #endregion
