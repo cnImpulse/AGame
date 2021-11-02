@@ -18,7 +18,7 @@ namespace SSRPG
             base.OnInit(userData);
 
             m_RewardList = GetChild<UIListTemplate>("m_RewardList");
-            m_RewardList.AddListener(OnRewardListShow);
+            m_RewardList.AddListener(OnRewardListInit);
 
             m_EnsureBtn = GetChild<Button>("m_EnsureBtn");
             m_EnsureBtn.onClick.AddListener(OnClickEnsureBtn);
@@ -36,7 +36,7 @@ namespace SSRPG
             GameEntry.GameTips.PlayTips("选择一个角色作为开山弟子。");
         }
 
-        private void OnRewardListShow(int index)
+        private void OnRewardListInit(int index)
         {
             var item = m_RewardList.GetItem(index);
             var m_ItemImg = item.GetChild<Image>("m_ItemImg");

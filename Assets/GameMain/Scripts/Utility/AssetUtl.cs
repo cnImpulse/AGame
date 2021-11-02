@@ -69,14 +69,5 @@ namespace SSRPG
         }
 
         #endregion
-
-        #region SaveData
-
-        public static string GetSaveDataPath(int index)
-        {
-            return Utility.Text.Format(GameEntry.Resource.ReadWritePath + "SaveData_{0}.json", index);
-        }
-
-        #endregion
     }
 }

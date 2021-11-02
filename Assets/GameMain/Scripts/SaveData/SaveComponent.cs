@@ -20,18 +20,17 @@ namespace SSRPG
             }
         }
 
-        public string DataPath
+        public string CurrentSaveName
         {
             get
             {
-                return AssetUtl.GetSaveDataPath(m_SaveIndex);
+                return GetSaveName(m_SaveIndex);
             }
         }
 
         public bool HasSave(int saveIndex)
         {
-            string path = AssetUtl.GetSaveDataPath(saveIndex);
-            return File.Exists(path);
+            return GameEntry.Setting.HasSetting(GetSaveName(saveIndex));
         }
 
         public void InitSaveData(int saveIndex)
@@ -39,12 +38,17 @@ namespace SSRPG
             m_SaveIndex = saveIndex;
             if (HasSave(m_SaveIndex))
             {
-                m_SaveData = AssetUtl.ReadData<SaveData>(DataPath);
+                m_SaveData = GetSaveData(m_SaveIndex);
             }
             else
             {
                 m_SaveData = new SaveData();
             }
+        }
+
+        public SaveData GetSaveData(int index)
+        {
+            return GameEntry.Setting.GetObject<SaveData>(GetSaveName(index));
         }
 
         public void Save()
@@ -54,12 +58,26 @@ namespace SSRPG
                 Log.Warning("没有存档数据!");
             }
 
-            AssetUtl.SaveData(DataPath, m_SaveData);
+            GameEntry.Setting.SetObject(CurrentSaveName, m_SaveData);
         }
 
-        public void Remove(int savaIndex)
+        public void Delete(int savaIndex)
         {
-            File.Delete(AssetUtl.GetSaveDataPath(savaIndex));
+            GameEntry.Setting.RemoveSetting(GetSaveName(savaIndex));
         }
+
+        private string GetSaveName(int index)
+        {
+            return string.Format("SaveData_{0}", index);
+        }
+
+        #region EditSaveData
+
+        public void AddDisciple(int id)
+        {
+            m_SaveData.DiscipleList.Add(id, id);
+        }
+
+        #endregion
     }
 }

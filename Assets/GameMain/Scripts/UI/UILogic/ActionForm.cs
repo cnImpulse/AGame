@@ -30,7 +30,7 @@ namespace SSRPG
             m_AttackBtn.onClick.AddListener(() => { OnClickBtn(ActionType.Attack); });
             m_AwaitBtn.onClick.AddListener(() => { OnClickBtn(ActionType.Await); });
             m_SkillBtn.onClick.AddListener(OnClickSkillBtn);
-            m_SkillList.AddListener(OnShowSkillBtn);
+            m_SkillList.AddListener(OnSkillBtnInit);
         }
 
         protected override void OnOpen(object userData)
@@ -54,7 +54,7 @@ namespace SSRPG
 
         }
 
-        private void OnShowSkillBtn(int index)
+        private void OnSkillBtnInit(int index)
         {
             var item = m_SkillList.GetItem(index);
             var button = item.GetComponent<Button>();

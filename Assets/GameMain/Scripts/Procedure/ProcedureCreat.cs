@@ -62,6 +62,7 @@ namespace SSRPG
             var ne = (EnsureRewardEventArgs)e;
             if (sender.Equals(m_Form))
             {
+                GameEntry.Save.AddDisciple(ne.ItemId);
                 GameEntry.Save.SaveData.EndFirstGuide = true;
                 GameEntry.Save.Save();
                 m_EndProcedure = true;

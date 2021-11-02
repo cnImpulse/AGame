@@ -16,7 +16,7 @@ namespace SSRPG
             base.OnInit(userData);
 
             m_SaveList = GetChild<UIListTemplate>("m_SaveList");
-            m_SaveList.AddListener(OnSaveListShow);
+            m_SaveList.AddListener(OnSaveListInit, OnSaveListShow);
         }
 
         protected override void OnOpen(object userData)
@@ -29,17 +29,20 @@ namespace SSRPG
             m_SaveList.AddItems(MaxSave);
         }
 
-        private void OnSaveListShow(int index)
+        private void OnSaveListInit(int index)
         {
             var item = m_SaveList.GetItem(index);
             var m_SaveBtn = item.GetChild<Button>("m_SaveBtn");
             var m_SaveIndex = item.GetChild<Text>("m_SaveIndex");
             var m_SaveTip = item.GetChild<Text>("m_SaveTip");
+            var m_DeleteBtn = item.GetChild<Button>("m_DeleteBtn");
 
             m_SaveIndex.text = string.Format("存档{0}: ", index);
             if (GameEntry.Save.HasSave(index))
             {
-                m_SaveTip.text = "存档存在";
+                var data = GameEntry.Save.GetSaveData(index);
+                m_SaveTip.text = data.SaveName;
+                m_DeleteBtn.onClick.AddListener(() => { OnClickDeleteBtn(index); });
             }
             else
             {
@@ -49,10 +52,31 @@ namespace SSRPG
             m_SaveBtn.onClick.AddListener(() => { OnClickSaveItem(index); });
         }
 
+        private void OnSaveListShow(int index)
+        {
+            var item = m_SaveList.GetItem(index);
+            var m_SaveTip = item.GetChild<Text>("m_SaveTip");
+            if (GameEntry.Save.HasSave(index))
+            {
+                var data = GameEntry.Save.GetSaveData(index);
+                m_SaveTip.text = data.SaveName;
+            }
+            else
+            {
+                m_SaveTip.text = "空存档";
+            }
+        }
+
         private void OnClickSaveItem(int index)
         {
             GameEntry.Save.InitSaveData(index);
             m_Owner.SetMenuOption(MenuOption.StartGame);
+        }
+
+        private void OnClickDeleteBtn(int index)
+        {
+            GameEntry.Save.Delete(index);
+            m_SaveList.RefreshAllItems();
         }
     }
 }
