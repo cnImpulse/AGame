@@ -133,13 +133,13 @@ TextureImporter:
       name: ui_elements_1
       rect:
         serializedVersion: 2
-        x: 36
-        y: 762
-        width: 292
-        height: 135
+        x: 45
+        y: 768
+        width: 276
+        height: 119
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 29, y: 23, z: 26, w: 25}
+      border: {x: 24, y: 16, z: 19, w: 15}
       outline: []
       physicsShape: []
       tessellationDetail: 0

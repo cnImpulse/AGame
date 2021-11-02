@@ -29,9 +29,8 @@ namespace SSRPG
             m_SaveList.AddItems(MaxSave);
         }
 
-        private void OnSaveListInit(int index)
+        private void OnSaveListInit(int index, UIItemTemplate item)
         {
-            var item = m_SaveList.GetItem(index);
             var m_SaveBtn = item.GetChild<Button>("m_SaveBtn");
             var m_SaveIndex = item.GetChild<Text>("m_SaveIndex");
             var m_SaveTip = item.GetChild<Text>("m_SaveTip");
@@ -52,9 +51,8 @@ namespace SSRPG
             m_SaveBtn.onClick.AddListener(() => { OnClickSaveItem(index); });
         }
 
-        private void OnSaveListShow(int index)
+        private void OnSaveListShow(int index, UIItemTemplate item)
         {
-            var item = m_SaveList.GetItem(index);
             var m_SaveTip = item.GetChild<Text>("m_SaveTip");
             if (GameEntry.Save.HasSave(index))
             {

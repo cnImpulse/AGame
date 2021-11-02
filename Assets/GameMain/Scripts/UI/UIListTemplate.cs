@@ -13,7 +13,7 @@ namespace SSRPG
 
         private Dictionary<int, UIItemTemplate> m_ItemList = null;
 
-        private UnityAction<int> m_OnInitItem, m_OnShowItem;
+        private UnityAction<int, UIItemTemplate> m_OnInitItem, m_OnShowItem;
 
         private void Awake()
         {
@@ -40,12 +40,12 @@ namespace SSRPG
 
             if (m_OnInitItem != null)
             {
-                m_OnInitItem(index);
+                m_OnInitItem(index, item);
             }
 
             if (m_OnShowItem != null)
             {
-                m_OnShowItem(index);
+                m_OnShowItem(index, item);
             }
         }
 
@@ -87,16 +87,16 @@ namespace SSRPG
 
         public void RefreshAllItems()
         {
-            foreach (var index in m_ItemList.Keys)
+            foreach (var pair in m_ItemList)
             {
                 if (m_OnShowItem != null)
                 {
-                    m_OnShowItem(index);
+                    m_OnShowItem(pair.Key, pair.Value);
                 }
             }
         }
 
-        public void AddListener(UnityAction<int> OnInitItem, UnityAction<int> OnShowItem = null)
+        public void AddListener(UnityAction<int, UIItemTemplate> OnInitItem, UnityAction<int, UIItemTemplate> OnShowItem = null)
         {
             m_OnInitItem += OnInitItem;
             m_OnShowItem += OnShowItem;

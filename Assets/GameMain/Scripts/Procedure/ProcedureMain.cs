@@ -19,12 +19,6 @@ namespace SSRPG
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenMainFormSuccess);
 
             GameEntry.UI.OpenUIForm(UIFormId.MainForm);
-            var data = new List<int>();
-            foreach (var id in GameEntry.Save.SaveData.DiscipleList.Keys)
-            {
-                data.Add(id);
-            }
-            GameEntry.UI.OpenUIForm(UIFormId.RewardForm, data);
         }
 
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)

@@ -36,9 +36,8 @@ namespace SSRPG
             GameEntry.GameTips.PlayTips("选择一个角色作为开山弟子。");
         }
 
-        private void OnRewardListInit(int index)
+        private void OnRewardListInit(int index, UIItemTemplate item)
         {
-            var item = m_RewardList.GetItem(index);
             var m_ItemImg = item.GetChild<Image>("m_ItemImg");
             var m_ItemName = item.GetChild<Text>("m_ItemName");
             var m_ItemBtn = item.GetChild<Button>("m_ItemBtn");

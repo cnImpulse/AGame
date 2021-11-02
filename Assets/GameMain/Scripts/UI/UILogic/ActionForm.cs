@@ -54,9 +54,8 @@ namespace SSRPG
 
         }
 
-        private void OnSkillBtnInit(int index)
+        private void OnSkillBtnInit(int index, UIItemTemplate item)
         {
-            var item = m_SkillList.GetItem(index);
             var button = item.GetComponent<Button>();
             var text = item.GetComponentInChildren<Text>();
 
