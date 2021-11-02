@@ -69,7 +69,7 @@ namespace SSRPG
 
         private void OnClickSaveItem(int index)
         {
-            GameEntry.Save.InitSaveData(index);
+            GameEntry.DataNode.SetData("SaveIndex", (VarInt32)index);
             m_Owner.SetMenuOption(MenuOption.StartGame);
         }
 

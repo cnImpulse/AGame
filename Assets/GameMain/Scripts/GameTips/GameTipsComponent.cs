@@ -16,12 +16,16 @@ namespace SSRPG
 
         public void PlayTips(string tips)
         {
-            if(m_Form != null)
+            StopTips();
+            GameEntry.UI.OpenUIForm(UIFormId.TipsForm, tips);
+        }
+
+        public void StopTips()
+        {
+            if (m_Form != null)
             {
                 m_Form.Close(true);
             }
-
-            GameEntry.UI.OpenUIForm(UIFormId.TipsForm, tips);
         }
 
         public void OnOpenTipsForm(object sender, GameEventArgs e)

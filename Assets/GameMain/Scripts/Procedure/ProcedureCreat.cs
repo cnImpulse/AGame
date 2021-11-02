@@ -5,7 +5,7 @@ using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedure
 
 namespace SSRPG
 {
-    public class ProcedureCreat : ProcedureBase
+    public class ProcedureLoadSaveData : ProcedureBase
     {
         private RewardForm m_Form = null;
         private bool m_EndProcedure = false;
@@ -14,12 +14,17 @@ namespace SSRPG
         {
             base.OnEnter(procedureOwner);
 
-            Log.Info("新建存档流程。");
+            Log.Info("加载存档流程。");
 
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenRewardForm);
             GameEntry.Event.Subscribe(EnsureRewardEventArgs.EventId, OnEnsureReward);
 
-            GameEntry.UI.OpenUIForm(UIFormId.StoryForm);
+            GameEntry.Save.InitSaveData();
+            m_EndProcedure = GameEntry.Save.SaveData.EndFirstGuide;
+            if (!m_EndProcedure)
+            {
+                GameEntry.UI.OpenUIForm(UIFormId.StoryForm);
+            }
         }
 
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)
@@ -41,6 +46,7 @@ namespace SSRPG
                 m_Form = null;
             }
 
+            GameEntry.GameTips.StopTips();
             GameEntry.Event.Unsubscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenRewardForm);
             GameEntry.Event.Unsubscribe(EnsureRewardEventArgs.EventId, OnEnsureReward);
 

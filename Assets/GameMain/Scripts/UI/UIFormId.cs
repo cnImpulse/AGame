@@ -7,6 +7,7 @@
         MenuForm = 100,
         SaveForm = 101,
         RewardForm = 102,
+        MainForm = 103,
 
         StoryForm = 1001,
         TipsForm = 1002,

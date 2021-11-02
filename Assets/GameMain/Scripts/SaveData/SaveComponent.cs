@@ -33,9 +33,9 @@ namespace SSRPG
             return GameEntry.Setting.HasSetting(GetSaveName(saveIndex));
         }
 
-        public void InitSaveData(int saveIndex)
+        public void InitSaveData()
         {
-            m_SaveIndex = saveIndex;
+            m_SaveIndex = GameEntry.DataNode.GetData<VarInt32>("SaveIndex");
             if (HasSave(m_SaveIndex))
             {
                 m_SaveData = GetSaveData(m_SaveIndex);
