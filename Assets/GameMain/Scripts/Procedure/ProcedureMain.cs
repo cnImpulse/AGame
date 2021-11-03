@@ -10,6 +10,8 @@ namespace SSRPG
     {
         private MainForm m_MainForm = null;
 
+        private bool m_Explore = false;
+
         protected override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
@@ -18,17 +20,22 @@ namespace SSRPG
 
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenMainFormSuccess);
 
-            GameEntry.UI.OpenUIForm(UIFormId.MainForm);
+            GameEntry.UI.OpenUIForm(UIFormId.MainForm, this);
         }
 
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
 
+            if (m_Explore)
+            {
+                ChangeState<ProcedureBattle>(procedureOwner);
+            }
         }
 
         protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
         {
+            m_Explore = false;
             if (m_MainForm != null)
             {
                 m_MainForm.Close(isShutdown);
@@ -36,6 +43,11 @@ namespace SSRPG
 
             GameEntry.Event.Unsubscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenMainFormSuccess);
             base.OnLeave(procedureOwner, isShutdown);
+        }
+
+        public void EnterExplore()
+        {
+            m_Explore = true;
         }
 
         private void OnOpenMainFormSuccess(object sender, GameEventArgs e)

@@ -27,7 +27,7 @@ namespace SSRPG
                 Log.Error("Entity data is invalid!");
                 return;
             }
-
+            
             Name = Utility.Text.Format("[{0} {1}]", m_Data.Name, Id);
         }
 

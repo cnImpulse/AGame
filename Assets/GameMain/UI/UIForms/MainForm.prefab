@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6218\u6597\u6D4B\u8BD5"
+  m_Text: "\u4E0B\u5C71"
 --- !u!1 &1461639504508656716
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 332258468973243901}
   - component: {fileID: 6375921715441881689}
   m_Layer: 5
-  m_Name: m_BattleTest
+  m_Name: m_ExploreBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
