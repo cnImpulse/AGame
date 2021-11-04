@@ -8,6 +8,8 @@ namespace SSRPG
 {
     public class GridUnitInfoComponent : GameFrameworkComponent
     {
+        public bool Enable = true;
+
         [SerializeField]
         private GridUnitInfoItem m_Template = null;
 
@@ -54,6 +56,11 @@ namespace SSRPG
 
         public void ShowGridUnitInfo(GridUnit gridUnit)
         {
+            if (Enable)
+            {
+                return;
+            }
+
             if (gridUnit == null)
             {
                 Log.Warning("GridUnit is invalid.");

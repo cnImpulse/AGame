@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GameFramework;
 using UnityGameFramework.Runtime;
+using UnityEngine.Tilemaps;
 
 namespace SSRPG
 {
@@ -13,6 +14,8 @@ namespace SSRPG
         [SerializeField]
         private Dictionary<int, EffectBase> m_EffectList = null;
 
+        public Tilemap GridMapEffect = null;
+
         private void Start()
         {
             if (m_EffectInstanceRoot == null)
@@ -23,6 +26,7 @@ namespace SSRPG
 
             GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnCreatEffect);
 
+            GridMapEffect = GetComponentInChildren<Tilemap>();
             m_EffectList = new Dictionary<int, EffectBase>();
         }
 

@@ -31,5 +31,12 @@ namespace SSRPG
             int dis2 = GetDistance(target, pos2);
             return dis1 <= dis2 ? pos1 : pos2;
         }
+
+        private static readonly int maxWidth = 100000;
+
+        public static int GridPosToIndex(Vector2Int gridPos)
+        {
+            return gridPos.x + gridPos.y * maxWidth;
+        }
     }
 }

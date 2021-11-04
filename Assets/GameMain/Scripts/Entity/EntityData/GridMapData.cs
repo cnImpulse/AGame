@@ -16,9 +16,10 @@ namespace SSRPG
         private Dictionary<int, GridData> m_GridList = null;
 
         [JsonConstructor]
-        private GridMapData(int mapId) : base(mapId)
+        public GridMapData(int mapId) : base(mapId)
         {
             Name = "GridMap";
+            m_GridList = new Dictionary<int, GridData>();
         }
 
         public GridMapData(int width, int height, int mapId) : base(mapId)
@@ -30,8 +31,8 @@ namespace SSRPG
                 for (int y = -height / 2; y < height / 2; ++y)
                 {
                     var pos = new Vector2Int(x, y);
-                    int index = GridPosToIndex(pos);
-                    m_GridList[index] = new GridData(pos, GridType.Normal);
+                    int index = GridMapUtl.GridPosToIndex(pos);
+                    m_GridList[index] = new GridData(pos, GridType.Land);
                 }
             }
         }
@@ -41,17 +42,18 @@ namespace SSRPG
         /// </summary>
         public Dictionary<int, GridData> GridList => m_GridList;
 
-        private static readonly int maxWidth = 100000;
 
-        public int GridPosToIndex(Vector2Int gridPos)
+
+        public void SetGridData(GridData gridData)
         {
-            return gridPos.x + gridPos.y * maxWidth;
+            var index = GridMapUtl.GridPosToIndex(gridData.GridPos);
+            m_GridList[index] = gridData;
         }
 
         public GridData GetGridData(Vector2Int gridPos)
         {
-            int gridIndex = GridPosToIndex(gridPos);
-            return GetGridData(gridIndex);
+            int index = GridMapUtl.GridPosToIndex(gridPos);
+            return GetGridData(index);
         }
 
         public GridData GetGridData(int gridIndex)

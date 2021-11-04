@@ -4,22 +4,21 @@ using Newtonsoft.Json;
 
 namespace SSRPG
 {
-    public class BattleData
+    public class LevelData
     {
-        public int maxPlayerBattleUnit = 0;
+        public int mapId = 0;
+        public int maxPlayerBattleUnit = -1;
         public HashSet<Vector2Int> playerBrithList = null;
         public Dictionary<int, int> enemyList = null;
-        public GridMapData gridMapData = null;
 
         [JsonConstructor]
-        private BattleData()
+        private LevelData()
         {
         }
 
-        public BattleData(GridMapData gridMapData)
+        public LevelData(int mapId)
         {
-            this.gridMapData = gridMapData;
-            maxPlayerBattleUnit = 4;
+            this.mapId = mapId;
             playerBrithList = new HashSet<Vector2Int>();
             enemyList = new Dictionary<int, int>();
         }

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: brith
+  m_Name: default
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 5fd1ce6d814ac4095b355dd07b7eba83, type: 3}
-  m_Color: {r: 0.36405307, g: 0.69900477, b: 0.9528302, a: 0.8235294}
+  m_Sprite: {fileID: -88759020809207691, guid: c45ab0c16642844c69ca777febfd0996, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0

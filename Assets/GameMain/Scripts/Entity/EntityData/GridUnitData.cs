@@ -4,7 +4,7 @@ using UnityEngine;
 namespace SSRPG
 {
     [Serializable]
-    public abstract class GridUnitData : ChirldEntityData
+    public abstract class GridUnitData : EntityData
     {
         [SerializeField]
         private Vector2Int m_GridPos;
@@ -18,8 +18,8 @@ namespace SSRPG
         [SerializeField]
         private int m_HP = 0;
 
-        public GridUnitData(int typeId, int parentId, Vector2Int gridPos, GridUnitType gridUnitType, CampType campType)
-            : base(typeId, parentId)
+        public GridUnitData(int typeId, Vector2Int gridPos, GridUnitType gridUnitType, CampType campType)
+            : base(typeId)
         {
             m_GridPos       = gridPos;
             m_GridUnitType  = gridUnitType;

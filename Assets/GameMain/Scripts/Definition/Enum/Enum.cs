@@ -6,8 +6,8 @@ namespace SSRPG
     public enum GridType
     {
         None,
-        Normal,
-        Wall,
+        Land,
+        Obstacle,
     }
 
     /// <summary>

@@ -80,7 +80,7 @@ namespace SSRPG
                 return false;
             }
 
-            if (GridType == GridType.Wall)
+            if (GridType == GridType.Obstacle)
             {
                 return false;
             }
@@ -98,7 +98,7 @@ namespace SSRPG
         /// </summary>
         public bool CanArrive()
         {
-            if (GridType == GridType.Wall || GridUnit != null)
+            if (GridType == GridType.Obstacle || GridUnit != null)
             {
                 return false;
             }
@@ -111,7 +111,7 @@ namespace SSRPG
         /// </summary>
         public bool CanAttack()
         {
-            if (GridType == GridType.Wall)
+            if (GridType == GridType.Obstacle)
             {
                 return false;
             }

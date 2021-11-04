@@ -29,8 +29,8 @@ namespace SSRPG
         [SerializeField]
         private List<int> m_SkillList = null;
 
-        public BattleUnitData(int typeId, int parentId, Vector2Int gridPos, CampType campType)
-            : base(typeId, parentId, gridPos, GridUnitType.BattleUnit, campType) 
+        public BattleUnitData(int typeId, Vector2Int gridPos, CampType campType)
+            : base(typeId, gridPos, GridUnitType.BattleUnit, campType) 
         {
             var cfg = GameEntry.Cfg.Tables.TblBattleUnit.Get(typeId);
             m_ATK = cfg.ATK;

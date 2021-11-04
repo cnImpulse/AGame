@@ -11,7 +11,7 @@ namespace SSRPG
     public class ProcedureBattle : ProcedureBase
     {
         private bool m_BattleEnd = false;
-        private BattleData m_BattleData = null;
+        private LevelData m_BattleData = null;
         private BattleForm m_BattleForm = null;
 
         private IFsm<ProcedureBattle> m_BattleFsm = null;
@@ -86,14 +86,14 @@ namespace SSRPG
                 new SkillReleaseState(), new AutoActionState(), new BattleUnitEndActionState());
         }
 
-        private void InitBattle(int battleId)
+        private void InitBattle(int levelId)
         {
-            string path = AssetUtl.GetBattleDataPath(battleId);
+            string path = AssetUtl.GetLevelData(levelId);
             GameEntry.Resource.LoadAsset(path, (assetName, asset, duration, userData) =>
             {
                 TextAsset textAsset = asset as TextAsset;
-                m_BattleData = Utility.Json.ToObject<BattleData>(textAsset.text);
-                GameEntry.Entity.ShowGridMap(m_BattleData.gridMapData);
+                m_BattleData = Utility.Json.ToObject<LevelData>(textAsset.text);
+                GameEntry.Entity.ShowGridMap(0);
             });
         }
 
@@ -102,9 +102,9 @@ namespace SSRPG
             // 加载敌人
             foreach (var enemy in m_BattleData.enemyList)
             {
-                int typeId = enemy.Value;
+                int typeId = enemy.Value + 1;
                 var gridData = gridMap.Data.GetGridData(enemy.Key);
-                BattleUnitData battleUnitData = new BattleUnitData(typeId, gridMap.Id, gridData.GridPos, CampType.Enemy);
+                BattleUnitData battleUnitData = new BattleUnitData(typeId, gridData.GridPos, CampType.Enemy);
                 gridMap.RegisterBattleUnit(battleUnitData);
             }
 
@@ -113,7 +113,7 @@ namespace SSRPG
             foreach(var position in m_BattleData.playerBrithList)
             {
                 int typeId = 10000 + Random.Range(1, 6);
-                BattleUnitData battleUnitData = new BattleUnitData(typeId, gridMap.Id, position, CampType.Player);
+                BattleUnitData battleUnitData = new BattleUnitData(typeId, position, CampType.Player);
                 gridMap.RegisterBattleUnit(battleUnitData);
             }
         }

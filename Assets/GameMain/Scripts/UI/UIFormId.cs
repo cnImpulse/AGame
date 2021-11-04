@@ -17,7 +17,5 @@
 
         ActionForm = 300,
         GridUnitInfoForm = 301,
-
-        BattleEditorForm = 500,
     }
 }

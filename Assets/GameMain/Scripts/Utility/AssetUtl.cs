@@ -7,32 +7,37 @@ namespace SSRPG
 {
     public static class AssetUtl
     {
-        public static string GetEntityAssetPath(string assetName)
+        public static string GetEntityAsset(string name)
         {
-            return Utility.Text.Format("Assets/GameMain/Entities/{0}.prefab", assetName);
+            return Utility.Text.Format("Assets/GameMain/Entities/{0}.prefab", name);
         }
 
-        public static string GetEffectAssetPath(string assetName)
+        public static string GetGridMapAsset(int mapId)
         {
-            return Utility.Text.Format("Assets/GameMain/Effect/{0}.prefab", assetName);
+            return Utility.Text.Format("Assets/GameMain/Entities/GridMap/GridMap_{0}.prefab", mapId);
         }
 
-        public static string GetTileAssetPath(string assetName)
+        public static string GetEffectAsset(string name)
         {
-            return Utility.Text.Format("Assets/GameMain/Tilemap/{0}.asset", assetName);
+            return Utility.Text.Format("Assets/GameMain/Effect/{0}.prefab", name);
         }
 
-        public static string GetGridMapDataPath(int mapId)
+        public static string GetTileAsset(string gridType, string name)
         {
-            return Utility.Text.Format("Assets/GameMain/GameData/GridMapData/GridMapData_{0}.json", mapId);
+            if (gridType == "")
+            {
+                return Utility.Text.Format("Assets/GameMain/Tilemap/Tiles/{0}.asset", name);
+            }
+
+            return Utility.Text.Format("Assets/GameMain/Tilemap/Tiles/{0}/{1}.asset", gridType, name);
         }
 
-        public static string GetBattleDataPath(int battleId)
+        public static string GetLevelData(int levelId)
         {
-            return Utility.Text.Format("Assets/GameMain/GameData/BattleData/BattleData_{0}.json", battleId);
+            return Utility.Text.Format("Assets/GameMain/GameData/LevelData/LevelData_{0}.json", levelId);
         }
 
-        public static string GetSceneAssetPath(string assetName)
+        public static string GetSceneAsset(string assetName)
         {
             return Utility.Text.Format("Assets/GameMain/Scenes/{0}.unity", assetName);
         }

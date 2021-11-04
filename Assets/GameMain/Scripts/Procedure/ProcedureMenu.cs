@@ -40,10 +40,6 @@ namespace SSRPG
             {
                 sceneType = SceneType.Battle;
             }
-            else if (m_MenuOption == MenuOption.BattleEditor)
-            {
-                sceneType = SceneType.BattleEditor;
-            }
 
             procedureOwner.SetData<VarInt32>("NextSceneId", (int)sceneType);
             ChangeState<ProcedureChangeScene>(procedureOwner);

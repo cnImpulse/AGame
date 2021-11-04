@@ -11,8 +11,7 @@ namespace SSRPG
         None,
         Menu = 1,
         Main = 2,
-        BattleEditor = 3,
-        Battle = 4,
+        Battle = 3,
     }
 
     public class ProcedureChangeScene : ProcedureBase
@@ -57,7 +56,7 @@ namespace SSRPG
             m_NextSceneId = procedureOwner.GetData<VarInt32>("NextSceneId");
             var cfg = GameEntry.Cfg.Tables.TblScene.Get(m_NextSceneId);
             
-            GameEntry.Scene.LoadScene(AssetUtl.GetSceneAssetPath(cfg.AssetName), 0, this);
+            GameEntry.Scene.LoadScene(AssetUtl.GetSceneAsset(cfg.AssetName), 0, this);
         }
 
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)

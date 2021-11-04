@@ -8,7 +8,6 @@ namespace SSRPG
         None,
         StartGame,
         BattleTest,
-        BattleEditor,
     }
 
     public class MenuForm : UIForm
@@ -17,7 +16,6 @@ namespace SSRPG
 
         private Button m_StartGame = null;
         private Button m_BattleTest = null;
-        private Button m_BattleEditor = null;
 
         protected override void OnInit(object userData)
         {
@@ -25,11 +23,9 @@ namespace SSRPG
 
             m_StartGame = GetChild<Button>("m_StartGame");
             m_BattleTest = GetChild<Button>("m_BattleTest");
-            m_BattleEditor = GetChild<Button>("m_BattleEditor");
 
             m_StartGame.onClick.AddListener(OnClickStartGame);
             m_BattleTest.onClick.AddListener(() => OnClickOptionBtn(MenuOption.BattleTest));
-            m_BattleEditor.onClick.AddListener(() => OnClickOptionBtn(MenuOption.BattleEditor));
         }
 
         protected override void OnOpen(object userData)

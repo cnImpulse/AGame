@@ -17,7 +17,7 @@ namespace SSRPG
         public static void ShowEffect(this EntityComponent entityComponent, EffectDataBase data)
         {
             var cfg = GameEntry.Cfg.Tables.TblEffect.Get(data.TypeId);
-            entityComponent.ShowEntity(data.Id, typeof(EffectBase), AssetUtl.GetEffectAssetPath(cfg.AssetName), "Effect", data);
+            entityComponent.ShowEntity(data.Id, typeof(EffectBase), AssetUtl.GetEffectAsset(cfg.AssetName), "Effect", data);
         }
 
         // 重构-----------------
@@ -32,7 +32,7 @@ namespace SSRPG
             where T : EntityLogic
         {
             var cfg = GameEntry.Cfg.Tables.TblEntity.Get(entityType);
-            entityComponent.ShowEntity<T>(data.Id, AssetUtl.GetEntityAssetPath(cfg.AssetName), entityGroup, cfg.Priority, data);
+            entityComponent.ShowEntity<T>(data.Id, AssetUtl.GetEntityAsset(cfg.AssetName), entityGroup, cfg.Priority, data);
         }
 
         private static void ShowEntity<T>(this EntityComponent entityComponent, string entityGroup, EntityData data, EntityType entityType)
@@ -65,13 +65,9 @@ namespace SSRPG
 
         public static void ShowGridMap(this EntityComponent entityComponent, int mapId)
         {
-            string path = AssetUtl.GetGridMapDataPath(mapId);
-            GameEntry.Resource.LoadAsset(path, typeof(TextAsset), (assetName, asset, duration, userData) =>
-            {
-                TextAsset textAsset = asset as TextAsset;
-                GridMapData gridMapData = Utility.Json.ToObject<GridMapData>(textAsset.text);
-                entityComponent.ShowEntity<GridMap>("GridMap", gridMapData, EntityType.GridMap);
-            });
+            string path = AssetUtl.GetGridMapAsset(mapId);
+            GridMapData data = new GridMapData(mapId);
+            entityComponent.ShowEntity<GridMap>(data.Id, path, "GridMap", data);
         }
 
         public static void ShowGridMap(this EntityComponent entityComponent, GridMapData data)

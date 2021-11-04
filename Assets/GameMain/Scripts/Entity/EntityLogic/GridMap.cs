@@ -4,6 +4,7 @@ using UnityEngine.Tilemaps;
 using UnityEngine.EventSystems;
 using GameFramework.Event;
 using UnityGameFramework.Runtime;
+using GameFramework.Resource;
 
 namespace SSRPG
 {
@@ -12,10 +13,11 @@ namespace SSRPG
     /// </summary>
     public class GridMap : Entity, IPointerDownHandler
     {
-        public static TileBase empty = null, wall = null, streak = null, brith = null;
+        public static TileBase streak = null;
 
-        private Tilemap m_Tilemap = null, m_GridMapEffect = null;
-        private BoxCollider2D box = null;
+        private Tilemap m_GridMapEffect = null;
+
+        private Tilemap[] m_TilemapList = null;
 
         [SerializeField]
         private GridMapData m_Data = null;
@@ -25,43 +27,80 @@ namespace SSRPG
 
         public GridMapData Data => m_Data;
 
+        private GridData CreatGridData(Vector2Int position, TileBase tile)
+        {
+            var obstaclePath = AssetUtl.GetTileAsset(GridType.Obstacle.ToString(), tile.name);
+            if (GameEntry.Resource.HasAsset(obstaclePath) != HasAssetResult.NotExist)
+            {
+                return new GridData(position, GridType.Obstacle);
+            }
+
+            return new GridData(position, GridType.Land);
+        }
+
+        private void InitGridMapData(object userData)
+        {
+            m_Data = userData as GridMapData;
+            if (m_Data == null || m_TilemapList == null || m_TilemapList.Length == 0)
+            {
+                Log.Warning("网格地图数据初始化错误。");
+                return;
+            }
+
+            for (int i = m_TilemapList.Length - 1; i >= 0; --i)
+            {
+                var tilemap = m_TilemapList[i];
+                var bounds = tilemap.cellBounds;
+                for (int x = bounds.xMin; x <= bounds.xMax; ++x)
+                {
+                    for (int y = bounds.yMin; y <= bounds.yMax; ++y)
+                    {
+                        var position = new Vector3Int(x, y, 0);
+                        if (m_Data.GetGridData((Vector2Int)position) != null)
+                        {
+                            continue;
+                        }
+
+                        var tile = tilemap.GetTile<TileBase>(position);
+                        if (tile == null)
+                        {
+                            continue;
+                        }
+
+                        var gridData = CreatGridData((Vector2Int)position, tile);
+                        m_Data.SetGridData(gridData);
+                    }
+                }
+            }
+        }
+
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
 
-            gameObject.SetLayerRecursively(Constant.Layer.GridMapLayerId);
-
-            m_Tilemap = transform.Find("Tilemap").GetComponent<Tilemap>();
-            m_GridMapEffect = transform.Find("GridMapEffect").GetComponent<Tilemap>();
-            box = gameObject.GetOrAddComponent<BoxCollider2D>();
-
+            m_TilemapList = GetComponentsInChildren<Tilemap>();
             m_GridUnitList = new Dictionary<int, GridUnit>();
+
+            // temp code
+            m_GridMapEffect = GameEntry.Effect.GridMapEffect;
+            //m_GridMapEffect.GetComponent<TilemapRenderer>().sortingLayerName = "Effect";
         }
 
         protected override void OnShow(object userData)
         {
             base.OnShow(userData);
 
-            m_Data = userData as GridMapData;
+            GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnShowBattleUnitScuess);
 
-            GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntityScuess);
+            GameEntry.Resource.LoadAsset(AssetUtl.GetTileAsset("" ,"streak"), typeof(TileBase),
+                (assetName, asset, duration, userData) => { streak = asset as TileBase; });
 
-            GameEntry.Resource.LoadAsset(AssetUtl.GetTileAssetPath("empty"), typeof(TileBase),
-                (assetName, asset, duration, userData) => { empty = asset as TileBase; });
-            GameEntry.Resource.LoadAsset(AssetUtl.GetTileAssetPath("wall"), typeof(TileBase),
-                (assetName, asset, duration, userData) => { wall = asset as TileBase; });
-            GameEntry.Resource.LoadAsset(AssetUtl.GetTileAssetPath("brith"), typeof(TileBase),
-                (assetName, asset, duration, userData) => { brith = asset as TileBase; });
-            GameEntry.Resource.LoadAsset(AssetUtl.GetTileAssetPath("streak"), typeof(TileBase),
-                (assetName, asset, duration, userData) => { streak = asset as TileBase; RefreshMap(); });
+            InitGridMapData(userData);
         }
 
         protected override void OnHide(bool isShutdown, object userData)
         {
-            m_Tilemap.ClearAllTiles();
-            HideTilemapEffect();
-
-            GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntityScuess);
+            GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, OnShowBattleUnitScuess);
 
             base.OnHide(isShutdown, userData);
         }
@@ -84,63 +123,25 @@ namespace SSRPG
             Data.GetGridData(gridUnit.Data.GridPos).OnGridUnitLeave();
         }
 
-        public void SetGridData(Vector2Int position, GridType gridType)
-        {
-            var gridData = m_Data.GetGridData(position);
-            gridData.GridType = gridType;
-            RefreshGrid(gridData);
-        }
-
-        public void RefreshGrid(GridData gridData)
-        {
-            TileBase tile = empty;
-            if (gridData.GridType == GridType.Wall)
-            {
-                tile = wall;
-            }
-
-            m_Tilemap.SetTile((Vector3Int)gridData.GridPos, tile);
-        }
-
-        public void RefreshMap()
-        {
-            m_Tilemap.ClearAllTiles();
-            foreach(var gridData in m_Data.GridList.Values)
-            {
-                RefreshGrid(gridData);
-            }
-            box.size = m_Tilemap.localBounds.size;
-        }
-
-        public void RefreshPreview(List<GridData> gridList, GridType gridType)
-        {
-            RefreshMap();
-            foreach (var gridData in gridList)
-            {
-                TileBase tile = empty;
-                if (gridType == GridType.Wall)
-                {
-                    tile = wall;
-                }
-                m_Tilemap.SetTile((Vector3Int)gridData.GridPos, tile);
-            }
-        }
-
+        /// <summary>
+        /// 网格坐标转世界坐标
+        /// </summary>
         public Vector3 GridPosToWorldPos(Vector2Int gridPos)
         {
-            return m_Tilemap.GetCellCenterWorld((Vector3Int)gridPos);
+            return m_TilemapList[0].GetCellCenterWorld((Vector3Int)gridPos);
         }
 
+        /// <summary>
+        /// 世界坐标转网格坐标
+        /// </summary>
         public Vector2Int WorldPosToGridPos(Vector3 worldPosition)
         {
-            return (Vector2Int)m_Tilemap.WorldToCell(worldPosition);
+            return (Vector2Int)m_TilemapList[0].WorldToCell(worldPosition);
         }
 
         /// <summary>
         /// 注册战斗单位实体
         /// </summary>
-        /// <param name="gridUnit">网格单位</param>
-        /// <returns>注册结果</returns>
         public bool RegisterBattleUnit(BattleUnitData battleUnitData)
         {
             GridData gridData = m_Data.GetGridData(battleUnitData.GridPos);
@@ -238,7 +239,7 @@ namespace SSRPG
 
         private GridData GetGridDataByWorldPos(Vector3 worldPosition)
         {
-            Vector2Int gridPos = (Vector2Int)m_Tilemap.WorldToCell(worldPosition);
+            Vector2Int gridPos = (Vector2Int)m_TilemapList[0].WorldToCell(worldPosition);
             return m_Data.GetGridData(gridPos);
         }
 
@@ -251,12 +252,12 @@ namespace SSRPG
             }
         }
 
-        public void OnShowEntityScuess(object sender, GameEventArgs e)
+        public void OnShowBattleUnitScuess(object sender, GameEventArgs e)
         {
             var ne = (ShowEntitySuccessEventArgs)e;
 
             var gridUnit = ne.Entity.Logic as GridUnit;
-            if (gridUnit == null || gridUnit.Data.ParentId != Id) 
+            if (gridUnit == null) 
             {
                 return;
             }
