@@ -52,10 +52,21 @@ namespace SSRPG
 
         public void ShowGridMapEffect(List<GridData> gridDatas, GridMapEffectId effectId, Color color = default)
         {
+            List<Vector2Int> positions = gridDatas.ConvertAll((input) => input.GridPos);
+            ShowGridMapEffect(positions, effectId, color);
+        }
+
+        public void ShowGridMapEffect(List<Vector2Int> positions, GridMapEffectId effectId, Color color = default)
+        {
             m_GridMapEffect.ClearAllTiles();
-            if (gridDatas == null || effectId == GridMapEffectId.None)
+            if (positions == null || effectId == GridMapEffectId.None)
             {
                 return;
+            }
+
+            if (color == default)
+            {
+                color = Color.white;
             }
 
             var cfg = GameEntry.Cfg.Tables.TblGridMapEffect.Get((int)effectId);
@@ -66,9 +77,9 @@ namespace SSRPG
                     var tile = asset as TileBase;
 
                     m_GridMapEffect.color = color;
-                    foreach (var grid in gridDatas)
+                    foreach (var pos in positions)
                     {
-                        m_GridMapEffect.SetTile((Vector3Int)grid.GridPos, tile);
+                        m_GridMapEffect.SetTile((Vector3Int)pos, tile);
                     }
                 });
         }

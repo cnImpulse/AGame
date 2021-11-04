@@ -56,9 +56,14 @@ namespace SSRPG
         private void OnGridUnitDamage(object sender, GameEventArgs e)
         {
             var ne = (GridUnitDamageEventArgs)e;
+            var info = ne.DamageInfo;
 
-            GridUnit gridUnit = GameEntry.Entity.GetEntityLogic<GridUnit>(ne.DamageInfo.TargetId);
-            gridUnit.BeAttack(ne.DamageInfo.DamageHP);
+            GridUnit caster = GameEntry.Entity.GetEntityLogic<GridUnit>(info.CasterId);
+            GridUnit target = GameEntry.Entity.GetEntityLogic<GridUnit>(info.TargetId);
+            target.BeAttack(info.DamageHP);
+
+            GameEntry.GameTips.PlayTips(string.Format("{0}对{1}造成<color=#FF7070>{2}</color>点伤害",
+                Utl.GetText(caster.Data.CampType, caster.Name), Utl.GetText(target.Data.CampType, target.Name), info.DamageHP));
         }
 
         private void OnGridUnitDead(object sender, GameEventArgs e)

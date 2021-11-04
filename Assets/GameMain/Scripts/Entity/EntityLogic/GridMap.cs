@@ -171,11 +171,6 @@ namespace SSRPG
             GameEntry.Effect.ShowGridMapEffect(gridDatas, GridMapEffectId.Streak, Color.red);
         }
 
-        public void HideTilemapEffect()
-        {
-            GameEntry.Effect.HideGridMapEffect();
-        }
-
         public void MoveTo(GridUnit gridUnit, Vector2Int destination)
         {
             GridData start = m_Data.GetGridData(gridUnit.Data.GridPos);

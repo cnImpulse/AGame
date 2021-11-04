@@ -38,7 +38,7 @@ namespace SSRPG
 
             transform.position = m_InitialPosition;
             m_TipsTxt.text = "";
-            var tweener = m_TipsTxt.DOText(tips, tips.Length * 0.2f);
+            var tweener = m_TipsTxt.DOText(tips, tips.Length * 0.05f);
             tweener.SetDelay(0.2f);
             tweener.OnComplete(() =>
             {

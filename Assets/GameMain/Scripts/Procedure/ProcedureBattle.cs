@@ -22,6 +22,7 @@ namespace SSRPG
         {
             Log.Info("战斗开始。");
 
+            GameEntry.Effect.HideGridMapEffect();
             GameEntry.Battle.InitBattle(gridMap);
             m_BattleFsm.Start<RoundSwitchState>();
         }
@@ -140,6 +141,7 @@ namespace SSRPG
             if (ne.EntityLogicType == typeof(GridMap))
             {
                 gridMap = ne.Entity.Logic as GridMap;
+                GameEntry.Effect.ShowGridMapEffect(m_BattleData.playerBrithList, GridMapEffectId.Brith);
                 InitBattleUnit();
             }
         }
