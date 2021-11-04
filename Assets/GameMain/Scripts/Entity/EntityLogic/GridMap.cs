@@ -41,7 +41,7 @@ namespace SSRPG
         private void InitGridMapData(object userData)
         {
             m_Data = userData as GridMapData;
-            if (m_Data == null || m_TilemapList == null || m_TilemapList.Length == 0)
+            if (m_Data == null)
             {
                 Log.Warning("网格地图数据初始化错误。");
                 return;
@@ -79,6 +79,8 @@ namespace SSRPG
             base.OnInit(userData);
 
             m_TilemapList = GetComponentsInChildren<Tilemap>();
+            m_TilemapList[0].gameObject.GetOrAddComponent<BoxCollider2D>();
+
             m_GridUnitList = new Dictionary<int, GridUnit>();
 
             // temp code
