@@ -3,13 +3,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityGameFramework.Runtime;
 using DG.Tweening;
+using TMPro;
 
 namespace SSRPG
 {
     public class TipsForm : UIForm
     {
         private Vector3 m_InitialPosition = default;
-        private Text m_TipsTxt = null;
+        private TMP_Text m_TipsTxt = null;
 
         protected override void OnInit(object userData)
         {
@@ -18,7 +19,7 @@ namespace SSRPG
             FadeTime = 1f;
             m_InitialPosition = transform.position;
 
-            m_TipsTxt = GetChild<Text>("m_TipsTxt");
+            m_TipsTxt = GetChild<TMP_Text>("m_TipsTxt");
         }
 
         protected override void OnClose(bool isShutdown, object userData)
