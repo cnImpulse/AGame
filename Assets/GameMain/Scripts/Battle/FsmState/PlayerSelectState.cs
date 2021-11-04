@@ -86,7 +86,7 @@ namespace SSRPG
         {
             if (m_EffectId == 0)
             {
-                m_EffectId = GameEntry.Effect.CreatEffect(EffectType.SelectGridUnit, position);
+                m_EffectId = GameEntry.Effect.CreatEffect(EffectId.SelectGridUnit, position);
             }
             else
             {

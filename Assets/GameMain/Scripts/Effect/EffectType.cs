@@ -1,14 +1,15 @@
 namespace SSRPG
 {
-    public enum EffectType
+    public enum EffectId
     {
         None,
         SelectGridUnit = 100,
     }
 
-    public enum UIEffectType
+    public enum GridMapEffectId
     {
         None,
-        BattleInfo = 100,
+        Streak = 2001,
+        Brith = 2002,
     }
 }

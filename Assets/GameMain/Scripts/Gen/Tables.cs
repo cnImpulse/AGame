@@ -18,6 +18,7 @@ namespace cfg
         public UI.TblUIForm TblUIForm {get; }
         public Entity.TblEntity TblEntity {get; }
         public Effect.TblEffect TblEffect {get; }
+        public Effect.TblGridMapEffect TblGridMapEffect {get; }
         public Scene.TblScene TblScene {get; }
 
         public static readonly string[] Assets = {
@@ -26,6 +27,7 @@ namespace cfg
             "ui_tbluiform",
             "entity_tblentity",
             "effect_tbleffect",
+            "effect_tblgridmapeffect",
             "scene_tblscene",
         };
 
@@ -42,6 +44,8 @@ namespace cfg
             tables.Add("Entity.TblEntity", TblEntity);
             TblEffect = new Effect.TblEffect(loader("effect_tbleffect")); 
             tables.Add("Effect.TblEffect", TblEffect);
+            TblGridMapEffect = new Effect.TblGridMapEffect(loader("effect_tblgridmapeffect")); 
+            tables.Add("Effect.TblGridMapEffect", TblGridMapEffect);
             TblScene = new Scene.TblScene(loader("scene_tblscene")); 
             tables.Add("Scene.TblScene", TblScene);
 
@@ -50,6 +54,7 @@ namespace cfg
             TblUIForm.Resolve(tables); 
             TblEntity.Resolve(tables); 
             TblEffect.Resolve(tables); 
+            TblGridMapEffect.Resolve(tables); 
             TblScene.Resolve(tables); 
         }
 
@@ -60,6 +65,7 @@ namespace cfg
             TblUIForm.TranslateText(translator); 
             TblEntity.TranslateText(translator); 
             TblEffect.TranslateText(translator); 
+            TblGridMapEffect.TranslateText(translator); 
             TblScene.TranslateText(translator); 
         }
     }

@@ -55,7 +55,7 @@ namespace SSRPG
             UnityEditor.AssetDatabase.Refresh();
 #endif
 
-            Log.Info("保存数据成功!");
+            UnityEngine.Debug.Log("保存数据成功!");
         }
 
         public static T ReadData<T>(string path)

@@ -56,7 +56,7 @@ namespace SSRPG
             m_EndAttack = false;
             m_CanAttackList = null;
             m_ActiveBattleUnit = null;
-            m_GridMap.HideTilemapEffect();
+            GameEntry.Effect.HideGridMapEffect();
 
             GameEntry.Event.Unsubscribe(PointerDownGridMapEventArgs.EventId, OnPointGridMap);
         }

@@ -13,10 +13,6 @@ namespace SSRPG
     /// </summary>
     public class GridMap : Entity, IPointerDownHandler
     {
-        public static TileBase streak = null;
-
-        private Tilemap m_GridMapEffect = null;
-
         private Tilemap[] m_TilemapList = null;
 
         [SerializeField]
@@ -26,17 +22,6 @@ namespace SSRPG
         private Dictionary<int, GridUnit> m_GridUnitList = null;
 
         public GridMapData Data => m_Data;
-
-        private GridData CreatGridData(Vector2Int position, TileBase tile)
-        {
-            var obstaclePath = AssetUtl.GetTileAsset(GridType.Obstacle.ToString(), tile.name);
-            if (GameEntry.Resource.HasAsset(obstaclePath) != HasAssetResult.NotExist)
-            {
-                return new GridData(position, GridType.Obstacle);
-            }
-
-            return new GridData(position, GridType.Land);
-        }
 
         private void InitGridMapData(object userData)
         {
@@ -74,6 +59,17 @@ namespace SSRPG
             }
         }
 
+        private GridData CreatGridData(Vector2Int position, TileBase tile)
+        {
+            var obstaclePath = AssetUtl.GetTileAsset(GridType.Obstacle.ToString(), tile.name);
+            if (GameEntry.Resource.HasAsset(obstaclePath) != HasAssetResult.NotExist)
+            {
+                return new GridData(position, GridType.Obstacle);
+            }
+
+            return new GridData(position, GridType.Land);
+        }
+
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
@@ -82,10 +78,6 @@ namespace SSRPG
             m_TilemapList[0].gameObject.GetOrAddComponent<BoxCollider2D>();
 
             m_GridUnitList = new Dictionary<int, GridUnit>();
-
-            // temp code
-            m_GridMapEffect = GameEntry.Effect.GridMapEffect;
-            //m_GridMapEffect.GetComponent<TilemapRenderer>().sortingLayerName = "Effect";
         }
 
         protected override void OnShow(object userData)
@@ -93,9 +85,6 @@ namespace SSRPG
             base.OnShow(userData);
 
             GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnShowBattleUnitScuess);
-
-            GameEntry.Resource.LoadAsset(AssetUtl.GetTileAsset("" ,"streak"), typeof(TileBase),
-                (assetName, asset, duration, userData) => { streak = asset as TileBase; });
 
             InitGridMapData(userData);
         }
@@ -174,38 +163,17 @@ namespace SSRPG
 
         public void ShowMoveArea(List<GridData> gridDatas)
         {
-            m_GridMapEffect.color = Color.yellow;
-            ShowTilemapEffect(gridDatas, streak);
+            GameEntry.Effect.ShowGridMapEffect(gridDatas, GridMapEffectId.Streak, Color.yellow);
         }
 
         public void ShowAttackArea(List<GridData> gridDatas)
         {
-            m_GridMapEffect.color = Color.red;
-            ShowTilemapEffect(gridDatas, streak);
-        }
-
-        public void SetTilemapEffect(GridData gridData, TileBase tile)
-        {
-            m_GridMapEffect.SetTile((Vector3Int)gridData.GridPos, tile);
-        }
-
-        private void ShowTilemapEffect(List<GridData> gridDatas, TileBase tile)
-        {
-            if (gridDatas == null)
-            {
-                return;
-            }
-
-            m_GridMapEffect.ClearAllTiles();
-            foreach (var grid in gridDatas)
-            {
-                m_GridMapEffect.SetTile((Vector3Int)grid.GridPos, tile);
-            }
+            GameEntry.Effect.ShowGridMapEffect(gridDatas, GridMapEffectId.Streak, Color.red);
         }
 
         public void HideTilemapEffect()
         {
-            m_GridMapEffect.ClearAllTiles();
+            GameEntry.Effect.HideGridMapEffect();
         }
 
         public void MoveTo(GridUnit gridUnit, Vector2Int destination)

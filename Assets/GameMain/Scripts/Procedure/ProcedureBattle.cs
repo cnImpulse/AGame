@@ -102,7 +102,7 @@ namespace SSRPG
             // 加载敌人
             foreach (var enemy in m_BattleData.enemyList)
             {
-                int typeId = enemy.Value + 1;
+                int typeId = enemy.Value;
                 var gridData = gridMap.Data.GetGridData(enemy.Key);
                 BattleUnitData battleUnitData = new BattleUnitData(typeId, gridData.GridPos, CampType.Enemy);
                 gridMap.RegisterBattleUnit(battleUnitData);

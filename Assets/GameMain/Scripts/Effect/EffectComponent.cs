@@ -14,7 +14,7 @@ namespace SSRPG
         [SerializeField]
         private Dictionary<int, EffectBase> m_EffectList = null;
 
-        public Tilemap GridMapEffect = null;
+        public Tilemap m_GridMapEffect = null;
 
         private void Start()
         {
@@ -26,7 +26,7 @@ namespace SSRPG
 
             GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnCreatEffect);
 
-            GridMapEffect = GetComponentInChildren<Tilemap>();
+            m_GridMapEffect = GetComponentInChildren<Tilemap>();
             m_EffectList = new Dictionary<int, EffectBase>();
         }
 
@@ -41,7 +41,7 @@ namespace SSRPG
         /// <param name="type">特效类型</param>
         /// <param name="position">特效位置</param>
         /// <returns>特效实体Id</returns>
-        public int CreatEffect(EffectType type, Vector3 position)
+        public int CreatEffect(EffectId type, Vector3 position)
         {
             int entityId = GameEntry.Entity.GenerateSerialId();
             EffectDataBase effectData = new EffectDataBase(entityId, (int)type, position);
@@ -50,9 +50,32 @@ namespace SSRPG
             return entityId;
         }
 
-        public int CreatUIEffect(UIEffectType type, Vector3 position)
+        public void ShowGridMapEffect(List<GridData> gridDatas, GridMapEffectId effectId, Color color = default)
         {
-            return 0;
+            m_GridMapEffect.ClearAllTiles();
+            if (gridDatas == null || effectId == GridMapEffectId.None)
+            {
+                return;
+            }
+
+            var cfg = GameEntry.Cfg.Tables.TblGridMapEffect.Get((int)effectId);
+            string path = AssetUtl.GetTileAsset("Effect", cfg.AssetName);
+            GameEntry.Resource.LoadAsset(path, typeof(TileBase),
+                (assetName, asset, duration, userData) =>
+                {
+                    var tile = asset as TileBase;
+
+                    m_GridMapEffect.color = color;
+                    foreach (var grid in gridDatas)
+                    {
+                        m_GridMapEffect.SetTile((Vector3Int)grid.GridPos, tile);
+                    }
+                });
+        }
+
+        public void HideGridMapEffect()
+        {
+            m_GridMapEffect.ClearAllTiles();
         }
 
         /// <summary>

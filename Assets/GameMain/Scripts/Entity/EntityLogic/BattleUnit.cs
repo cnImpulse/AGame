@@ -1,5 +1,7 @@
 using GameFramework.Event;
+using GameFramework.Resource;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using UnityGameFramework.Runtime;
 
 namespace SSRPG
@@ -10,7 +12,7 @@ namespace SSRPG
     public class BattleUnit : GridUnit
     {
         private static Color enemyColor, playerColor;
-        private SpriteRenderer spriteRenderer = null;
+        private SpriteRenderer m_SpriteRenderer = null;
 
         [SerializeField]
         private BattleUnitData m_Data;
@@ -23,11 +25,33 @@ namespace SSRPG
             private set;
         }
 
+        private void InitSprite()
+        {
+            switch (m_Data.CampType)
+            {
+                case CampType.Player: m_SpriteRenderer.color = playerColor; break;
+                case CampType.Enemy: m_SpriteRenderer.color = enemyColor; break;
+            }
+
+            string path = AssetUtl.GetTileAsset("BattleUnit", m_Data.TypeId.ToString());
+            if (GameEntry.Resource.HasAsset(path) == HasAssetResult.NotExist)
+            {
+                path = AssetUtl.GetTileAsset("BattleUnit", "default");
+            }
+
+            GameEntry.Resource.LoadAsset(path, typeof(Tile),
+            (assetName, asset, duration, userData) =>
+            {
+                var tile = asset as Tile;
+                m_SpriteRenderer.sprite = tile.sprite;
+            });
+        }
+
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
 
-            spriteRenderer = GetComponent<SpriteRenderer>();
+            m_SpriteRenderer = GetComponent<SpriteRenderer>();
             ColorUtility.TryParseHtmlString("#70FFF0", out playerColor);
             ColorUtility.TryParseHtmlString("#FF7070", out enemyColor);
         }
@@ -37,20 +61,11 @@ namespace SSRPG
             base.OnShow(userData);
 
             m_Data = userData as BattleUnitData;
-            if (m_Data == null)
-            {
-                Log.Error("BattleUnit object data is invalid.");
-                return;
-            }
-
-            CanAction = false;
-            switch (m_Data.CampType)
-            {
-                case CampType.Player: spriteRenderer.color = playerColor; break;
-                case CampType.Enemy: spriteRenderer.color = enemyColor; break;
-            }
 
             GameEntry.Event.Subscribe(RoundSwitchEventArgs.EventId, OnRoundSwitch);
+
+            CanAction = false;
+            InitSprite();
         }
 
         protected override void OnHide(bool isShutdown, object userData)

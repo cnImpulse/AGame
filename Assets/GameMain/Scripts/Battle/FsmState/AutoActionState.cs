@@ -141,14 +141,14 @@ namespace SSRPG
 
         public IEnumerator BattleUnitAutoAction(BattleUnit battleUnit, BattleUnit attackTarget, List<GridData> path)
         {
-            int effectId = GameEntry.Effect.CreatEffect(EffectType.SelectGridUnit, battleUnit.transform.position);
+            int effectId = GameEntry.Effect.CreatEffect(EffectId.SelectGridUnit, battleUnit.transform.position);
             yield return new WaitForSeconds(1.5f);
             GameEntry.Effect.DestoryEffect(effectId);
 
             var canMoveList = m_GridMap.Data.GetCanMoveGrids(battleUnit);
             m_GridMap.ShowMoveArea(canMoveList);
             yield return new WaitForSeconds(0.8f);
-            m_GridMap.HideTilemapEffect();
+            GameEntry.Effect.HideGridMapEffect();
 
             foreach (var gridData in path)
             {
@@ -163,7 +163,7 @@ namespace SSRPG
             var canAttackList = m_GridMap.Data.GetCanAttackGrids(battleUnit);
             m_GridMap.ShowAttackArea(canAttackList);
             yield return new WaitForSeconds(0.5f);
-            m_GridMap.HideTilemapEffect();
+            GameEntry.Effect.HideGridMapEffect();
 
             yield return new WaitForSeconds(0.2f);
             battleUnit.Attack(attackTarget.GridData);

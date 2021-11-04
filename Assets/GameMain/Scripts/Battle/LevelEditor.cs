@@ -43,10 +43,16 @@ namespace SSRPG
                     {
                         data.playerBrithList.Add((Vector2Int)position);
                     }
-                    else if (tile.name == "default")
+                    else 
                     {
+                        var typeId = 0;
+                        if (tile.name != "default")
+                        {
+                            typeId = int.Parse(tile.name);
+                        }
+
                         var index = GridMapUtl.GridPosToIndex((Vector2Int)position);
-                        data.enemyList.Add(index, 20000);
+                        data.enemyList.Add(index, typeId);
                     }
                 }
             }
