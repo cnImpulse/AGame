@@ -28,7 +28,7 @@ namespace SSRPG
                 return;
             }
             
-            Name = Utility.Text.Format("[{0} {1}]", m_Data.Name, Id);
+            Name = Utility.Text.Format("[{0}{1}]", m_Data.Name, Id);
         }
 
         protected override void OnAttached(EntityLogic childEntity, Transform parentTransform, object userData)

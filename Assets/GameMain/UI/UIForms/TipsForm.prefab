@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "\\t\u90ED\\t123\\tabc+-*/"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0d34014710d7044748297fd1f5b49171, type: 2}
   m_sharedMaterial: {fileID: -5736976095577755034, guid: 0d34014710d7044748297fd1f5b49171, type: 2}
