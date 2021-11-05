@@ -59,7 +59,7 @@ namespace SSRPG
                 return;
             }
 
-            GameEntry.Event.Fire(this, EnsureRewardEventArgs.Create(m_SelectedRewardId));
+            GameEntry.Event.Fire(this, EventName.EnsureReward, (VarInt32)m_SelectedRewardId);
             Close();
         }
 

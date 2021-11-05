@@ -1,4 +1,5 @@
 using GameFramework.Event;
+using GameFramework.Fsm;
 using GameFramework.Resource;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -15,18 +16,14 @@ namespace SSRPG
         private SpriteRenderer m_SpriteRenderer = null;
 
         [SerializeField]
-        private BattleUnitData m_Data;
-
+        private BattleUnitData m_Data = null;
         public new BattleUnitData Data => m_Data;
 
-        public bool CanAction
-        {
-            get;
-            private set;
-        }
+        public bool CanAction { get; private set; }
 
         private void InitSprite()
         {
+            InternalSetVisible(false);
             switch (m_Data.CampType)
             {
                 case CampType.Player: m_SpriteRenderer.color = playerColor; break;
@@ -44,6 +41,7 @@ namespace SSRPG
             {
                 var tile = asset as Tile;
                 m_SpriteRenderer.sprite = tile.sprite;
+                InternalSetVisible(true);
             });
         }
 
@@ -63,25 +61,62 @@ namespace SSRPG
             m_Data = userData as BattleUnitData;
 
             GameEntry.Event.Subscribe(RoundSwitchEventArgs.EventId, OnRoundSwitch);
-
-            CanAction = false;
             InitSprite();
         }
 
         protected override void OnHide(bool isShutdown, object userData)
         {
             m_Data = null;
+
             GameEntry.Event.Unsubscribe(RoundSwitchEventArgs.EventId, OnRoundSwitch);
 
             base.OnHide(isShutdown, userData);
         }
 
+        #region 战斗单位状态
+
+        public virtual void OnBattleStart()
+        {
+            CanAction = false;
+        }
+
+        public virtual void OnRoundStart()
+        {
+            CanAction = true;
+        }
+
+        public virtual void OnActionEnd()
+        {
+            if (!CanAction)
+            {
+                Log.Info("战斗单位重复行动!");
+                return;
+            }
+
+            CanAction = false;
+        }
+
+        public virtual void OnRoundEnd()
+        {
+            if (CanAction)
+            {
+                OnActionEnd();
+            }
+        }
+
+        public virtual void OnBattleEnd()
+        {
+            
+        }
+
+        #endregion
+
         //-----------------------------------------
 
         public void Move(Vector2Int destination)
         {
-            m_GridMap.MoveTo(this, destination);
-            transform.position = m_GridMap.GridPosToWorldPos(destination);
+            GridMap.MoveTo(this, destination);
+            transform.position = GridMap.GridPosToWorldPos(destination);
         }
 
         public void Attack(GridData gridData)
@@ -92,7 +127,7 @@ namespace SSRPG
             }
 
             DamageInfo damageInfo = new DamageInfo(m_Data.ATK, Id, gridData.GridUnit.Id);
-            GameEntry.Event.Fire(this, GridUnitDamageEventArgs.Create(damageInfo));
+            GameEntry.Event.Fire(this, EventName.GridUnitDamage, damageInfo);
         }
 
         private void OnRoundBegin()

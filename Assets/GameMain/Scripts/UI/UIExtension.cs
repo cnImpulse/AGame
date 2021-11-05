@@ -37,5 +37,23 @@ namespace SSRPG
             string assetName = AssetUtl.GetUIFormAsset(cfg.AssetName);
             return uiComponent.OpenUIForm(assetName, cfg.UIGroup, userData);
         }
+
+        /// <summary>
+        /// 界面不存在时不会报错
+        /// </summary>
+        public static void CloseUIForm(this UIComponent uiComponent, int serialId, bool isShutdown)
+        {
+            if (uiComponent.HasUIForm(serialId))
+            {
+                var form = uiComponent.GetUIForm(serialId).Logic as UIForm;
+                form.Close(isShutdown);
+            }
+            else if (uiComponent.IsLoadingUIForm(serialId))
+            {
+                uiComponent.CloseUIForm(serialId);
+            }
+
+            return;
+        }
     }
 }

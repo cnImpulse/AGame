@@ -14,36 +14,31 @@ namespace SSRPG
         private LevelData m_BattleData = null;
         private BattleForm m_BattleForm = null;
 
-        private IFsm<ProcedureBattle> m_BattleFsm = null;
+        private IFsm<ProcedureBattle> m_Fsm = null;
 
-        public GridMap gridMap = null;
+        public GridMap GridMap { get; private set; }
 
         public void StartBattle()
         {
-            Log.Info("战斗开始。");
-
             GameEntry.Effect.HideGridMapEffect();
-            GameEntry.Battle.InitBattle(gridMap);
-            m_BattleFsm.Start<RoundSwitchState>();
+            GameEntry.Battle.InitBattle(GridMap);
+            InitBattleFsm();
         }
 
         protected override void OnInit(ProcedureOwner procedureOwner)
         {
             base.OnInit(procedureOwner);
-
         }
 
         protected override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
 
-            Log.Info("进入战斗准备阶段。");
-
             GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnShowGirdMapSuccess);
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
             GameEntry.Event.Subscribe(GridUnitDeadEventArgs.EventId, OnGridUnitDead);
 
-            InitBattleFsm();
+            
             InitBattle(GameEntry.Battle.BattleId);
             InitBattleUnitSelect();
         }
@@ -62,10 +57,10 @@ namespace SSRPG
         {
             base.OnLeave(procedureOwner, isShutdown);
 
-            GameEntry.Entity.HideEntity(gridMap);
-            GameEntry.Fsm.DestroyFsm(m_BattleFsm);
+            GameEntry.Entity.HideEntity(GridMap);
+            GameEntry.Fsm.DestroyFsm(m_Fsm);
             
-            gridMap = null;
+            GridMap = null;
             m_BattleEnd = false;
             m_BattleData = null;
 
@@ -82,9 +77,9 @@ namespace SSRPG
 
         private void InitBattleFsm()
         {
-            m_BattleFsm = GameEntry.Fsm.CreateFsm(this, new RoundSwitchState(), new PlayerSelectState(),
-                new BattleUnitMoveState(), new PlayerActionState(), new BattleUnitAttackState(),
-                new SkillReleaseState(), new AutoActionState(), new BattleUnitEndActionState());
+            m_Fsm = GameEntry.Fsm.CreateFsm(this, new BattleStartState(), new RoundStartState(),
+                new BattleState(), new RoundEndState(), new BattleEndState());
+            m_Fsm.Start<BattleStartState>();
         }
 
         private void InitBattle(int levelId)
@@ -104,9 +99,9 @@ namespace SSRPG
             foreach (var enemy in m_BattleData.enemyList)
             {
                 int typeId = enemy.Value;
-                var gridData = gridMap.Data.GetGridData(enemy.Key);
+                var gridData = GridMap.Data.GetGridData(enemy.Key);
                 BattleUnitData battleUnitData = new BattleUnitData(typeId, gridData.GridPos, CampType.Enemy);
-                gridMap.RegisterBattleUnit(battleUnitData);
+                GridMap.RegisterBattleUnit(battleUnitData);
             }
 
             // 加载玩家战棋
@@ -115,7 +110,7 @@ namespace SSRPG
             {
                 int typeId = 10000 + Random.Range(1, 6);
                 BattleUnitData battleUnitData = new BattleUnitData(typeId, position, CampType.Player);
-                gridMap.RegisterBattleUnit(battleUnitData);
+                GridMap.RegisterBattleUnit(battleUnitData);
             }
         }
 
@@ -140,7 +135,7 @@ namespace SSRPG
             ShowEntitySuccessEventArgs ne = (ShowEntitySuccessEventArgs)e;
             if (ne.EntityLogicType == typeof(GridMap))
             {
-                gridMap = ne.Entity.Logic as GridMap;
+                GridMap = ne.Entity.Logic as GridMap;
                 GameEntry.Effect.ShowGridMapEffect(m_BattleData.playerBrithList, GridMapEffectId.Brith);
                 InitBattleUnit();
             }
@@ -151,10 +146,10 @@ namespace SSRPG
             GridUnitDeadEventArgs ne = (GridUnitDeadEventArgs)e;
 
             GridUnitData data = ne.gridUnit.Data;
-            gridMap.UnRegisterGridUnit(ne.gridUnit);
+            GridMap.UnRegisterGridUnit(ne.gridUnit);
             if (data.GridUnitType == GridUnitType.BattleUnit)
             {
-                var battleUnitList = gridMap.GetBattleUnitList(data.CampType);
+                var battleUnitList = GridMap.GetGridUnitList<BattleUnit>(data.CampType);
                 if (battleUnitList.Count == 0)
                 {
                     m_BattleEnd = true;
@@ -168,7 +163,7 @@ namespace SSRPG
                         info = new BattleResultInfo(CampType.Player);
                     }
                     GameEntry.DataNode.SetData("BattleResultInfo", info);
-                    GameEntry.Fsm.DestroyFsm(m_BattleFsm);
+                    GameEntry.Fsm.DestroyFsm(m_Fsm);
                 }
             }
         }

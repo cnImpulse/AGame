@@ -12,15 +12,15 @@ namespace SSRPG
     public abstract class GridUnit : Entity
     {
         [SerializeField]
-        private GridUnitData m_Data;
-
-        protected GridMap m_GridMap;
+        private GridUnitData m_Data = null;
 
         public GridUnitData Data => m_Data;
 
+        public GridMap GridMap { get; private set; }
+
         public bool IsDead => m_Data.HP <= 0;
 
-        public GridData GridData => m_GridMap.Data.GetGridData(m_Data.GridPos);
+        public GridData GridData => GridMap.Data.GetGridData(m_Data.GridPos);
 
         protected override void OnInit(object userData)
         {
@@ -41,7 +41,7 @@ namespace SSRPG
             GameEntry.Entity.DetachEntity(Id);
 
             m_Data = null;
-            m_GridMap = null;
+            GridMap = null;
 
             base.OnHide(isShutdown, userData);
         }
@@ -50,8 +50,8 @@ namespace SSRPG
         {
             base.OnAttachTo(parentEntity, parentTransform, userData);
 
-            m_GridMap = parentEntity as GridMap;
-            transform.position = m_GridMap.GridPosToWorldPos(m_Data.GridPos);
+            GridMap = parentEntity as GridMap;
+            transform.position = GridMap.GridPosToWorldPos(m_Data.GridPos);
             GameEntry.GridUnitInfo.ShowGridUnitInfo(this);
         }
 

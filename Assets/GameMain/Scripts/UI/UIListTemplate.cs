@@ -25,9 +25,10 @@ namespace SSRPG
             m_ItemList = new Dictionary<int, UIItemTemplate>();
         }
 
-        public void InitList()
+        public void InitList(int count = 0, int startIndex = 0)
         {
             RemoveAllItems();
+            AddItems(count, startIndex);
         }
 
         public void AddItem(int index)

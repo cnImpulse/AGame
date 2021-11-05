@@ -44,7 +44,7 @@ namespace SSRPG
         {
             int damageHP = Mathf.CeilToInt(m_Caster.ATK * m_DamageRate);
             DamageInfo damageInfo = new DamageInfo(damageHP, m_CasterId, m_TargetId);
-            GameEntry.Event.Fire(this, GridUnitDamageEventArgs.Create(damageInfo));
+            GameEntry.Event.Fire(this, EventName.GridUnitDamage, damageInfo);
         }
     }
 }

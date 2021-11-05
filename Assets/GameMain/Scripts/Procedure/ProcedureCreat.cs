@@ -17,7 +17,7 @@ namespace SSRPG
             Log.Info("加载存档流程。");
 
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenRewardForm);
-            GameEntry.Event.Subscribe(EnsureRewardEventArgs.EventId, OnEnsureReward);
+            GameEntry.Event.Subscribe(EventName.EnsureReward, OnEnsureReward);
 
             GameEntry.Save.InitSaveData();
             m_EndProcedure = GameEntry.Save.SaveData.EndFirstGuide;
@@ -48,7 +48,7 @@ namespace SSRPG
 
             GameEntry.GameTips.StopTips();
             GameEntry.Event.Unsubscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenRewardForm);
-            GameEntry.Event.Unsubscribe(EnsureRewardEventArgs.EventId, OnEnsureReward);
+            GameEntry.Event.Unsubscribe(EventName.EnsureReward, OnEnsureReward);
 
             base.OnLeave(procedureOwner, isShutdown);
         }
@@ -65,10 +65,10 @@ namespace SSRPG
 
         private void OnEnsureReward(object sender, GameEventArgs e)
         {
-            var ne = (EnsureRewardEventArgs)e;
+            var ne = e as GameEventBase;
             if (sender.Equals(m_Form))
             {
-                GameEntry.Save.AddDisciple(ne.ItemId);
+                GameEntry.Save.AddDisciple(ne.UserData as VarInt32);
                 GameEntry.Save.SaveData.EndFirstGuide = true;
                 GameEntry.Save.Save();
                 m_EndProcedure = true;

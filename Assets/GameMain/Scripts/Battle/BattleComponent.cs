@@ -14,10 +14,6 @@ namespace SSRPG
         public int ActionArg = 0;
         [NonSerialized]
         public BattleUnit SelectBattleUnit = null;
-        [NonSerialized]
-        public BattleUnit ActiveBattleUnit = null;
-        [NonSerialized]
-        public CampType ActiveCampType = CampType.None;
 
         public GridMap GridMap
         {
@@ -25,26 +21,9 @@ namespace SSRPG
             private set;
         }
 
-        public bool NeedRoundSwitch
-        {
-            get
-            {
-                List<BattleUnit> battleUnits = GridMap.GetBattleUnitList(ActiveCampType);
-                foreach (var battleUnit in battleUnits)
-                {
-                    if (battleUnit.CanAction)
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-        }
-
         private void Start()
         {
-            GameEntry.Event.Subscribe(GridUnitDamageEventArgs.EventId, OnGridUnitDamage);
+            GameEntry.Event.Subscribe(EventName.GridUnitDamage, OnGridUnitDamage);
             GameEntry.Event.Subscribe(GridUnitDeadEventArgs.EventId, OnGridUnitDead);
         }
 
@@ -55,8 +34,8 @@ namespace SSRPG
 
         private void OnGridUnitDamage(object sender, GameEventArgs e)
         {
-            var ne = (GridUnitDamageEventArgs)e;
-            var info = ne.DamageInfo;
+            var ne = e as GameEventBase;
+            var info = ne.UserData as DamageInfo;
 
             GridUnit caster = GameEntry.Entity.GetEntityLogic<GridUnit>(info.CasterId);
             GridUnit target = GameEntry.Entity.GetEntityLogic<GridUnit>(info.TargetId);

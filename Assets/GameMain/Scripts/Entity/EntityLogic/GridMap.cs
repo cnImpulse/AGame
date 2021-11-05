@@ -182,18 +182,13 @@ namespace SSRPG
             gridUnit.Data.GridPos = destination;
         }
 
-        public List<BattleUnit> GetBattleUnitList(CampType campType)
-        {
-            return GetGridUnitList<BattleUnit>(GridUnitType.BattleUnit, campType);
-        }
-
-        private List<T> GetGridUnitList<T>(GridUnitType gridUnitType, CampType campType)
+        public List<T> GetGridUnitList<T>(CampType campType = CampType.None)
             where T : GridUnit
         {
             List<T> gridUnitList = new List<T>();
             foreach (var gridUnit in m_GridUnitList.Values)
             {
-                if (gridUnit.Data.GridUnitType == gridUnitType && gridUnit.Data.CampType == campType)
+                if (gridUnit is T && (campType == CampType.None || gridUnit.Data.CampType == campType))
                 {
                     gridUnitList.Add(gridUnit as T);
                 }
@@ -213,7 +208,7 @@ namespace SSRPG
             var gridData = GetGridDataByWorldPos(eventData.pointerCurrentRaycast.worldPosition);
             if (gridData != null)
             {
-                GameEntry.Event.Fire(this, PointerDownGridMapEventArgs.Create(gridData));
+                GameEntry.Event.Fire(this, EventName.PointerDownGridMap, gridData);
             }
         }
 
