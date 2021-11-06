@@ -48,8 +48,10 @@ namespace SSRPG
             target.BeAttack(info.DamageHP);
 
             GameEntry.Effect.CreatEffect(Cfg.Effect.EffectType.Attack, target.transform.position, 0.5f);
-            GameEntry.GameTips.PlayTips(string.Format("{0}对{1}造成<color=#FF7070>{2}</color>点伤害",
-                BattleUtl.GetNameText(caster), BattleUtl.GetNameText(caster), info.DamageHP));
+            GameEntry.GameTips.PlayTips(string.Format("{0}对{1}造成{2}点伤害",
+                BattleUtl.GetText(caster.Data.CampType, caster.Name),
+                BattleUtl.GetText(caster.Data.CampType, caster.Name),
+                BattleUtl.GetText(CampType.Enemy, info.DamageHP.ToString())));
         }
 
         private void OnGridUnitDead(object sender, GameEventArgs e)

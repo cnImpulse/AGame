@@ -7,7 +7,6 @@ namespace SSRPG
     {
         None,
         StartGame,
-        BattleTest,
     }
 
     public class MenuForm : UIForm
@@ -15,17 +14,14 @@ namespace SSRPG
         private ProcedureMenu m_ProcedureMenu = null;
 
         private Button m_StartGame = null;
-        private Button m_BattleTest = null;
 
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
 
             m_StartGame = GetChild<Button>("m_StartGame");
-            m_BattleTest = GetChild<Button>("m_BattleTest");
 
             m_StartGame.onClick.AddListener(OnClickStartGame);
-            m_BattleTest.onClick.AddListener(() => OnClickOptionBtn(MenuOption.BattleTest));
         }
 
         protected override void OnOpen(object userData)

@@ -1,5 +1,6 @@
 ﻿using UnityEngine.UI;
 using UnityGameFramework.Runtime;
+using TMPro;
 
 namespace SSRPG
 {
@@ -32,8 +33,8 @@ namespace SSRPG
         private void OnSaveListInit(int index, UIItemTemplate item)
         {
             var m_SaveBtn = item.GetChild<Button>("m_SaveBtn");
-            var m_SaveIndex = item.GetChild<Text>("m_SaveIndex");
-            var m_SaveTip = item.GetChild<Text>("m_SaveTip");
+            var m_SaveIndex = item.GetChild<TextMeshProUGUI>("m_SaveIndex");
+            var m_SaveTip = item.GetChild<TextMeshProUGUI>("m_SaveTip");
             var m_DeleteBtn = item.GetChild<Button>("m_DeleteBtn");
 
             m_SaveIndex.text = string.Format("存档{0}: ", index);
@@ -53,7 +54,7 @@ namespace SSRPG
 
         private void OnSaveListShow(int index, UIItemTemplate item)
         {
-            var m_SaveTip = item.GetChild<Text>("m_SaveTip");
+            var m_SaveTip = item.GetChild<TextMeshProUGUI>("m_SaveTip");
             if (GameEntry.Save.HasSave(index))
             {
                 var data = GameEntry.Save.GetSaveData(index);

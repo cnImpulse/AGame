@@ -19,7 +19,7 @@ namespace SSRPG
 
             GameEntry.Event.Subscribe(EventName.PointerDownGridMap, OnPointGridMap);
 
-            m_SerilId = (int)GameEntry.UI.OpenUIForm(Cfg.UI.FormType.SkillActionForm, this);
+            m_SerilId = GameEntry.UI.OpenUIForm(Cfg.UI.FormType.SkillActionForm, this);
         }
 
         protected override void OnUpdate(IFsm<BattleUnit> fsm, float elapseSeconds, float realElapseSeconds)

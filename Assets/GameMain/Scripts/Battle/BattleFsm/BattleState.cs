@@ -9,7 +9,6 @@ namespace SSRPG
 {
     public class BattleState : BattleStateBase
     {
-        private int m_EffectId = 0;
         private IFsm<BattleUnit> m_BattleUnitFsm = null;
 
         protected override void OnEnter(IFsm<ProcedureBattle> fsm)

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 using GameFramework;
 using GameFramework.Event;
 using UnityGameFramework.Runtime;
@@ -7,35 +8,39 @@ namespace SSRPG
 {
     public class GameTipsComponent : GameFrameworkComponent
     {
-        Queue<int> m_TipsFormList = null;
+        public float TimeTnterval = 0.6f;
+
+        private Queue<string> m_TipsList = null;
+        private float m_LastPlayTime = 0f;
 
         private void Start()
         {
-            m_TipsFormList = new Queue<int>();
-            GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenTipsForm);
+            m_TipsList = new Queue<string>();
+        }
+
+        private void Update()
+        {
+            if (Time.time - m_LastPlayTime > TimeTnterval)
+            {
+                PlayTips();
+                m_LastPlayTime = Time.time;
+            }
         }
 
         public void PlayTips(string tips)
         {
-            m_TipsFormList.Enqueue((int)GameEntry.UI.OpenUIForm(Cfg.UI.FormType.TipsForm, tips));
+            m_TipsList.Enqueue(tips);
         }
 
-        public void StopAllTips()
+        private void PlayTips()
         {
-            foreach (var id in m_TipsFormList)
+            if (m_TipsList.Count == 0)
             {
-                GameEntry.UI.CloseUIForm(true, id);
+                return;
             }
-        }
 
-        public void OnOpenTipsForm(object sender, GameEventArgs e)
-        {
-            var ne = (OpenUIFormSuccessEventArgs)e;
-
-            if (ne.UIForm.Logic is TipsForm)
-            {
-
-            }
+            string tips = m_TipsList.Dequeue();
+            GameEntry.UI.OpenUIForm(Cfg.UI.FormType.TipsForm, tips);
         }
     }
 }

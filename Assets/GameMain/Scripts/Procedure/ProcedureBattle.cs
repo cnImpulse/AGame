@@ -24,11 +24,6 @@ namespace SSRPG
             InitBattleFsm();
         }
 
-        protected override void OnInit(ProcedureOwner procedureOwner)
-        {
-            base.OnInit(procedureOwner);
-        }
-
         protected override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
@@ -38,7 +33,6 @@ namespace SSRPG
             GameEntry.Event.Subscribe(EventName.GridUnitDead, OnGridUnitDead);
 
             InitBattle(0);
-            InitBattleUnitSelect();
         }
 
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)
@@ -62,11 +56,8 @@ namespace SSRPG
             m_BattleEnd = false;
             m_LevelData = null;
 
-            if (m_BattleForm != null)
-            {
-                m_BattleForm.Close(isShutdown);
-                m_BattleForm = null;
-            }
+            GameEntry.UI.CloseUIForm(m_BattleForm, isShutdown);
+            m_BattleForm = null;
 
             GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, OnShowGirdMapSuccess);
             GameEntry.Event.Unsubscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
@@ -135,6 +126,7 @@ namespace SSRPG
             {
                 GridMap = ne.Entity.Logic as GridMap;
                 GameEntry.Effect.ShowGridEffect(m_LevelData.playerBrithList, Cfg.Effect.GridEffectType.Brith);
+                InitBattleUnitSelect();
                 InitBattleUnit();
             }
         }

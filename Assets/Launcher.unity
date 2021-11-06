@@ -652,7 +652,7 @@ PrefabInstance:
       objectReference: {fileID: 252659019}
     - target: {fileID: 11454530, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_UIGroups.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 11454530, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_UIFormHelperTypeName
@@ -671,8 +671,16 @@ PrefabInstance:
       value: Popup
       objectReference: {fileID: 0}
     - target: {fileID: 11454530, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_UIGroups.Array.data[2].m_Name
+      value: Tips
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454530, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_UIGroups.Array.data[1].m_Depth
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454530, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_UIGroups.Array.data[2].m_Depth
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 11463816, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_EnableCachedAssets
@@ -1013,6 +1021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51a129a43d2b74ef59413896ef92d3fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TimeTnterval: 1
 --- !u!1 &1987051832
 GameObject:
   m_ObjectHideFlags: 0

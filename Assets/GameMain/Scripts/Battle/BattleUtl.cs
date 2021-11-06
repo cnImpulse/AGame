@@ -34,10 +34,10 @@ namespace SSRPG
             return "#FFFFFF";
         }
 
-        public static string GetNameText(GridUnit gridUnit)
+        public static string GetText(CampType camp, string text)
         {
-            string color = GetCampColor(gridUnit.Data.CampType);
-            return string.Format("<color={0}>{1}</color>", color, gridUnit.Name);
+            string color = GetCampColor(camp);
+            return string.Format("<color={0}>{1}</color>", color, text);
         }
     }
 }

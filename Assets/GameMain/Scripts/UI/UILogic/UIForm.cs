@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
 using UnityGameFramework.Runtime;
+using DG.Tweening;
 
 namespace SSRPG
 {
@@ -16,24 +15,16 @@ namespace SSRPG
         private Canvas m_CachedCanvas = null;
         protected CanvasGroup m_CanvasGroup = null;
 
-        public UnityAction OnCloseForm = null;
-
-        public void Close()
+        public void Close(bool ignoreFade = false)
         {
-            Close(false);
-        }
-
-        public void Close(bool ignoreFade)
-        {
-            StopAllCoroutines();
-
             if (ignoreFade)
             {
                 GameEntry.UI.CloseUIForm(UIForm);
             }
             else
             {
-                StartCoroutine(CloseCo(m_FadeTime));
+                var tweener = m_CanvasGroup.DOFade(0, m_FadeTime);
+                tweener.OnComplete(() => { GameEntry.UI.CloseUIForm(UIForm); });
             }
         }
 
@@ -57,7 +48,7 @@ namespace SSRPG
             var m_CloseBtn = GetChild<Button>("m_CloseBtn");
             if (m_CloseBtn != null)
             {
-                m_CloseBtn.onClick.AddListener(Close);
+                m_CloseBtn.onClick.AddListener(() => { Close(); });
             }
         }
 
@@ -107,24 +98,14 @@ namespace SSRPG
             base.OnOpen(userData);
 
             m_CanvasGroup.alpha = 0f;
-            StopAllCoroutines();
-            StartCoroutine(m_CanvasGroup.FadeToAlpha(1f, m_FadeTime));
+            m_CanvasGroup.DOFade(1, m_FadeTime);
         }
 
         protected override void OnClose(bool isShutdown, object userData)
         {
-            if (OnCloseForm != null)
-            {
-                OnCloseForm();
-            }
+            m_CanvasGroup.DOKill();
 
             base.OnClose(isShutdown, userData);
-        }
-
-        private IEnumerator CloseCo(float duration)
-        {
-            yield return m_CanvasGroup.FadeToAlpha(0f, duration);
-            GameEntry.UI.CloseUIForm(UIForm);
         }
     }
 }

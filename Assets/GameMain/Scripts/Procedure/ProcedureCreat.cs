@@ -46,7 +46,6 @@ namespace SSRPG
                 m_Form = null;
             }
 
-            GameEntry.GameTips.StopAllTips();
             GameEntry.Event.Unsubscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenRewardForm);
             GameEntry.Event.Unsubscribe(EventName.EnsureReward, OnEnsureReward);
 
