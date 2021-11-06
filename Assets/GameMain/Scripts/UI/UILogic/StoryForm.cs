@@ -44,7 +44,7 @@ namespace SSRPG
                 rewardIdList.Add(20001);
                 rewardIdList.Add(20002);
                 rewardIdList.Add(20003);
-                GameEntry.UI.OpenUIForm(UIFormId.RewardForm, rewardIdList);
+                GameEntry.UI.OpenUIForm(Cfg.UI.FormType.RewardForm, rewardIdList);
                 Close();
                 return;
             }

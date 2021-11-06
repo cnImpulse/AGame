@@ -9,17 +9,17 @@
 using Bright.Serialization;
 using System.Collections.Generic;
 
-namespace cfg.Effect
+namespace Cfg.Effect
 {
    
 public sealed class TblGridMapEffect
 {
-    private readonly Dictionary<int, Effect.GridMapEffectRes> _dataMap;
+    private readonly Dictionary<Effect.GridEffectType, Effect.GridMapEffectRes> _dataMap;
     private readonly List<Effect.GridMapEffectRes> _dataList;
     
     public TblGridMapEffect(ByteBuf _buf)
     {
-        _dataMap = new Dictionary<int, Effect.GridMapEffectRes>();
+        _dataMap = new Dictionary<Effect.GridEffectType, Effect.GridMapEffectRes>();
         _dataList = new List<Effect.GridMapEffectRes>();
         
         for(int n = _buf.ReadSize() ; n > 0 ; --n)
@@ -31,12 +31,12 @@ public sealed class TblGridMapEffect
         }
     }
 
-    public Dictionary<int, Effect.GridMapEffectRes> DataMap => _dataMap;
+    public Dictionary<Effect.GridEffectType, Effect.GridMapEffectRes> DataMap => _dataMap;
     public List<Effect.GridMapEffectRes> DataList => _dataList;
 
-    public Effect.GridMapEffectRes GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
-    public Effect.GridMapEffectRes Get(int key) => _dataMap[key];
-    public Effect.GridMapEffectRes this[int key] => _dataMap[key];
+    public Effect.GridMapEffectRes GetOrDefault(Effect.GridEffectType key) => _dataMap.TryGetValue(key, out var v) ? v : null;
+    public Effect.GridMapEffectRes Get(Effect.GridEffectType key) => _dataMap[key];
+    public Effect.GridMapEffectRes this[Effect.GridEffectType key] => _dataMap[key];
 
     public void Resolve(Dictionary<string, object> _tables)
     {

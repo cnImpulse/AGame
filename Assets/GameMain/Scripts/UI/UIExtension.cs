@@ -5,8 +5,7 @@ using UnityEngine.UI;
 using GameFramework.UI;
 using GameFramework.DataTable;
 using UnityGameFramework.Runtime;
-
-
+using Cfg.UI;
 
 namespace SSRPG
 {
@@ -26,14 +25,9 @@ namespace SSRPG
             canvasGroup.alpha = alpha;
         }
 
-        public static int? OpenUIForm(this UIComponent uiComponent, UIFormId uiFormId, object userData = null)
+        public static int? OpenUIForm(this UIComponent uiComponent, FormType type, object userData = null)
         {
-            return uiComponent.OpenUIForm((int)uiFormId, userData);
-        }
-
-        public static int? OpenUIForm(this UIComponent uiComponent, int uiFormId, object userData = null)
-        {
-            var cfg = GameEntry.Cfg.Tables.TblUIForm.Get(uiFormId);
+            var cfg = GameEntry.Cfg.Tables.TblUIForm.Get(type);
             string assetName = AssetUtl.GetUIFormAsset(cfg.AssetName);
             return uiComponent.OpenUIForm(assetName, cfg.UIGroup, userData);
         }

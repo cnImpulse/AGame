@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 
 
-namespace cfg.Scene
+namespace Cfg.Scene
 {
 
 public sealed class SceneRes :  Bright.Config.BeanBase 

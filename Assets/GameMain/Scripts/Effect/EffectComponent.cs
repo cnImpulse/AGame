@@ -3,6 +3,7 @@ using UnityEngine;
 using GameFramework;
 using UnityGameFramework.Runtime;
 using UnityEngine.Tilemaps;
+using Cfg.Effect;
 
 namespace SSRPG
 {
@@ -41,7 +42,7 @@ namespace SSRPG
         /// <param name="type">特效类型</param>
         /// <param name="position">特效位置</param>
         /// <returns>特效实体Id</returns>
-        public int CreatEffect(EffectId type, Vector3 position)
+        public int CreatEffect(EffectType type, Vector3 position)
         {
             int entityId = GameEntry.Entity.GenerateSerialId();
             EffectData effectData = new EffectData(entityId, (int)type, position);
@@ -50,16 +51,16 @@ namespace SSRPG
             return entityId;
         }
 
-        public void ShowGridMapEffect(List<GridData> gridDatas, GridMapEffectId effectId, Color color = default)
+        public void ShowGridMapEffect(List<GridData> gridDatas, GridEffectType type, Color color = default)
         {
             List<Vector2Int> positions = gridDatas.ConvertAll((input) => input.GridPos);
-            ShowGridMapEffect(positions, effectId, color);
+            ShowGridEffect(positions, type, color);
         }
 
-        public void ShowGridMapEffect(List<Vector2Int> positions, GridMapEffectId effectId, Color color = default)
+        public void ShowGridEffect(List<Vector2Int> positions, GridEffectType type, Color color = default)
         {
             m_GridMapEffect.ClearAllTiles();
-            if (positions == null || effectId == GridMapEffectId.None)
+            if (positions == null)
             {
                 return;
             }
@@ -69,7 +70,7 @@ namespace SSRPG
                 color = Color.white;
             }
 
-            var cfg = GameEntry.Cfg.Tables.TblGridMapEffect.Get((int)effectId);
+            var cfg = GameEntry.Cfg.Tables.TblGridMapEffect.Get(type);
             string path = AssetUtl.GetTileAsset("Effect", cfg.AssetName);
             GameEntry.Resource.LoadAsset(path, typeof(TileBase),
                 (assetName, asset, duration, userData) =>

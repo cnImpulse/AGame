@@ -11,14 +11,13 @@ using System.Collections.Generic;
 
 
 
-namespace cfg.Effect
 {
 
 public sealed class GridMapEffectRes :  Bright.Config.BeanBase 
 {
     public GridMapEffectRes(ByteBuf _buf) 
     {
-        Id = _buf.ReadInt();
+        Id = (Effect.GridEffectType)_buf.ReadInt();
         Name = _buf.ReadString();
         AssetName = _buf.ReadString();
     }
@@ -31,7 +30,7 @@ public sealed class GridMapEffectRes :  Bright.Config.BeanBase
     /// <summary>
     /// 特效编号
     /// </summary>
-    public int Id { get; private set; }
+    public Effect.GridEffectType Id { get; private set; }
     /// <summary>
     /// 特效名
     /// </summary>

@@ -21,7 +21,7 @@ namespace SSRPG
 
         public static string GetEffectAsset(string name)
         {
-            return Utility.Text.Format("Assets/GameMain/Effect/{0}.prefab", name);
+            return Utility.Text.Format("Assets/GameMain/Entities/Effect/{0}.prefab", name);
         }
 
         public static string GetTileAsset(string gridType, string name)

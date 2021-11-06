@@ -29,7 +29,7 @@ namespace SSRPG
 
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
 
-            GameEntry.UI.OpenUIForm(UIFormId.BattleEndForm, this);
+            GameEntry.UI.OpenUIForm(Cfg.UI.FormType.BattleEndForm, this);
 
             Log.Info("进入战斗结束流程。");
         }

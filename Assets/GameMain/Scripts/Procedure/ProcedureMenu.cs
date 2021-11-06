@@ -19,7 +19,7 @@ namespace SSRPG
 
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
 
-            m_MenuSerialId = (int)GameEntry.UI.OpenUIForm(UIFormId.MenuForm, this);
+            m_MenuSerialId = (int)GameEntry.UI.OpenUIForm(Cfg.UI.FormType.MenuForm, this);
         }
 
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)

@@ -3,15 +3,10 @@ using UnityEngine;
 using GameFramework;
 using GameFramework.Resource;
 using UnityGameFramework.Runtime;
+using Cfg.Entity;
 
 namespace SSRPG
 {
-    public enum EntityType
-    {
-        GridMap = 10000,
-        BattleUnit = 20000,
-    }
-
     public static class EntityExtension
     {
         // 重构-----------------
@@ -20,10 +15,10 @@ namespace SSRPG
         // 0 为无效
         private static int s_SerialId = 0;
 
-        private static void ShowEntity<T>(this EntityComponent entityComponent, EntityData data, EntityType entityType)
+        private static void ShowEntity<T>(this EntityComponent entityComponent, EntityData data, EntityType type)
             where T : EntityLogic
         {
-            var cfg = GameEntry.Cfg.Tables.TblEntity.Get((int)entityType);
+            var cfg = GameEntry.Cfg.Tables.TblEntity.Get(type);
             var path = AssetUtl.GetEntityAsset(cfg.Group, cfg.AssetName, data.TypeId);
             entityComponent.ShowEntity<T>(data.Id, path, cfg.Group, cfg.Priority, data);
         }
@@ -63,9 +58,8 @@ namespace SSRPG
 
         public static void ShowEffect(this EntityComponent entityComponent, EffectData data)
         {
-            //entityComponent.ShowEntity<Effect>(data, EntityType.);
-            //var cfg = GameEntry.Cfg.Tables.TblEffect.Get(data.TypeId);
-            //entityComponent.ShowEntity(data.Id, typeof(Effect), AssetUtl.GetEffectAsset(cfg.AssetName), "Effect", data);
+            var cfg = GameEntry.Cfg.Tables.TblEffect.Get((Cfg.Effect.EffectType)data.TypeId);
+            entityComponent.ShowEntity(data.Id, typeof(Effect), AssetUtl.GetEffectAsset(cfg.AssetName), "Effect", data);
         }
 
         public static int GenerateSerialId(this EntityComponent entityComponent)

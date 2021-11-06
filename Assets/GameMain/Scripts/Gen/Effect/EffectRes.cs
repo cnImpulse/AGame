@@ -11,14 +11,14 @@ using System.Collections.Generic;
 
 
 
-namespace cfg.Effect
+namespace Cfg.Effect
 {
 
 public sealed class EffectRes :  Bright.Config.BeanBase 
 {
     public EffectRes(ByteBuf _buf) 
     {
-        Id = _buf.ReadInt();
+        Id = (Effect.EffectType)_buf.ReadInt();
         Name = _buf.ReadString();
         AssetName = _buf.ReadString();
     }
@@ -31,7 +31,7 @@ public sealed class EffectRes :  Bright.Config.BeanBase
     /// <summary>
     /// 特效编号
     /// </summary>
-    public int Id { get; private set; }
+    public Effect.EffectType Id { get; private set; }
     /// <summary>
     /// 特效名
     /// </summary>

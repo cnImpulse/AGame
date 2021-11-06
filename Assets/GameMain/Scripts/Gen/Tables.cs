@@ -9,7 +9,7 @@
 using Bright.Serialization;
 
 
-namespace cfg
+namespace Cfg
 {
    
 public sealed class Tables

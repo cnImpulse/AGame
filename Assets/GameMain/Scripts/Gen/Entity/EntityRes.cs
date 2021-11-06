@@ -11,14 +11,14 @@ using System.Collections.Generic;
 
 
 
-namespace cfg.Entity
+namespace Cfg.Entity
 {
 
 public sealed class EntityRes :  Bright.Config.BeanBase 
 {
     public EntityRes(ByteBuf _buf) 
     {
-        Id = _buf.ReadInt();
+        Id = (Entity.EntityType)_buf.ReadInt();
         Name = _buf.ReadString();
         Group = _buf.ReadString();
         AssetName = _buf.ReadString();
@@ -33,7 +33,7 @@ public sealed class EntityRes :  Bright.Config.BeanBase
     /// <summary>
     /// 实体编号
     /// </summary>
-    public int Id { get; private set; }
+    public Entity.EntityType Id { get; private set; }
     /// <summary>
     /// 实体名
     /// </summary>

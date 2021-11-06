@@ -9,17 +9,17 @@
 using Bright.Serialization;
 using System.Collections.Generic;
 
-namespace cfg.Effect
+namespace Cfg.Effect
 {
    
 public sealed class TblEffect
 {
-    private readonly Dictionary<int, Effect.EffectRes> _dataMap;
+    private readonly Dictionary<Effect.EffectType, Effect.EffectRes> _dataMap;
     private readonly List<Effect.EffectRes> _dataList;
     
     public TblEffect(ByteBuf _buf)
     {
-        _dataMap = new Dictionary<int, Effect.EffectRes>();
+        _dataMap = new Dictionary<Effect.EffectType, Effect.EffectRes>();
         _dataList = new List<Effect.EffectRes>();
         
         for(int n = _buf.ReadSize() ; n > 0 ; --n)
@@ -31,12 +31,12 @@ public sealed class TblEffect
         }
     }
 
-    public Dictionary<int, Effect.EffectRes> DataMap => _dataMap;
+    public Dictionary<Effect.EffectType, Effect.EffectRes> DataMap => _dataMap;
     public List<Effect.EffectRes> DataList => _dataList;
 
-    public Effect.EffectRes GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
-    public Effect.EffectRes Get(int key) => _dataMap[key];
-    public Effect.EffectRes this[int key] => _dataMap[key];
+    public Effect.EffectRes GetOrDefault(Effect.EffectType key) => _dataMap.TryGetValue(key, out var v) ? v : null;
+    public Effect.EffectRes Get(Effect.EffectType key) => _dataMap[key];
+    public Effect.EffectRes this[Effect.EffectType key] => _dataMap[key];
 
     public void Resolve(Dictionary<string, object> _tables)
     {

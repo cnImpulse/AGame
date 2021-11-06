@@ -9,7 +9,7 @@
 using Bright.Serialization;
 using System.Collections.Generic;
 
-namespace cfg.Scene
+namespace Cfg.Scene
 {
    
 public sealed class TblScene

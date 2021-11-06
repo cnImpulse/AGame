@@ -23,7 +23,7 @@ namespace SSRPG
             m_EndProcedure = GameEntry.Save.SaveData.EndFirstGuide;
             if (!m_EndProcedure)
             {
-                GameEntry.UI.OpenUIForm(UIFormId.StoryForm);
+                GameEntry.UI.OpenUIForm(Cfg.UI.FormType.StoryForm);
             }
         }
 

@@ -11,14 +11,14 @@ using System.Collections.Generic;
 
 
 
-namespace cfg.UI
+namespace Cfg.UI
 {
 
 public sealed class UIFormRes :  Bright.Config.BeanBase 
 {
     public UIFormRes(ByteBuf _buf) 
     {
-        Id = _buf.ReadInt();
+        Id = (UI.FormType)_buf.ReadInt();
         Name = _buf.ReadString();
         UIGroup = _buf.ReadString();
         AssetName = _buf.ReadString();
@@ -32,7 +32,7 @@ public sealed class UIFormRes :  Bright.Config.BeanBase
     /// <summary>
     /// 界面编号
     /// </summary>
-    public int Id { get; private set; }
+    public UI.FormType Id { get; private set; }
     /// <summary>
     /// 界面名
     /// </summary>

@@ -17,7 +17,7 @@ namespace SSRPG
         public void PlayTips(string tips)
         {
             StopTips();
-            GameEntry.UI.OpenUIForm(UIFormId.TipsForm, tips);
+            GameEntry.UI.OpenUIForm(Cfg.UI.FormType.TipsForm, tips);
         }
 
         public void StopTips()

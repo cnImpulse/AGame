@@ -15,7 +15,7 @@ namespace SSRPG
         {
             base.OnEnter(fsm);
 
-            m_SerilId = (int)GameEntry.UI.OpenUIForm(UIFormId.ActionForm, this);
+            m_SerilId = (int)GameEntry.UI.OpenUIForm(Cfg.UI.FormType.ActionForm, this);
         }
 
         protected override void OnUpdate(IFsm<BattleUnit> fsm, float elapseSeconds, float realElapseSeconds)

@@ -9,7 +9,7 @@
 using Bright.Serialization;
 using System.Collections.Generic;
 
-namespace cfg.Battle
+namespace Cfg.Battle
 {
    
 public sealed class TblBattleUnit

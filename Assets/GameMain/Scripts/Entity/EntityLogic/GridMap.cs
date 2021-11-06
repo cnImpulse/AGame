@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using GameFramework.Event;
 using UnityGameFramework.Runtime;
 using GameFramework.Resource;
+using Cfg.Effect;
 
 namespace SSRPG
 {
@@ -163,12 +164,12 @@ namespace SSRPG
 
         public void ShowMoveArea(List<GridData> gridDatas)
         {
-            GameEntry.Effect.ShowGridMapEffect(gridDatas, GridMapEffectId.Streak, Color.yellow);
+            GameEntry.Effect.ShowGridMapEffect(gridDatas, GridEffectType.Streak, Color.yellow);
         }
 
         public void ShowAttackArea(List<GridData> gridDatas)
         {
-            GameEntry.Effect.ShowGridMapEffect(gridDatas, GridMapEffectId.Streak, Color.red);
+            GameEntry.Effect.ShowGridMapEffect(gridDatas, GridEffectType.Streak, Color.red);
         }
 
         public void MoveTo(GridUnit gridUnit, Vector2Int destination)

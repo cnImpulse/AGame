@@ -114,7 +114,7 @@ namespace SSRPG
 
         private void InitBattleUnitSelect()
         {
-            GameEntry.UI.OpenUIForm(UIFormId.BattleForm, this);
+            GameEntry.UI.OpenUIForm(Cfg.UI.FormType.BattleForm, this);
         }
 
         private void OnOpenUIFormSuccess(object sender, GameEventArgs e)
@@ -134,7 +134,7 @@ namespace SSRPG
             if (ne.EntityLogicType == typeof(GridMap))
             {
                 GridMap = ne.Entity.Logic as GridMap;
-                GameEntry.Effect.ShowGridMapEffect(m_LevelData.playerBrithList, GridMapEffectId.Brith);
+                GameEntry.Effect.ShowGridEffect(m_LevelData.playerBrithList, Cfg.Effect.GridEffectType.Brith);
                 InitBattleUnit();
             }
         }

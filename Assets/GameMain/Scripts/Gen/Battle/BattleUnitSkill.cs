@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 
 
-namespace cfg.Battle
+namespace Cfg.Battle
 {
 
 public sealed class BattleUnitSkill :  Bright.Config.BeanBase 

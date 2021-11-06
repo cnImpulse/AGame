@@ -42,7 +42,7 @@ namespace SSRPG
 
         public void OnClickStartGame()
         {
-            GameEntry.UI.OpenUIForm(UIFormId.SaveForm, m_ProcedureMenu);
+            GameEntry.UI.OpenUIForm(Cfg.UI.FormType.SaveForm, m_ProcedureMenu);
         }
 
         public void OnClickOptionBtn(MenuOption menuOption)
