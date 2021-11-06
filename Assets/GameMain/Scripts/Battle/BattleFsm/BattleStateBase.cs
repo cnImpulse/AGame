@@ -14,7 +14,17 @@ namespace SSRPG
         public ProcedureBattle Owner => Fsm == null ? null : Fsm.Owner;
 
         protected GridMap m_GridMap => Owner.GridMap;
-        protected CampType m_ActiveCamp = CampType.Player;
+        protected CampType m_ActiveCamp
+        {
+            get
+            {
+                return (CampType)(int)Fsm.GetData<VarInt32>("ActiveCamp");
+            }
+            set
+            {
+                Fsm.SetData<VarInt32>("ActiveCamp", (int)value);
+            }
+        }
 
         private Type m_NextState = null;
 

@@ -16,6 +16,11 @@ namespace SSRPG
             GameEntry.Event.Subscribe(EventName.GridUnitDead, OnGridUnitDead);
         }
 
+        public int CreatBattle()
+        {
+            return 0;
+        }
+
         private void OnGridUnitDamage(object sender, GameEventArgs e)
         {
             var ne = e as GameEventBase;

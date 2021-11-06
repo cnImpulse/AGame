@@ -14,31 +14,18 @@ namespace SSRPG
 
     public static class EntityExtension
     {
-        public static void ShowEffect(this EntityComponent entityComponent, EffectDataBase data)
-        {
-            var cfg = GameEntry.Cfg.Tables.TblEffect.Get(data.TypeId);
-            entityComponent.ShowEntity(data.Id, typeof(EffectBase), AssetUtl.GetEffectAsset(cfg.AssetName), "Effect", data);
-        }
-
         // 重构-----------------
 
         // 关于 EntityId 的约定：
         // 0 为无效
-        // 正值用于和服务器通信的实体（如玩家角色、NPC、怪等，服务器只产生正值）
-        // 负值用于本地生成的临时实体（如特效、FakeObject等）
         private static int s_SerialId = 0;
 
-        private static void ShowEntity<T>(this EntityComponent entityComponent, string entityGroup, EntityData data, int entityType)
+        private static void ShowEntity<T>(this EntityComponent entityComponent, EntityData data, EntityType entityType)
             where T : EntityLogic
         {
-            var cfg = GameEntry.Cfg.Tables.TblEntity.Get(entityType);
-            entityComponent.ShowEntity<T>(data.Id, AssetUtl.GetEntityAsset(cfg.AssetName), entityGroup, cfg.Priority, data);
-        }
-
-        private static void ShowEntity<T>(this EntityComponent entityComponent, string entityGroup, EntityData data, EntityType entityType)
-            where T : EntityLogic
-        {
-            entityComponent.ShowEntity<T>(entityGroup, data, (int)entityType);
+            var cfg = GameEntry.Cfg.Tables.TblEntity.Get((int)entityType);
+            var path = AssetUtl.GetEntityAsset(cfg.Group, cfg.AssetName, data.TypeId);
+            entityComponent.ShowEntity<T>(data.Id, path, cfg.Group, cfg.Priority, data);
         }
 
         public static T GetEntityLogic<T>(this EntityComponent entityComponent, int entityId)
@@ -65,24 +52,24 @@ namespace SSRPG
 
         public static void ShowGridMap(this EntityComponent entityComponent, int mapId)
         {
-            string path = AssetUtl.GetGridMapAsset(mapId);
             GridMapData data = new GridMapData(mapId);
-            entityComponent.ShowEntity<GridMap>(data.Id, path, "GridMap", data);
-        }
-
-        public static void ShowGridMap(this EntityComponent entityComponent, GridMapData data)
-        {
-            entityComponent.ShowEntity<GridMap>("GridMap", data, EntityType.GridMap);
+            entityComponent.ShowEntity<GridMap>(data, EntityType.GridMap);
         }
 
         public static void ShowBattleUnit(this EntityComponent entityComponent, BattleUnitData data)
         {
-            entityComponent.ShowEntity<BattleUnit>("BattleUnit", data, EntityType.BattleUnit);
+            entityComponent.ShowEntity<BattleUnit>(data, EntityType.BattleUnit);
+        }
+
+        public static void ShowEffect(this EntityComponent entityComponent, EffectDataBase data)
+        {
+            var cfg = GameEntry.Cfg.Tables.TblEffect.Get(data.TypeId);
+            entityComponent.ShowEntity(data.Id, typeof(EffectBase), AssetUtl.GetEffectAsset(cfg.AssetName), "Effect", data);
         }
 
         public static int GenerateSerialId(this EntityComponent entityComponent)
         {
-            return --s_SerialId;
+            return s_SerialId++;
         }
     }
 }

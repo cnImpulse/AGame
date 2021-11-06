@@ -1,20 +1,22 @@
 ﻿using System.IO;
 using GameFramework;
 using UnityGameFramework.Runtime;
+using GameFramework.Resource;
 using Newtonsoft.Json;
 
 namespace SSRPG
 {
     public static class AssetUtl
     {
-        public static string GetEntityAsset(string name)
+        public static string GetEntityAsset(string entityGroup, string name, int typeId)
         {
-            return Utility.Text.Format("Assets/GameMain/Entities/{0}.prefab", name);
-        }
+            string path = Utility.Text.Format("Assets/GameMain/Entities/{0}/{1}_{2}.prefab", entityGroup, name, typeId);
+            if (GameEntry.Resource.HasAsset(path) == HasAssetResult.NotExist)
+            {
+                return Utility.Text.Format("Assets/GameMain/Entities/{0}/{1}.prefab", entityGroup, name);
+            }
 
-        public static string GetGridMapAsset(int mapId)
-        {
-            return Utility.Text.Format("Assets/GameMain/Entities/GridMap/GridMap_{0}.prefab", mapId);
+            return path;
         }
 
         public static string GetEffectAsset(string name)
@@ -66,13 +68,9 @@ namespace SSRPG
             return Utility.Json.ToObject<T>(json);
         }
 
-        #region UI
-
         public static string GetUIFormAsset(string assetName)
         {
             return Utility.Text.Format("Assets/GameMain/UI/UIForms/{0}.prefab", assetName);
         }
-
-        #endregion
     }
 }

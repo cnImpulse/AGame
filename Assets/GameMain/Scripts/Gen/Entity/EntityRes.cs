@@ -22,6 +22,7 @@ namespace cfg.Entity
         {
             Id = _buf.ReadInt();
             Name = _buf.ReadString();
+            Group = _buf.ReadString();
             AssetName = _buf.ReadString();
             Priority = _buf.ReadInt();
         }
@@ -39,6 +40,10 @@ namespace cfg.Entity
         /// 名字
         /// </summary>
         public string Name { get; private set; }
+        /// <summary>
+        /// 实体组
+        /// </summary>
+        public string Group { get; private set; }
         /// <summary>
         /// 资源名
         /// </summary>
@@ -64,6 +69,7 @@ namespace cfg.Entity
             return "{ "
             + "Id:" + Id + ","
             + "Name:" + Name + ","
+            + "Group:" + Group + ","
             + "AssetName:" + AssetName + ","
             + "Priority:" + Priority + ","
             + "}";

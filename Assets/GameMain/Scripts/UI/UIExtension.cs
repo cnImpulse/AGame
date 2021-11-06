@@ -41,7 +41,7 @@ namespace SSRPG
         /// <summary>
         /// 界面不存在时不会报错
         /// </summary>
-        public static void CloseUIForm(this UIComponent uiComponent, int serialId, bool isShutdown)
+        public static void CloseUIForm(this UIComponent uiComponent, bool isShutdown, int serialId)
         {
             if (uiComponent.HasUIForm(serialId))
             {

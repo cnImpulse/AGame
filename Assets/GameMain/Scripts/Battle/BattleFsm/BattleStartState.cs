@@ -13,6 +13,8 @@ namespace SSRPG
         {
             base.OnEnter(fsm);
 
+            m_ActiveCamp = CampType.Player;
+
             var battleUnitList = m_GridMap.GetGridUnitList<BattleUnit>();
             foreach (var battleUnit in battleUnitList)
             {

@@ -37,7 +37,6 @@ namespace SSRPG
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
             GameEntry.Event.Subscribe(EventName.GridUnitDead, OnGridUnitDead);
 
-            
             InitBattle(0);
             InitBattleUnitSelect();
         }

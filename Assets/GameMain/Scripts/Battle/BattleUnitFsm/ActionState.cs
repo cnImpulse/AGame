@@ -25,7 +25,7 @@ namespace SSRPG
 
         protected override void OnLeave(IFsm<BattleUnit> fsm, bool isShutdown)
         {
-            GameEntry.UI.CloseUIForm(m_SerilId, isShutdown);
+            GameEntry.UI.CloseUIForm(isShutdown, m_SerilId);
             m_SerilId = 0;
 
             base.OnLeave(fsm, isShutdown);

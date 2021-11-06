@@ -19,14 +19,7 @@ namespace SSRPG
                 battleUnit.OnRoundEnd();
             }
 
-            if (m_ActiveCamp == CampType.Enemy)
-            {
-                m_ActiveCamp = CampType.Player;
-            }
-            else if (m_ActiveCamp == CampType.Player)
-            {
-                m_ActiveCamp = CampType.Enemy;
-            }
+            m_ActiveCamp = BattleUtl.GetHostileCamp(m_ActiveCamp);
         }
 
         protected override void OnUpdate(IFsm<ProcedureBattle> fsm, float elapseSeconds, float realElapseSeconds)
