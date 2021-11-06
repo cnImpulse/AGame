@@ -26,7 +26,7 @@ namespace SSRPG
         {
             base.OnInit(userData);
 
-            gameObject.SetLayerRecursively(Constant.Layer.GridUnitLayerId);
+            InitLayer("GridUnit");
         }
 
         protected override void OnShow(object userData)

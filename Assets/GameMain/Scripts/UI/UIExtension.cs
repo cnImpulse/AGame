@@ -13,7 +13,7 @@ namespace SSRPG
     {
         public static int OpenUIForm(this UIComponent uiComponent, FormType type, object userData = null)
         {
-            var cfg = GameEntry.Cfg.Tables.TblUIForm.Get(type);
+            var cfg = GameEntry.Cfg.Tables.TblUIForm.Get((int)type);
             string assetName = AssetUtl.GetUIFormAsset(cfg.AssetName);
             return uiComponent.OpenUIForm(assetName, cfg.UIGroup, userData);
         }

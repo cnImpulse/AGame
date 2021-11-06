@@ -14,12 +14,12 @@ namespace Cfg.UI
    
 public sealed class TblUIForm
 {
-    private readonly Dictionary<UI.FormType, UI.UIFormRes> _dataMap;
+    private readonly Dictionary<int, UI.UIFormRes> _dataMap;
     private readonly List<UI.UIFormRes> _dataList;
     
     public TblUIForm(ByteBuf _buf)
     {
-        _dataMap = new Dictionary<UI.FormType, UI.UIFormRes>();
+        _dataMap = new Dictionary<int, UI.UIFormRes>();
         _dataList = new List<UI.UIFormRes>();
         
         for(int n = _buf.ReadSize() ; n > 0 ; --n)
@@ -31,12 +31,12 @@ public sealed class TblUIForm
         }
     }
 
-    public Dictionary<UI.FormType, UI.UIFormRes> DataMap => _dataMap;
+    public Dictionary<int, UI.UIFormRes> DataMap => _dataMap;
     public List<UI.UIFormRes> DataList => _dataList;
 
-    public UI.UIFormRes GetOrDefault(UI.FormType key) => _dataMap.TryGetValue(key, out var v) ? v : null;
-    public UI.UIFormRes Get(UI.FormType key) => _dataMap[key];
-    public UI.UIFormRes this[UI.FormType key] => _dataMap[key];
+    public UI.UIFormRes GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
+    public UI.UIFormRes Get(int key) => _dataMap[key];
+    public UI.UIFormRes this[int key] => _dataMap[key];
 
     public void Resolve(Dictionary<string, object> _tables)
     {

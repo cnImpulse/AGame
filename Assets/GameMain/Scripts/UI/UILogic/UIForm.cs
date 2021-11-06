@@ -32,6 +32,8 @@ namespace SSRPG
         {
             base.OnInit(userData);
 
+            gameObject.SetLayerRecursively(LayerMask.NameToLayer("UI"));
+
             m_CachedCanvas = gameObject.GetOrAddComponent<Canvas>();
             m_CanvasGroup = gameObject.GetOrAddComponent<CanvasGroup>();
 

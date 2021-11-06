@@ -74,7 +74,7 @@ namespace SSRPG
                 color = Color.white;
             }
 
-            var cfg = GameEntry.Cfg.Tables.TblGridMapEffect.Get(type);
+            var cfg = GameEntry.Cfg.Tables.TblGridMapEffect.Get((int)type);
             string path = AssetUtl.GetTileAsset("Effect", cfg.AssetName);
             GameEntry.Resource.LoadAsset(path, typeof(TileBase),
                 (assetName, asset, duration, userData) =>

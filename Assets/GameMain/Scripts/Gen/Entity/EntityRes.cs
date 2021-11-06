@@ -18,7 +18,7 @@ public sealed class EntityRes :  Bright.Config.BeanBase
 {
     public EntityRes(ByteBuf _buf) 
     {
-        Id = (Entity.EntityType)_buf.ReadInt();
+        Id = _buf.ReadInt();
         Name = _buf.ReadString();
         Group = _buf.ReadString();
         AssetName = _buf.ReadString();
@@ -33,7 +33,7 @@ public sealed class EntityRes :  Bright.Config.BeanBase
     /// <summary>
     /// 实体编号
     /// </summary>
-    public Entity.EntityType Id { get; private set; }
+    public int Id { get; private set; }
     /// <summary>
     /// 实体名
     /// </summary>

@@ -75,6 +75,8 @@ namespace SSRPG
         {
             base.OnInit(userData);
 
+            InitLayer("GridMap");
+
             m_TilemapList = GetComponentsInChildren<Tilemap>();
             m_TilemapList[0].gameObject.GetOrAddComponent<BoxCollider2D>();
 

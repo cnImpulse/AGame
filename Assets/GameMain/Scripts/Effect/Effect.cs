@@ -10,6 +10,13 @@ namespace SSRPG
 
         private float m_RealLifeTime = 0;
 
+        protected override void OnInit(object userData)
+        {
+            base.OnInit(userData);
+
+            InitLayer("Effect");
+        }
+
         protected override void OnShow(object userData)
         {
             base.OnShow(userData);

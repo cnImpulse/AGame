@@ -18,7 +18,7 @@ public sealed class GridMapEffectRes :  Bright.Config.BeanBase
 {
     public GridMapEffectRes(ByteBuf _buf) 
     {
-        Id = (Effect.GridEffectType)_buf.ReadInt();
+        Id = _buf.ReadInt();
         Name = _buf.ReadString();
         AssetName = _buf.ReadString();
     }
@@ -31,7 +31,7 @@ public sealed class GridMapEffectRes :  Bright.Config.BeanBase
     /// <summary>
     /// 特效编号
     /// </summary>
-    public Effect.GridEffectType Id { get; private set; }
+    public int Id { get; private set; }
     /// <summary>
     /// 特效名
     /// </summary>

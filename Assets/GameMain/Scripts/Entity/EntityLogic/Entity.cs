@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using GameFramework;
 using UnityGameFramework.Runtime;
+using System;
+using System.Collections.Generic;
 
 namespace SSRPG
 {
@@ -17,6 +19,22 @@ namespace SSRPG
             }
         }
 
+        protected void InitLayer(string layerName)
+        {
+            gameObject.SetLayerRecursively(LayerMask.NameToLayer(layerName));
+
+            var renderers = GetComponentsInChildren<Renderer>();
+            for (int i = 0; i < renderers.Length; ++i)
+            {
+                renderers[i].sortingLayerID = SortingLayer.NameToID(layerName);
+            }
+        }
+
+        protected override void OnInit(object userData)
+        {
+            base.OnInit(userData);
+        }
+
         protected override void OnShow(object userData)
         {
             base.OnShow(userData);
@@ -28,7 +46,7 @@ namespace SSRPG
                 return;
             }
             
-            Name = Utility.Text.Format("[{0}{1}]", m_Data.Name, Id);
+            Name = Utility.Text.Format("[{0}-{1}]", m_Data.Name, Id);
         }
 
         protected override void OnAttached(EntityLogic childEntity, Transform parentTransform, object userData)

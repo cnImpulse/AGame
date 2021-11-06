@@ -14,12 +14,12 @@ namespace Cfg.Entity
    
 public sealed class TblEntity
 {
-    private readonly Dictionary<Entity.EntityType, Entity.EntityRes> _dataMap;
+    private readonly Dictionary<int, Entity.EntityRes> _dataMap;
     private readonly List<Entity.EntityRes> _dataList;
     
     public TblEntity(ByteBuf _buf)
     {
-        _dataMap = new Dictionary<Entity.EntityType, Entity.EntityRes>();
+        _dataMap = new Dictionary<int, Entity.EntityRes>();
         _dataList = new List<Entity.EntityRes>();
         
         for(int n = _buf.ReadSize() ; n > 0 ; --n)
@@ -31,12 +31,12 @@ public sealed class TblEntity
         }
     }
 
-    public Dictionary<Entity.EntityType, Entity.EntityRes> DataMap => _dataMap;
+    public Dictionary<int, Entity.EntityRes> DataMap => _dataMap;
     public List<Entity.EntityRes> DataList => _dataList;
 
-    public Entity.EntityRes GetOrDefault(Entity.EntityType key) => _dataMap.TryGetValue(key, out var v) ? v : null;
-    public Entity.EntityRes Get(Entity.EntityType key) => _dataMap[key];
-    public Entity.EntityRes this[Entity.EntityType key] => _dataMap[key];
+    public Entity.EntityRes GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
+    public Entity.EntityRes Get(int key) => _dataMap[key];
+    public Entity.EntityRes this[int key] => _dataMap[key];
 
     public void Resolve(Dictionary<string, object> _tables)
     {

@@ -18,7 +18,7 @@ namespace SSRPG
         private static void ShowEntity<T>(this EntityComponent entityComponent, EntityData data, EntityType type)
             where T : EntityLogic
         {
-            var cfg = GameEntry.Cfg.Tables.TblEntity.Get(type);
+            var cfg = GameEntry.Cfg.Tables.TblEntity.Get((int)type);
             var path = AssetUtl.GetEntityAsset(cfg.Group, cfg.AssetName, data.TypeId);
             entityComponent.ShowEntity<T>(data.Id, path, cfg.Group, cfg.Priority, data);
         }
@@ -58,7 +58,7 @@ namespace SSRPG
 
         public static void ShowEffect(this EntityComponent entityComponent, EffectData data)
         {
-            var cfg = GameEntry.Cfg.Tables.TblEffect.Get((Cfg.Effect.EffectType)data.TypeId);
+            var cfg = GameEntry.Cfg.Tables.TblEffect.Get(data.TypeId);
             entityComponent.ShowEntity(data.Id, typeof(Effect), AssetUtl.GetEffectAsset(cfg.AssetName), "Effect", data);
         }
 
