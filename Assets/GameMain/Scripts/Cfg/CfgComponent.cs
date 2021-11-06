@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using GameFramework.Resource;
@@ -8,9 +9,10 @@ namespace SSRPG
 {
     public class CfgComponent : GameFrameworkComponent
     {
-        private Dictionary<string, ByteBuf> ByteBufList = new Dictionary<string, ByteBuf>();
-
+        [NonSerialized]
         public bool EndLoad = false;
+
+        private Dictionary<string, ByteBuf> ByteBufList = new Dictionary<string, ByteBuf>();
 
         public Cfg.Tables Tables
         {

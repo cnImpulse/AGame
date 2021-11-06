@@ -2,15 +2,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityGameFramework.Runtime;
+using TMPro;
 
 namespace SSRPG
 {
     public class GridUnitInfoItem : UIItemTemplate
     {
         private RectTransform m_InfoList = null;
-        private Text m_NameText = null;
-        private Text m_HpText = null;
-        private Text m_MpText = null;
+        private TextMeshProUGUI m_NameText = null;
+        private TextMeshProUGUI m_HpText = null;
+        private TextMeshProUGUI m_MpText = null;
 
         private Canvas m_ParentCanvas = null;
         private GridUnit m_Owner = null;
@@ -22,9 +23,9 @@ namespace SSRPG
             base.Init();
 
             m_InfoList = GetChild<RectTransform>("m_InfoList");
-            m_NameText = GetChild<Text>("m_NameText");
-            m_HpText = GetChild<Text>("m_HpText");
-            m_MpText = GetChild<Text>("m_MpText");
+            m_NameText = GetChild<TextMeshProUGUI>("m_NameText");
+            m_HpText = GetChild<TextMeshProUGUI>("m_HpText");
+            m_MpText = GetChild<TextMeshProUGUI>("m_MpText");
         }
 
         public void Init(GridUnit owner, Canvas parentCanvas)
@@ -71,11 +72,11 @@ namespace SSRPG
 
         private void RefreshAttr()
         {
-            m_HpText.text = string.Format("HP: {0} / {1}", m_Owner.Data.MaxHP, m_Owner.Data.HP);
+            m_HpText.text = string.Format("HP:{0}/{1}", m_Owner.Data.MaxHP, m_Owner.Data.HP);
             if (m_Owner.Data.GridUnitType == GridUnitType.BattleUnit)
             {
                 var battleUnit = m_Owner as BattleUnit;
-                //m_MpText.text = string.Format("MP: {0} / {1}", battleUnit.Data.MaxMP, battleUnit.Data.MP);
+                m_MpText.text = string.Format("MP:{0}/{1}", battleUnit.Data.MaxMP, battleUnit.Data.MP);
             }
         }
 

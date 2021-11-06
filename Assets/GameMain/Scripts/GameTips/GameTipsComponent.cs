@@ -8,7 +8,7 @@ namespace SSRPG
 {
     public class GameTipsComponent : GameFrameworkComponent
     {
-        public float TimeTnterval = 0.6f;
+        public float TimeTnterval = 0.4f;
 
         private Queue<string> m_TipsList = null;
         private float m_LastPlayTime = 0f;

@@ -8,7 +8,7 @@ namespace SSRPG
 {
     public class GridUnitInfoComponent : GameFrameworkComponent
     {
-        public bool Enable = true;
+        public bool Disable = true;
 
         [SerializeField]
         private GridUnitInfoItem m_Template = null;
@@ -56,7 +56,7 @@ namespace SSRPG
 
         public void ShowGridUnitInfo(GridUnit gridUnit)
         {
-            if (Enable)
+            if (Disable)
             {
                 return;
             }

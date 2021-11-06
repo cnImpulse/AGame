@@ -13,7 +13,7 @@ TagManager:
   - UI
   - GridUnit
   - GridMap
-  - 
+  - Effect
   - 
   - 
   - 
@@ -40,6 +40,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: GridMap
+    uniqueID: 1747893471
     locked: 0
   - name: GridUnit
     uniqueID: 310705351
