@@ -48,12 +48,10 @@ namespace SSRPG
                 Owner.Attack(gridData);
                 ChangeState<EndActionState>();
             }
-
-            // 目前不做取消行动的逻辑,后面找时间用命令模式做可撤销的行动逻辑
-            //else
-            //{
-            //    ChangeState<ActionState>();
-            //}
+            else
+            {
+                ChangeState<ActionState>();
+            }
         }
     }
 }

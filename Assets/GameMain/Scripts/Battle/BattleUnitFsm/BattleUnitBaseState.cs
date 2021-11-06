@@ -38,6 +38,8 @@ namespace SSRPG
 
         protected override void OnLeave(IFsm<BattleUnit> fsm, bool isShutdown)
         {
+            m_NextState = null;
+
             base.OnLeave(fsm, isShutdown);
         }
 

@@ -4,12 +4,12 @@ using UnityEngine.UI;
 
 namespace SSRPG
 {
-    public class ActionForm : UIForm
+    public class SkillActionForm : UIForm
     {
         private Button m_Mask = null;
         private UIListTemplate m_ActionList = null;
 
-        private ActionState m_Owner = null;
+        private SkillState m_Owner = null;
 
         protected override void OnInit(object userData)
         {
@@ -25,12 +25,9 @@ namespace SSRPG
         {
             base.OnOpen(userData);
 
-            m_Owner = userData as ActionState;
+            m_Owner = userData as SkillState;
 
             m_ActionList.InitList();
-            m_ActionList.AddItem((int)ActionType.Attack);
-            m_ActionList.AddItem((int)ActionType.Skill);
-            m_ActionList.AddItem((int)ActionType.Await);
         }
 
         protected override void OnClose(bool isShutdown, object userData)
@@ -40,39 +37,13 @@ namespace SSRPG
 
         private void OnClickMask()
         {
-            Close();
-            GameEntry.Event.Fire(this, EventName.BattleUnitActionCancel);
+            m_Owner.ChangeState<ActionState>();
         }
 
         private void OnActionItemInit(int index, UIItemTemplate item)
         {
             var button = item.GetComponent<Button>();
             var text = item.GetChild<TextMeshProUGUI>("m_Text");
-
-            var type = (ActionType)index;
-            if (type == ActionType.Attack)
-            {
-                text.text = "攻击";
-            }
-            else if (type == ActionType.Skill)
-            {
-                text.text = "技能";
-            }
-            else if (type == ActionType.Await)
-            {
-                text.text = "待机";
-            }
-            else
-            {
-                text.text = "Error!";
-            }
-
-            button.onClick.AddListener(() => { Action(type); });
-        }
-
-        private void Action(ActionType type)
-        {
-            m_Owner.SelectAction(type);
         }
     }
 }

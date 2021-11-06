@@ -20,6 +20,7 @@ namespace SSRPG
         public new BattleUnitData Data => m_Data;
 
         public bool CanAction { get; private set; }
+        public bool CanMove { get; private set; }
 
         private void InitSprite()
         {
@@ -74,12 +75,13 @@ namespace SSRPG
 
         public virtual void OnBattleStart()
         {
-            CanAction = false;
+
         }
 
         public virtual void OnRoundStart()
         {
             CanAction = true;
+            CanMove = true;
         }
 
         public virtual void OnActionEnd()
@@ -112,6 +114,7 @@ namespace SSRPG
 
         public void Move(Vector2Int destination)
         {
+            CanMove = false;
             GridMap.MoveTo(this, destination);
             transform.position = GridMap.GridPosToWorldPos(destination);
         }

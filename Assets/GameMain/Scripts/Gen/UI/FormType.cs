@@ -40,9 +40,13 @@ namespace Cfg.UI
         /// </summary>
         BattleEndForm = 201,
         /// <summary>
-        /// 行动指令列表
+        /// 行动指令界面
         /// </summary>
         ActionForm = 300,
+        /// <summary>
+        /// 技能指令界面
+        /// </summary>
+        SkillActionForm = 301,
         /// <summary>
         /// 剧情界面
         /// </summary>

@@ -17,14 +17,20 @@ namespace SSRPG
 
             GameEntry.Event.Subscribe(EventName.PointerDownGridMap, OnPointGridMap);
 
-            m_CanMoveList = m_GridMap.Data.GetCanMoveGrids(Owner);
-            m_GridMap.ShowMoveArea(m_CanMoveList);
+            if (Owner.CanMove)
+            {
+                m_CanMoveList = m_GridMap.Data.GetCanMoveGrids(Owner);
+                m_GridMap.ShowMoveArea(m_CanMoveList);
+            }
+            else
+            {
+                ChangeState<ActionState>(fsm);
+            }
         }
 
         protected override void OnUpdate(IFsm<BattleUnit> fsm, float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
-
         }
 
         protected override void OnLeave(IFsm<BattleUnit> fsm, bool isShutdown)
