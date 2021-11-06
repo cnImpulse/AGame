@@ -19,7 +19,7 @@ namespace SSRPG
 
             if (GameEntry.Cfg.EndLoad)
             {
-                procedureOwner.SetData<VarInt32>("NextSceneId", (int)SceneType.Menu);
+                procedureOwner.SetData<VarInt32>("NextSceneId", (int)Cfg.Scene.SceneType.Menu);
                 ChangeState<ProcedureChangeScene>(procedureOwner);
             }
         }

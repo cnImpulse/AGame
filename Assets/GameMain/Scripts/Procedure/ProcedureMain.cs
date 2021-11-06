@@ -29,7 +29,7 @@ namespace SSRPG
 
             if (m_Explore)
             {
-                procedureOwner.SetData<VarInt32>("NextSceneId", (int)SceneType.Battle);
+                procedureOwner.SetData<VarInt32>("NextSceneId", (int)Cfg.Scene.SceneType.Battle);
                 ChangeState<ProcedureChangeScene>(procedureOwner);
             }
         }

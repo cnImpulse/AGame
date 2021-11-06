@@ -6,14 +6,6 @@ using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedure
 
 namespace SSRPG
 {
-    public enum SceneType
-    {
-        None,
-        Menu = 1,
-        Main = 2,
-        Battle = 3,
-    }
-
     public class ProcedureChangeScene : ProcedureBase
     {
         private int m_NextSceneId = 0;

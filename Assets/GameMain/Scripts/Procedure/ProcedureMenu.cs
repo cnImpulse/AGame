@@ -2,6 +2,7 @@
 using GameFramework.Procedure;
 using UnityGameFramework.Runtime;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
+using Cfg.Scene;
 
 namespace SSRPG
 {
@@ -31,17 +32,15 @@ namespace SSRPG
                 return;
             }
 
-            SceneType sceneType = SceneType.None;
             if (m_MenuOption == MenuOption.StartGame)
             {
-                sceneType = SceneType.Main;
+                procedureOwner.SetData<VarInt32>("NextSceneId", (int)SceneType.Main);
             }
             else if (m_MenuOption == MenuOption.BattleTest)
             {
-                sceneType = SceneType.Battle;
+                procedureOwner.SetData<VarInt32>("NextSceneId", (int)SceneType.Battle);
             }
 
-            procedureOwner.SetData<VarInt32>("NextSceneId", (int)sceneType);
             ChangeState<ProcedureChangeScene>(procedureOwner);
         }
 

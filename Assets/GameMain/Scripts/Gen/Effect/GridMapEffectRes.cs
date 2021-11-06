@@ -11,6 +11,7 @@ using System.Collections.Generic;
 
 
 
+namespace Cfg.Effect
 {
 
 public sealed class GridMapEffectRes :  Bright.Config.BeanBase 
