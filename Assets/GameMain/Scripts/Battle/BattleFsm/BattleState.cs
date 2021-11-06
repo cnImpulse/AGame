@@ -9,6 +9,7 @@ namespace SSRPG
 {
     public class BattleState : BattleStateBase
     {
+        private int m_EffectId = 0;
         private IFsm<BattleUnit> m_BattleUnitFsm = null;
 
         protected override void OnEnter(IFsm<ProcedureBattle> fsm)
@@ -27,6 +28,7 @@ namespace SSRPG
 
         protected override void OnLeave(IFsm<ProcedureBattle> fsm, bool isShutdown)
         {
+            GameEntry.Battle.HideSelectEffect();
             GameEntry.Event.Unsubscribe(EventName.BattleUnitActionCancel, OnBattleUnitActionCancel);
             GameEntry.Event.Unsubscribe(EventName.BattleUnitActionEnd, OnBattleUnitActionEnd);
             GameEntry.Event.Unsubscribe(EventName.PointerDownGridMap, OnPointGridMap);
@@ -70,6 +72,8 @@ namespace SSRPG
         {
             var ne = e as GameEventBase;
             var gridData = ne.UserData as GridData;
+            GameEntry.Battle.ShowSelectEffect(m_GridMap.GridPosToWorldPos(gridData.GridPos));
+
             var gridUnit = gridData.GridUnit;
             if (gridUnit == null)
             {

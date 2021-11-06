@@ -12,8 +12,7 @@ namespace SSRPG
         [SerializeField]
         private Transform m_EffectInstanceRoot = null;
 
-        [SerializeField]
-        private Dictionary<int, Effect> m_EffectList = null;
+        private Dictionary<int, Effect> m_LoadedEffectList = null;
 
         public Tilemap m_GridMapEffect = null;
 
@@ -28,12 +27,7 @@ namespace SSRPG
             GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnCreatEffect);
 
             m_GridMapEffect = GetComponentInChildren<Tilemap>();
-            m_EffectList = new Dictionary<int, Effect>();
-        }
-
-        private void Update()
-        {
-
+            m_LoadedEffectList = new Dictionary<int, Effect>();
         }
 
         /// <summary>
@@ -51,7 +45,17 @@ namespace SSRPG
             return entityId;
         }
 
-        public void ShowGridMapEffect(List<GridData> gridDatas, GridEffectType type, Color color = default)
+        public Effect GetEffect(int entityId)
+        {
+            if (m_LoadedEffectList.TryGetValue(entityId, out var effect))
+            {
+                return effect;
+            }
+
+            return null;
+        }
+
+        public void ShowGridEffect(List<GridData> gridDatas, GridEffectType type, Color color = default)
         {
             List<Vector2Int> positions = gridDatas.ConvertAll((input) => input.GridPos);
             ShowGridEffect(positions, type, color);
@@ -94,40 +98,23 @@ namespace SSRPG
         /// 销毁特效
         /// </summary>
         /// <param name="entityId">特效实体Id</param>
-        public void DestoryEffect(int entityId)
+        public void HideEffect(int entityId)
         {
-            if (entityId == 0)
+            if (m_LoadedEffectList.ContainsKey(entityId))
             {
-                return;
+                m_LoadedEffectList.Remove(entityId);
+                GameEntry.Entity.HideEntity(entityId);
             }
-            GameEntry.Entity.HideEntity(entityId);
-        }
-
-        /// <summary>
-        /// 改变特效位置
-        /// </summary>
-        /// <param name="entityId">特效实体Id</param>
-        /// <param name="position">特效位置</param>
-        public bool ChangeEffectPos(int entityId, Vector3 position)
-        {
-            if (m_EffectList.TryGetValue(entityId, out var effect))
-            {
-                effect.transform.position = position;
-                return true;
-            }
-            return false;
         }
 
         private void OnCreatEffect(object sender, GameFrameworkEventArgs e)
         {
             var ne = (ShowEntitySuccessEventArgs)e;
-            if (ne.EntityLogicType != typeof(Effect))
+            if (ne.Entity.Logic is Entity)
             {
-                return;
+                m_LoadedEffectList.Add(ne.Entity.Id, ne.Entity.Logic as Effect);
+                ne.Entity.transform.SetParent(m_EffectInstanceRoot);
             }
-
-            m_EffectList.Add(ne.Entity.Id, ne.Entity.Logic as Effect);
-            ne.Entity.transform.SetParent(m_EffectInstanceRoot);
         }
     }
 }

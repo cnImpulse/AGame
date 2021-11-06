@@ -164,12 +164,12 @@ namespace SSRPG
 
         public void ShowMoveArea(List<GridData> gridDatas)
         {
-            GameEntry.Effect.ShowGridMapEffect(gridDatas, GridEffectType.Streak, Color.yellow);
+            GameEntry.Effect.ShowGridEffect(gridDatas, GridEffectType.Streak, Color.yellow);
         }
 
         public void ShowAttackArea(List<GridData> gridDatas)
         {
-            GameEntry.Effect.ShowGridMapEffect(gridDatas, GridEffectType.Streak, Color.red);
+            GameEntry.Effect.ShowGridEffect(gridDatas, GridEffectType.Streak, Color.red);
         }
 
         public void MoveTo(GridUnit gridUnit, Vector2Int destination)

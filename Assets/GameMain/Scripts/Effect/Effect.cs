@@ -31,7 +31,7 @@ namespace SSRPG
             m_RealLifeTime += elapseSeconds;
             if (m_RealLifeTime >= m_Data.LifeTime)
             {
-                GameEntry.Effect.DestoryEffect(Id);
+                GameEntry.Effect.HideEffect(Id);
             }
         }
     }

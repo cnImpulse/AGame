@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using GameFramework.Event;
 using UnityGameFramework.Runtime;
 
@@ -10,15 +11,31 @@ namespace SSRPG
         public int BattleId = 2;
         public bool AutoBattle = true;
 
+        private int m_SelectEffectId = 0;
+
         private void Start()
         {
             GameEntry.Event.Subscribe(EventName.GridUnitDamage, OnGridUnitDamage);
             GameEntry.Event.Subscribe(EventName.GridUnitDead, OnGridUnitDead);
         }
 
-        public int CreatBattle()
+        public void ShowSelectEffect(Vector3 position)
         {
-            return 0;
+            var entity = GameEntry.Effect.GetEffect(m_SelectEffectId);
+            if (entity == null)
+            {
+                m_SelectEffectId = GameEntry.Effect.CreatEffect(Cfg.Effect.EffectType.Select, position);
+            }
+            else
+            {
+                entity.transform.position = position;
+            }
+        }
+
+        public void HideSelectEffect()
+        {
+            GameEntry.Effect.HideEffect(m_SelectEffectId);
+            m_SelectEffectId = 0;
         }
 
         private void OnGridUnitDamage(object sender, GameEventArgs e)
