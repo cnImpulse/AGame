@@ -882,7 +882,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectInstanceRoot: {fileID: 1005707032}
-  GridMapEffect: {fileID: 0}
+  m_GridMapEffect: {fileID: 0}
 --- !u!1 &1005707031
 GameObject:
   m_ObjectHideFlags: 0

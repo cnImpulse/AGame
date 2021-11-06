@@ -15,5 +15,9 @@ namespace Cfg.Effect
         /// 选择特效
         /// </summary>
         SelectEffect = 1,
+        /// <summary>
+        /// 攻击特效
+        /// </summary>
+        Attack = 2,
     }
 }

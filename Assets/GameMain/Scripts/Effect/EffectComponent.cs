@@ -33,7 +33,7 @@ namespace SSRPG
 
         private void Update()
         {
-            
+
         }
 
         /// <summary>
@@ -42,10 +42,10 @@ namespace SSRPG
         /// <param name="type">特效类型</param>
         /// <param name="position">特效位置</param>
         /// <returns>特效实体Id</returns>
-        public int CreatEffect(EffectType type, Vector3 position)
+        public int CreatEffect(EffectType type, Vector3 position, float lifetime = -1)
         {
             int entityId = GameEntry.Entity.GenerateSerialId();
-            EffectData effectData = new EffectData(entityId, (int)type, position);
+            EffectData effectData = new EffectData(entityId, (int)type, position, lifetime);
 
             GameEntry.Entity.ShowEffect(effectData);
             return entityId;
