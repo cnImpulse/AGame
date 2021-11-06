@@ -11,7 +11,7 @@ namespace SSRPG
     public class ProcedureBattle : ProcedureBase
     {
         private bool m_BattleEnd = false;
-        private LevelData m_BattleData = null;
+        private LevelData m_LevelData = null;
         private BattleForm m_BattleForm = null;
 
         private IFsm<ProcedureBattle> m_Fsm = null;
@@ -21,7 +21,6 @@ namespace SSRPG
         public void StartBattle()
         {
             GameEntry.Effect.HideGridMapEffect();
-            GameEntry.Battle.InitBattle(GridMap);
             InitBattleFsm();
         }
 
@@ -36,10 +35,10 @@ namespace SSRPG
 
             GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnShowGirdMapSuccess);
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
-            GameEntry.Event.Subscribe(GridUnitDeadEventArgs.EventId, OnGridUnitDead);
+            GameEntry.Event.Subscribe(EventName.GridUnitDead, OnGridUnitDead);
 
             
-            InitBattle(GameEntry.Battle.BattleId);
+            InitBattle(0);
             InitBattleUnitSelect();
         }
 
@@ -62,7 +61,7 @@ namespace SSRPG
             
             GridMap = null;
             m_BattleEnd = false;
-            m_BattleData = null;
+            m_LevelData = null;
 
             if (m_BattleForm != null)
             {
@@ -72,7 +71,7 @@ namespace SSRPG
 
             GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, OnShowGirdMapSuccess);
             GameEntry.Event.Unsubscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
-            GameEntry.Event.Unsubscribe(GridUnitDeadEventArgs.EventId, OnGridUnitDead);
+            GameEntry.Event.Unsubscribe(EventName.GridUnitDead, OnGridUnitDead);
         }
 
         private void InitBattleFsm()
@@ -88,15 +87,15 @@ namespace SSRPG
             GameEntry.Resource.LoadAsset(path, (assetName, asset, duration, userData) =>
             {
                 TextAsset textAsset = asset as TextAsset;
-                m_BattleData = Utility.Json.ToObject<LevelData>(textAsset.text);
-                GameEntry.Entity.ShowGridMap(0);
+                m_LevelData = Utility.Json.ToObject<LevelData>(textAsset.text);
+                GameEntry.Entity.ShowGridMap(m_LevelData.mapId);
             });
         }
 
         private void InitBattleUnit()
         {
             // 加载敌人
-            foreach (var enemy in m_BattleData.enemyList)
+            foreach (var enemy in m_LevelData.enemyList)
             {
                 int typeId = enemy.Value;
                 var gridData = GridMap.Data.GetGridData(enemy.Key);
@@ -105,8 +104,8 @@ namespace SSRPG
             }
 
             // 加载玩家战棋
-            int posCount = m_BattleData.playerBrithList.Count;
-            foreach(var position in m_BattleData.playerBrithList)
+            int posCount = m_LevelData.playerBrithList.Count;
+            foreach(var position in m_LevelData.playerBrithList)
             {
                 int typeId = 10000 + Random.Range(1, 6);
                 BattleUnitData battleUnitData = new BattleUnitData(typeId, position, CampType.Player);
@@ -136,17 +135,17 @@ namespace SSRPG
             if (ne.EntityLogicType == typeof(GridMap))
             {
                 GridMap = ne.Entity.Logic as GridMap;
-                GameEntry.Effect.ShowGridMapEffect(m_BattleData.playerBrithList, GridMapEffectId.Brith);
+                GameEntry.Effect.ShowGridMapEffect(m_LevelData.playerBrithList, GridMapEffectId.Brith);
                 InitBattleUnit();
             }
         }
 
         private void OnGridUnitDead(object sender, GameEventArgs e)
         {
-            GridUnitDeadEventArgs ne = (GridUnitDeadEventArgs)e;
+            var gridUnit = sender as GridUnit;
 
-            GridUnitData data = ne.gridUnit.Data;
-            GridMap.UnRegisterGridUnit(ne.gridUnit);
+            GridUnitData data = gridUnit.Data;
+            GridMap.UnRegisterGridUnit(gridUnit);
             if (data.GridUnitType == GridUnitType.BattleUnit)
             {
                 var battleUnitList = GridMap.GetGridUnitList<BattleUnit>(data.CampType);

@@ -60,15 +60,12 @@ namespace SSRPG
 
             m_Data = userData as BattleUnitData;
 
-            GameEntry.Event.Subscribe(RoundSwitchEventArgs.EventId, OnRoundSwitch);
             InitSprite();
         }
 
         protected override void OnHide(bool isShutdown, object userData)
         {
             m_Data = null;
-
-            GameEntry.Event.Unsubscribe(RoundSwitchEventArgs.EventId, OnRoundSwitch);
 
             base.OnHide(isShutdown, userData);
         }
@@ -128,29 +125,6 @@ namespace SSRPG
 
             DamageInfo damageInfo = new DamageInfo(m_Data.ATK, Id, gridData.GridUnit.Id);
             GameEntry.Event.Fire(this, EventName.GridUnitDamage, damageInfo);
-        }
-
-        private void OnRoundBegin()
-        {
-            CanAction = true;
-        }
-
-        public void EndAction()
-        {
-            CanAction = false;
-        }
-
-        private void OnRoundSwitch(object sender, GameEventArgs e)
-        {
-            RoundSwitchEventArgs ne = (RoundSwitchEventArgs)e;
-            if (ne.ActionCamp == m_Data.CampType)
-            {
-                OnRoundBegin();
-            }
-            else if (ne.EndActionCamp == m_Data.CampType)
-            {
-                EndAction();
-            }
         }
     }
 }

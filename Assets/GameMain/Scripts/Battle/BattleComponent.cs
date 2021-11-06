@@ -10,26 +10,10 @@ namespace SSRPG
         public int BattleId = 2;
         public bool AutoBattle = true;
 
-        [NonSerialized]
-        public int ActionArg = 0;
-        [NonSerialized]
-        public BattleUnit SelectBattleUnit = null;
-
-        public GridMap GridMap
-        {
-            get;
-            private set;
-        }
-
         private void Start()
         {
             GameEntry.Event.Subscribe(EventName.GridUnitDamage, OnGridUnitDamage);
-            GameEntry.Event.Subscribe(GridUnitDeadEventArgs.EventId, OnGridUnitDead);
-        }
-
-        public void InitBattle(GridMap gridMap)
-        {
-            GridMap = gridMap;
+            GameEntry.Event.Subscribe(EventName.GridUnitDead, OnGridUnitDead);
         }
 
         private void OnGridUnitDamage(object sender, GameEventArgs e)
@@ -47,9 +31,8 @@ namespace SSRPG
 
         private void OnGridUnitDead(object sender, GameEventArgs e)
         {
-            var ne = (GridUnitDeadEventArgs)e;
+            var ne = e as GameEventBase;
 
-            
         }
     }
 }

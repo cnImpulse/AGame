@@ -77,7 +77,7 @@ namespace SSRPG
         {
             Log.Info("{0}: 死亡", Name);
 
-            GameEntry.Event.Fire(this, GridUnitDeadEventArgs.Create(this));
+            GameEntry.Event.Fire(this, EventName.GridUnitDead);
         }
     }
 }

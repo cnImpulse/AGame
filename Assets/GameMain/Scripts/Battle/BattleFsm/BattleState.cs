@@ -27,6 +27,7 @@ namespace SSRPG
 
         protected override void OnLeave(IFsm<ProcedureBattle> fsm, bool isShutdown)
         {
+            GameEntry.Event.Unsubscribe(EventName.BattleUnitActionCancel, OnBattleUnitActionCancel);
             GameEntry.Event.Unsubscribe(EventName.BattleUnitActionEnd, OnBattleUnitActionEnd);
             GameEntry.Event.Unsubscribe(EventName.PointerDownGridMap, OnPointGridMap);
 

@@ -22,6 +22,8 @@ namespace SSRPG
         protected override void OnEnter(IFsm<BattleUnit> fsm)
         {
             base.OnEnter(fsm);
+
+            Log.Info("Enter {0}", GetType());
         }
 
         protected override void OnUpdate(IFsm<BattleUnit> fsm, float elapseSeconds, float realElapseSeconds)

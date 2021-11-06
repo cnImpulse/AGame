@@ -18,8 +18,6 @@ namespace SSRPG
         [InspectorName("玩家战斗单位上限")]
         private int m_MaxPlayerBattleUnit = 3;
 
-        private LevelEditor() { }
-
         [ContextMenu("保存数据")]
         private void SaveData()
         {
