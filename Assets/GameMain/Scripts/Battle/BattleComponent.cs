@@ -30,9 +30,9 @@ namespace SSRPG
             GridUnit target = GameEntry.Entity.GetEntityLogic<GridUnit>(info.TargetId);
             target.BeAttack(info.DamageHP);
 
-            GameEntry.Effect.CreatEffect(Cfg.Effect.EffectType.Attack, target.transform.position, 0.5f);   
+            GameEntry.Effect.CreatEffect(Cfg.Effect.EffectType.Attack, target.transform.position, 0.5f);
             GameEntry.GameTips.PlayTips(string.Format("{0}对{1}造成<color=#FF7070>{2}</color>点伤害",
-                Utl.GetText(caster.Data.CampType, caster.Name), Utl.GetText(target.Data.CampType, target.Name), info.DamageHP));
+                BattleUtl.GetNameText(caster), BattleUtl.GetNameText(caster), info.DamageHP));
         }
 
         private void OnGridUnitDead(object sender, GameEventArgs e)

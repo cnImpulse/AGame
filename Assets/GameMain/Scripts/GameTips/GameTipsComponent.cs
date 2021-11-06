@@ -7,24 +7,24 @@ namespace SSRPG
 {
     public class GameTipsComponent : GameFrameworkComponent
     {
-        private TipsForm m_Form = null;
+        Queue<int> m_TipsFormList = null;
 
         private void Start()
         {
+            m_TipsFormList = new Queue<int>();
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenTipsForm);
         }
 
         public void PlayTips(string tips)
         {
-            StopTips();
-            GameEntry.UI.OpenUIForm(Cfg.UI.FormType.TipsForm, tips);
+            m_TipsFormList.Enqueue((int)GameEntry.UI.OpenUIForm(Cfg.UI.FormType.TipsForm, tips));
         }
 
-        public void StopTips()
+        public void StopAllTips()
         {
-            if (m_Form != null)
+            foreach (var id in m_TipsFormList)
             {
-                m_Form.Close(true);
+                GameEntry.UI.CloseUIForm(true, id);
             }
         }
 
@@ -34,8 +34,7 @@ namespace SSRPG
 
             if (ne.UIForm.Logic is TipsForm)
             {
-                m_Form = ne.UIForm.Logic as TipsForm;
-                m_Form.OnCloseForm += () => { m_Form = null; };
+
             }
         }
     }

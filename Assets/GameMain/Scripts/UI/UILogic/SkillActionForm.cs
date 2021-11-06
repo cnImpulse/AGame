@@ -10,6 +10,7 @@ namespace SSRPG
         private UIListTemplate m_ActionList = null;
 
         private SkillState m_Owner = null;
+        private List<int> m_SkillIdList = null;
 
         protected override void OnInit(object userData)
         {
@@ -27,7 +28,8 @@ namespace SSRPG
 
             m_Owner = userData as SkillState;
 
-            m_ActionList.InitList();
+            m_SkillIdList = m_Owner.Owner.Data.SkillList;
+            m_ActionList.InitList(m_SkillIdList.Count);
         }
 
         protected override void OnClose(bool isShutdown, object userData)
@@ -44,6 +46,10 @@ namespace SSRPG
         {
             var button = item.GetComponent<Button>();
             var text = item.GetChild<TextMeshProUGUI>("m_Text");
+
+            var cfg = GameEntry.Cfg.Tables.TblBattleUnitSkill.Get(m_SkillIdList[index]);
+            text.text = cfg.Name;
+            button.onClick.AddListener(() => { m_Owner.ReleaseSkill(cfg.Id); });
         }
     }
 }

@@ -12,7 +12,7 @@ namespace SSRPG
     {
         private Dictionary<string, Transform> m_ChildList = null;
 
-        protected float FadeTime = 0.3f;
+        private float m_FadeTime = 0.3f;
         private Canvas m_CachedCanvas = null;
         protected CanvasGroup m_CanvasGroup = null;
 
@@ -33,7 +33,7 @@ namespace SSRPG
             }
             else
             {
-                StartCoroutine(CloseCo(FadeTime));
+                StartCoroutine(CloseCo(m_FadeTime));
             }
         }
 
@@ -108,7 +108,7 @@ namespace SSRPG
 
             m_CanvasGroup.alpha = 0f;
             StopAllCoroutines();
-            StartCoroutine(m_CanvasGroup.FadeToAlpha(1f, FadeTime));
+            StartCoroutine(m_CanvasGroup.FadeToAlpha(1f, m_FadeTime));
         }
 
         protected override void OnClose(bool isShutdown, object userData)
