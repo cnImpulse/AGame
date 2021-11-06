@@ -16,7 +16,7 @@ class {{name}}:
         for _json2_ in _json_:
             {{py3_deserialize_value '_v' '_json2_' value_type}}
             self._dataList.append(_v)
-            self._dataMap[_v.{{x.index_field.py_style_name}}] = _v
+            self._dataMap[_v.{{x.index_field.convention_name}}] = _v
 
     def getDataMap(self) : return self._dataMap
     def getDataList(self) : return self._dataList
@@ -34,9 +34,9 @@ class {{name}}:
     {{~ for field in value_type.bean.hierarchy_export_fields ~}}
 {{~if field.comment != '' ~}}
     '''
-    {{field.comment}}
+    {{field.escape_comment}}
     '''
 {{~end~}}
-    def {{field.py_style_name}}(self) : return self._data.{{field.py_style_name}}
+    def {{field.convention_name}}(self) : return self._data.{{field.convention_name}}
     {{~end~}}
     {{~end~}}

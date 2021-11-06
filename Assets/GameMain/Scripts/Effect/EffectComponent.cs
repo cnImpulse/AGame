@@ -12,7 +12,7 @@ namespace SSRPG
         private Transform m_EffectInstanceRoot = null;
 
         [SerializeField]
-        private Dictionary<int, EffectBase> m_EffectList = null;
+        private Dictionary<int, Effect> m_EffectList = null;
 
         public Tilemap m_GridMapEffect = null;
 
@@ -27,7 +27,7 @@ namespace SSRPG
             GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnCreatEffect);
 
             m_GridMapEffect = GetComponentInChildren<Tilemap>();
-            m_EffectList = new Dictionary<int, EffectBase>();
+            m_EffectList = new Dictionary<int, Effect>();
         }
 
         private void Update()
@@ -44,7 +44,7 @@ namespace SSRPG
         public int CreatEffect(EffectId type, Vector3 position)
         {
             int entityId = GameEntry.Entity.GenerateSerialId();
-            EffectDataBase effectData = new EffectDataBase(entityId, (int)type, position);
+            EffectData effectData = new EffectData(entityId, (int)type, position);
 
             GameEntry.Entity.ShowEffect(effectData);
             return entityId;
@@ -120,12 +120,12 @@ namespace SSRPG
         private void OnCreatEffect(object sender, GameFrameworkEventArgs e)
         {
             var ne = (ShowEntitySuccessEventArgs)e;
-            if (ne.EntityLogicType != typeof(EffectBase))
+            if (ne.EntityLogicType != typeof(Effect))
             {
                 return;
             }
 
-            m_EffectList.Add(ne.Entity.Id, ne.Entity.Logic as EffectBase);
+            m_EffectList.Add(ne.Entity.Id, ne.Entity.Logic as Effect);
             ne.Entity.transform.SetParent(m_EffectInstanceRoot);
         }
     }

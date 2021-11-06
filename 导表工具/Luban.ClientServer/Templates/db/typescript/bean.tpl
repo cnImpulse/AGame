@@ -11,14 +11,14 @@
 {{x.typescript_namespace_begin}}
 {{~if x.comment != '' ~}}
 /**
- * {{x.comment}}
+ * {{x.escape_comment}}
  */
 {{~end~}}
 export {{x.ts_class_modifier}} class {{name}} extends {{if parent_def_type}} {{x.parent}} {{else}} TxnBeanBase {{end}}{
     {{~ for field in fields~}}
 {{~if field.comment != '' ~}}
     /**
-     * {{field.comment}}
+     * {{field.escape_comment}}
      */
 {{~end~}}
     {{if is_abstract_type}}protected{{else}}private{{end}} {{field.internal_name}}: {{db_ts_define_type field.ctype}} 
@@ -50,10 +50,10 @@ export {{x.ts_class_modifier}} class {{name}} extends {{if parent_def_type}} {{x
 
 {{~if field.comment != '' ~}}
     /**
-     * {{field.comment}}
+     * {{field.escape_comment}}
      */
 {{~end~}}
-    get {{field.ts_style_name}}(): {{db_ts_define_type ctype}} {
+    get {{field.convention_name}}(): {{db_ts_define_type ctype}} {
         if (this.isManaged) {
             var txn = TransactionContext.current
             if (txn == null) return {{field.internal_name_with_this}}
@@ -66,10 +66,10 @@ export {{x.ts_class_modifier}} class {{name}} extends {{if parent_def_type}} {{x
 
 {{~if field.comment != '' ~}}
     /**
-     * {{field.comment}}
+     * {{field.escape_comment}}
      */
 {{~end~}}
-    set {{field.ts_style_name}}(value: {{db_ts_define_type ctype}}) {
+    set {{field.convention_name}}(value: {{db_ts_define_type ctype}}) {
         {{~if db_field_cannot_null~}}
         if (value == null) throw new Error()
         {{~end~}}
@@ -87,10 +87,10 @@ export {{x.ts_class_modifier}} class {{name}} extends {{if parent_def_type}} {{x
         {{~else~}}
 {{~if field.comment != '' ~}}
     /**
-     * {{field.comment}}
+     * {{field.escape_comment}}
      */
 {{~end~}}
-    get {{field.ts_style_name}}(): {{db_ts_define_type ctype}}  { return {{field.internal_name_with_this}} }
+    get {{field.convention_name}}(): {{db_ts_define_type ctype}}  { return {{field.internal_name_with_this}} }
         {{~end~}}
     {{~end~}}
 
@@ -148,7 +148,7 @@ export {{x.ts_class_modifier}} class {{name}} extends {{if parent_def_type}} {{x
     toString(): string {
         return '{{full_name}}{ '
     {{~ for field in hierarchy_fields~}}
-        + '{{field.ts_style_name}}:' + {{ts_to_string ('this.' + field.ts_style_name) field.ctype}} + ','
+        + '{{field.convention_name}}:' + {{ts_to_string ('this.' + field.convention_name) field.ctype}} + ','
     {{~end~}}
         + '}'
     }

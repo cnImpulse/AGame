@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace SSRPG
 {
-    public class EffectDataBase : EntityData
+    public class EffectData : EntityData
     {
         [SerializeField]
         private Vector3 m_Position = Vector3.zero;
 
-        public EffectDataBase(int id, int typeId, Vector3 position) : base(id, typeId)
+        public EffectData(int id, int typeId, Vector3 position) : base(id, typeId)
         {
             m_Position = position;
         }

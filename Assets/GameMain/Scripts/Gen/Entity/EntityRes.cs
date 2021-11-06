@@ -10,69 +10,68 @@ using Bright.Serialization;
 using System.Collections.Generic;
 
 
+
 namespace cfg.Entity
 {
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public sealed partial class EntityRes :  Bright.Config.BeanBase 
+public sealed class EntityRes :  Bright.Config.BeanBase 
+{
+    public EntityRes(ByteBuf _buf) 
     {
-        public EntityRes(ByteBuf _buf) 
-        {
-            Id = _buf.ReadInt();
-            Name = _buf.ReadString();
-            Group = _buf.ReadString();
-            AssetName = _buf.ReadString();
-            Priority = _buf.ReadInt();
-        }
-
-        public static EntityRes DeserializeEntityRes(ByteBuf _buf)
-        {
-            return new Entity.EntityRes(_buf);
-        }
-
-        /// <summary>
-        /// 编号
-        /// </summary>
-        public int Id { get; private set; }
-        /// <summary>
-        /// 名字
-        /// </summary>
-        public string Name { get; private set; }
-        /// <summary>
-        /// 实体组
-        /// </summary>
-        public string Group { get; private set; }
-        /// <summary>
-        /// 资源名
-        /// </summary>
-        public string AssetName { get; private set; }
-        /// <summary>
-        /// 优先级
-        /// </summary>
-        public int Priority { get; private set; }
-
-        public const int ID = -1578301070;
-        public override int GetTypeId() => ID;
-
-        public  void Resolve(Dictionary<string, object> _tables)
-        {
-        }
-
-        public  void TranslateText(System.Func<string, string, string> translator)
-        {
-        }
-
-        public override string ToString()
-        {
-            return "{ "
-            + "Id:" + Id + ","
-            + "Name:" + Name + ","
-            + "Group:" + Group + ","
-            + "AssetName:" + AssetName + ","
-            + "Priority:" + Priority + ","
-            + "}";
-        }
+        Id = _buf.ReadInt();
+        Name = _buf.ReadString();
+        Group = _buf.ReadString();
+        AssetName = _buf.ReadString();
+        Priority = _buf.ReadInt();
     }
+
+    public static EntityRes DeserializeEntityRes(ByteBuf _buf)
+    {
+        return new Entity.EntityRes(_buf);
+    }
+
+    /// <summary>
+    /// 实体编号
+    /// </summary>
+    public int Id { get; private set; }
+    /// <summary>
+    /// 实体名
+    /// </summary>
+    public string Name { get; private set; }
+    /// <summary>
+    /// 实体组
+    /// </summary>
+    public string Group { get; private set; }
+    /// <summary>
+    /// 资源名
+    /// </summary>
+    public string AssetName { get; private set; }
+    /// <summary>
+    /// 资源加载优先级
+    /// </summary>
+    public int Priority { get; private set; }
+
+    public const int ID = -1578301070;
+    public override int GetTypeId() => ID;
+
+    public  void Resolve(Dictionary<string, object> _tables)
+    {
+    }
+
+    public  void TranslateText(System.Func<string, string, string> translator)
+    {
+    }
+
+    public override string ToString()
+    {
+        return "{ "
+        + "Id:" + Id + ","
+        + "Name:" + Name + ","
+        + "Group:" + Group + ","
+        + "AssetName:" + AssetName + ","
+        + "Priority:" + Priority + ","
+        + "}";
+    }
+    }
+
 }

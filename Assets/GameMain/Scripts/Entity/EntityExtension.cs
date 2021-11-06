@@ -61,10 +61,11 @@ namespace SSRPG
             entityComponent.ShowEntity<BattleUnit>(data, EntityType.BattleUnit);
         }
 
-        public static void ShowEffect(this EntityComponent entityComponent, EffectDataBase data)
+        public static void ShowEffect(this EntityComponent entityComponent, EffectData data)
         {
-            var cfg = GameEntry.Cfg.Tables.TblEffect.Get(data.TypeId);
-            entityComponent.ShowEntity(data.Id, typeof(EffectBase), AssetUtl.GetEffectAsset(cfg.AssetName), "Effect", data);
+            //entityComponent.ShowEntity<Effect>(data, EntityType.);
+            //var cfg = GameEntry.Cfg.Tables.TblEffect.Get(data.TypeId);
+            //entityComponent.ShowEntity(data.Id, typeof(Effect), AssetUtl.GetEffectAsset(cfg.AssetName), "Effect", data);
         }
 
         public static int GenerateSerialId(this EntityComponent entityComponent)

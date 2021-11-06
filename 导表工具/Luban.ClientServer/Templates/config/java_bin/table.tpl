@@ -12,7 +12,7 @@ import bright.serialization.*;
 
 {{~if x.comment != '' ~}}
 /**
- * {{x.comment}}
+ * {{x.escape_comment}}
  */
 {{~end~}}
 public final class {{name}} {
@@ -28,7 +28,7 @@ public final class {{name}} {
             {{java_box_define_type value_type}} _v;
             {{java_deserialize '_buf' '_v' value_type}}
             _dataList.add(_v);
-            _dataMap.put(_v.{{x.index_field.java_style_name}}, _v);
+            _dataMap.put(_v.{{x.index_field.convention_name}}, _v);
         }
     }
 
@@ -62,10 +62,10 @@ public final class {{name}} {
     {{~ for field in value_type.bean.hierarchy_export_fields ~}}
 {{~if field.comment != '' ~}}
     /**
-     * {{field.comment}}
+     * {{field.escape_comment}}
      */
 {{~end~}}
-     public {{java_define_type field.ctype}} {{field.java_getter_name}}() { return _data.{{field.java_style_name}}; }
+     public {{java_define_type field.ctype}} {{field.convention_getter_name}}() { return _data.{{field.convention_name}}; }
     {{~end~}}
 
     public void resolve(java.util.HashMap<String, Object> _tables) {

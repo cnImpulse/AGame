@@ -10,75 +10,74 @@ using Bright.Serialization;
 using System.Collections.Generic;
 
 
+
 namespace cfg.Battle
 {
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public sealed partial class BattleUnitSkill :  Bright.Config.BeanBase 
+public sealed class BattleUnitSkill :  Bright.Config.BeanBase 
+{
+    public BattleUnitSkill(ByteBuf _buf) 
     {
-        public BattleUnitSkill(ByteBuf _buf) 
-        {
-            Id = _buf.ReadInt();
-            Name = _buf.ReadString();
-            Desc = _buf.ReadString();
-            DamageRate = _buf.ReadFloat();
-            ReleaseRange = _buf.ReadInt();
-            MPCost = _buf.ReadInt();
-        }
-
-        public static BattleUnitSkill DeserializeBattleUnitSkill(ByteBuf _buf)
-        {
-            return new Battle.BattleUnitSkill(_buf);
-        }
-
-        /// <summary>
-        /// 编号
-        /// </summary>
-        public int Id { get; private set; }
-        /// <summary>
-        /// 名字
-        /// </summary>
-        public string Name { get; private set; }
-        /// <summary>
-        /// 描述
-        /// </summary>
-        public string Desc { get; private set; }
-        /// <summary>
-        /// 伤害倍率
-        /// </summary>
-        public float DamageRate { get; private set; }
-        /// <summary>
-        /// 基础释放范围
-        /// </summary>
-        public int ReleaseRange { get; private set; }
-        /// <summary>
-        /// 基础释放MP消耗
-        /// </summary>
-        public int MPCost { get; private set; }
-
-        public const int ID = -1085631457;
-        public override int GetTypeId() => ID;
-
-        public  void Resolve(Dictionary<string, object> _tables)
-        {
-        }
-
-        public  void TranslateText(System.Func<string, string, string> translator)
-        {
-        }
-
-        public override string ToString()
-        {
-            return "{ "
-            + "Id:" + Id + ","
-            + "Name:" + Name + ","
-            + "Desc:" + Desc + ","
-            + "DamageRate:" + DamageRate + ","
-            + "ReleaseRange:" + ReleaseRange + ","
-            + "MPCost:" + MPCost + ","
-            + "}";
-        }
+        Id = _buf.ReadInt();
+        Name = _buf.ReadString();
+        Desc = _buf.ReadString();
+        DamageRate = _buf.ReadFloat();
+        ReleaseRange = _buf.ReadInt();
+        MPCost = _buf.ReadInt();
     }
+
+    public static BattleUnitSkill DeserializeBattleUnitSkill(ByteBuf _buf)
+    {
+        return new Battle.BattleUnitSkill(_buf);
+    }
+
+    /// <summary>
+    /// 技能编号
+    /// </summary>
+    public int Id { get; private set; }
+    /// <summary>
+    /// 技能名
+    /// </summary>
+    public string Name { get; private set; }
+    /// <summary>
+    /// 技能描述
+    /// </summary>
+    public string Desc { get; private set; }
+    /// <summary>
+    /// 伤害倍率
+    /// </summary>
+    public float DamageRate { get; private set; }
+    /// <summary>
+    /// 基础释放范围
+    /// </summary>
+    public int ReleaseRange { get; private set; }
+    /// <summary>
+    /// 基础释放MP消耗
+    /// </summary>
+    public int MPCost { get; private set; }
+
+    public const int ID = -1085631457;
+    public override int GetTypeId() => ID;
+
+    public  void Resolve(Dictionary<string, object> _tables)
+    {
+    }
+
+    public  void TranslateText(System.Func<string, string, string> translator)
+    {
+    }
+
+    public override string ToString()
+    {
+        return "{ "
+        + "Id:" + Id + ","
+        + "Name:" + Name + ","
+        + "Desc:" + Desc + ","
+        + "DamageRate:" + DamageRate + ","
+        + "ReleaseRange:" + ReleaseRange + ","
+        + "MPCost:" + MPCost + ","
+        + "}";
+    }
+    }
+
 }
