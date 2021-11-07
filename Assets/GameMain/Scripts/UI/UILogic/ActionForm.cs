@@ -57,6 +57,10 @@ namespace SSRPG
             else if (type == ActionType.Skill)
             {
                 text.text = "技能";
+                if (m_Owner.Owner.Data.SkillList.Count == 0)
+                {
+                    button.interactable = false;
+                }
             }
             else if (type == ActionType.Await)
             {

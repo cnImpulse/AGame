@@ -13,8 +13,8 @@ namespace SSRPG
         public IFsm<ProcedureBattle> Fsm { get; private set; }
         public ProcedureBattle Owner => Fsm == null ? null : Fsm.Owner;
 
-        protected GridMap m_GridMap => Owner.GridMap;
-        protected CampType m_ActiveCamp
+        public GridMap m_GridMap => Owner.GridMap;
+        public CampType m_ActiveCamp
         {
             get
             {

@@ -18,13 +18,13 @@ namespace SSRPG
             {
                 battleUnit.OnRoundStart();
             }
+
+            GameEntry.UI.OpenUIForm(Cfg.UI.FormType.RoundSwitchForm, this);
         }
 
         protected override void OnUpdate(IFsm<ProcedureBattle> fsm, float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
-
-            ChangeState<BattleState>(fsm);
         }
 
         protected override void OnLeave(IFsm<ProcedureBattle> fsm, bool isShutdown)

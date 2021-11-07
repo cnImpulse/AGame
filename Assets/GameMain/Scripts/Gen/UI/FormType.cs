@@ -55,5 +55,9 @@ namespace Cfg.UI
         /// 游戏提示界面
         /// </summary>
         TipsForm = 1002,
+        /// <summary>
+        /// 回合切换动画
+        /// </summary>
+        RoundSwitchForm = 1003,
     }
 }

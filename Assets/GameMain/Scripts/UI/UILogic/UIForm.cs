@@ -11,6 +11,9 @@ namespace SSRPG
     {
         private Dictionary<string, Transform> m_ChildList = null;
 
+        [SerializeField]
+        private bool m_OpenFade = true;
+        [SerializeField]
         private float m_FadeTime = 0.3f;
         private Canvas m_CachedCanvas = null;
         protected CanvasGroup m_CanvasGroup = null;
@@ -99,8 +102,11 @@ namespace SSRPG
         {
             base.OnOpen(userData);
 
-            m_CanvasGroup.alpha = 0f;
-            m_CanvasGroup.DOFade(1, m_FadeTime);
+            if (m_OpenFade)
+            {
+                m_CanvasGroup.alpha = 0f;
+                m_CanvasGroup.DOFade(1, m_FadeTime);
+            }
         }
 
         protected override void OnClose(bool isShutdown, object userData)
