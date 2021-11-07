@@ -110,7 +110,7 @@ namespace SSRPG
         private void OnCreatEffect(object sender, GameFrameworkEventArgs e)
         {
             var ne = (ShowEntitySuccessEventArgs)e;
-            if (ne.Entity.Logic is Entity)
+            if (ne.Entity.Logic is Effect)
             {
                 m_LoadedEffectList.Add(ne.Entity.Id, ne.Entity.Logic as Effect);
                 ne.Entity.transform.SetParent(m_EffectInstanceRoot);

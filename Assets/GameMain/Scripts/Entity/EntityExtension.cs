@@ -64,7 +64,7 @@ namespace SSRPG
 
         public static int GenerateSerialId(this EntityComponent entityComponent)
         {
-            return s_SerialId++;
+            return ++s_SerialId;
         }
     }
 }

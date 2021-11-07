@@ -17,7 +17,8 @@ namespace SSRPG
 
             GameEntry.Event.Subscribe(EventName.BattleUnitActionCancel, OnBattleUnitActionCancel);
             GameEntry.Event.Subscribe(EventName.BattleUnitActionEnd, OnBattleUnitActionEnd);
-            GameEntry.Event.Subscribe(EventName.PointerDownGridMap, OnPointGridMap);
+
+            m_BattleUnitFsm = Fsm.GetData<VarObject>("BattleUnitFsm").Value as IFsm<BattleUnit>;
         }
 
         protected override void OnUpdate(IFsm<ProcedureBattle> fsm, float elapseSeconds, float realElapseSeconds)
@@ -27,10 +28,8 @@ namespace SSRPG
 
         protected override void OnLeave(IFsm<ProcedureBattle> fsm, bool isShutdown)
         {
-            GameEntry.Battle.HideSelectEffect();
             GameEntry.Event.Unsubscribe(EventName.BattleUnitActionCancel, OnBattleUnitActionCancel);
             GameEntry.Event.Unsubscribe(EventName.BattleUnitActionEnd, OnBattleUnitActionEnd);
-            GameEntry.Event.Unsubscribe(EventName.PointerDownGridMap, OnPointGridMap);
 
             base.OnLeave(fsm, isShutdown);
         }
@@ -44,6 +43,7 @@ namespace SSRPG
             }
 
             GameEntry.Fsm.DestroyFsm(m_BattleUnitFsm);
+            Fsm.RemoveData("BattleUnitFsm");
             m_BattleUnitFsm = null;
         }
 
@@ -55,37 +55,18 @@ namespace SSRPG
             {
                 if (battleUnit.CanAction)
                 {
+                    ChangeState<BattleUnitSelectState>();
                     return;
                 }
             }
-
+            
             ChangeState<RoundEndState>();
         }
 
         private void OnBattleUnitActionCancel(object sender, GameEventArgs e)
         {
             DestoryBattleUnitFsm();
-        }
-
-        private void OnPointGridMap(object sender, GameEventArgs e)
-        {
-            var ne = e as GameEventBase;
-            var gridData = ne.UserData as GridData;
-            GameEntry.Battle.ShowSelectEffect(m_GridMap.GridPosToWorldPos(gridData.GridPos));
-
-            var gridUnit = gridData.GridUnit;
-            if (gridUnit == null)
-            {
-                return;
-            }
-
-            var battleUnit = gridUnit as BattleUnit;
-            if (m_BattleUnitFsm == null && battleUnit != null && battleUnit.CanAction)
-            {
-                m_BattleUnitFsm = GameEntry.Fsm.CreateFsm(battleUnit, new MoveState(),
-                    new ActionState(), new AttackState(), new SkillState(), new EndActionState());
-                m_BattleUnitFsm.Start<MoveState>();
-            }
+            ChangeState<BattleUnitSelectState>();
         }
     }
 }

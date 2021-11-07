@@ -25,6 +25,17 @@ namespace SSRPG
                 Fsm.SetData<VarInt32>("ActiveCamp", (int)value);
             }
         }
+        public bool IsAutoBattle
+        {
+            get
+            {
+                if (m_ActiveCamp != CampType.Player || GameEntry.Battle.AutoBattle)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
 
         private Type m_NextState = null;
 

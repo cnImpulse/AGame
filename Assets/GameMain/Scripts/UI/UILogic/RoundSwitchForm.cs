@@ -43,15 +43,16 @@ namespace SSRPG
                 m_BannerTxt.text = "敌方回合";
             }
             
-            var tweener = m_CanvasGroup.DOFade(1, 1.5f);
+            var tweener = m_CanvasGroup.DOFade(0.8f, 1.5f);
             tweener.OnComplete(() =>
             {
-                m_Banner.DOMoveY(1080, 3f);
-                m_Banner.DOScale(0.4f, 3f);
-                var tweener = m_CanvasGroup.DOFade(0, 3f);
+                //m_Banner.DOMoveY(1080, 2f);
+                //m_Banner.DOScale(0, 2f);
+                var tweener = m_CanvasGroup.DOFade(0, 1.5f);
+                tweener.SetDelay(0.5f);
                 tweener.OnComplete(() =>
                 {
-                    m_Owner.ChangeState<BattleState>();
+                    m_Owner.ChangeState<BattleUnitSelectState>();
                     Close(true);
                 });
             });
