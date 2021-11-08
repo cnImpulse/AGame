@@ -32,6 +32,7 @@ namespace SSRPG
         {
             if (m_Caster.Data.MP < m_MPCost)
             {
+                GameEntry.GameTips.PlayTips("法力值不足");
                 return false;
             }
 
@@ -48,7 +49,7 @@ namespace SSRPG
 
             string tips = string.Format("{0}对{1}释放技能{2}",
                 BattleUtl.GetText(m_Caster.Data.CampType, m_Caster.Name),
-                BattleUtl.GetText(m_Target.Data.CampType, m_Caster.Name),
+                BattleUtl.GetText(m_Target.Data.CampType, m_Target.Name),
                 BattleUtl.GetText(m_Caster.Data.CampType, m_Name));
             GameEntry.GameTips.PlayTips(tips);
         }

@@ -36,6 +36,7 @@ namespace SSRPG
 
         protected override void OnLeave(IFsm<ProcedureBattle> fsm, bool isShutdown)
         {
+            DestoryBattleUnitFsm();
             GameEntry.Event.Unsubscribe(EventName.BattleUnitActionCancel, OnBattleUnitActionCancel);
             GameEntry.Event.Unsubscribe(EventName.BattleUnitActionEnd, OnBattleUnitActionEnd);
 
@@ -46,7 +47,6 @@ namespace SSRPG
         {
             if (m_BattleUnitFsm == null)
             {
-                Log.Warning("战斗单位状态机为空.");
                 return;
             }
 

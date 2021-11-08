@@ -12,10 +12,7 @@ namespace SSRPG
     public class ProcedureBattleEnd : ProcedureBase
     {
         private BattleEndForm m_Form = null;
-
         private bool m_AgainBattle = false;
-
-        public CampType WinCampType = default;
 
         protected override void OnInit(ProcedureOwner procedureOwner)
         {
@@ -49,7 +46,6 @@ namespace SSRPG
             base.OnLeave(procedureOwner, isShutdown);
 
             m_AgainBattle = false;
-
             if (m_Form != null)
             {
                 m_Form.Close(isShutdown);
