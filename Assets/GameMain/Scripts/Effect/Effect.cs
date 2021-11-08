@@ -30,6 +30,7 @@ namespace SSRPG
         {
             base.OnUpdate(elapseSeconds, realElapseSeconds);
 
+            transform.position = m_Data.Position;
             if (m_Data.LifeTime == -1)
             {
                 return;

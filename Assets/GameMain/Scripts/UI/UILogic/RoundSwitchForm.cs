@@ -48,7 +48,7 @@ namespace SSRPG
             {
                 //m_Banner.DOMoveY(1080, 2f);
                 //m_Banner.DOScale(0, 2f);
-                var tweener = m_CanvasGroup.DOFade(0, 1.5f);
+                var tweener = m_CanvasGroup.DOFade(0f, 1.5f);
                 tweener.SetDelay(0.5f);
                 tweener.OnComplete(() =>
                 {

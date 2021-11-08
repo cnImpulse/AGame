@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace SSRPG
@@ -27,6 +28,7 @@ namespace SSRPG
 
             m_Owner = userData as ActionState;
 
+            InitActionListPos();
             m_ActionList.InitList();
             m_ActionList.AddItem((int)ActionType.Attack);
             m_ActionList.AddItem((int)ActionType.Skill);
@@ -36,6 +38,12 @@ namespace SSRPG
         protected override void OnClose(bool isShutdown, object userData)
         {
             base.OnClose(isShutdown, userData);
+        }
+
+        private void InitActionListPos()
+        {
+            var isLeft = Camera.main.WorldToViewportPoint(m_Owner.Owner.transform.position).x < 0.5;
+            m_ActionList.transform.SetLocalPositionX(isLeft ? (Screen.width - 610) : 100);
         }
 
         private void OnClickMask()

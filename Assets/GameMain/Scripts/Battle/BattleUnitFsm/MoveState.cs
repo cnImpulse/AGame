@@ -21,6 +21,7 @@ namespace SSRPG
             {
                 m_CanMoveList = m_GridMap.Data.GetCanMoveGrids(Owner);
                 m_GridMap.ShowMoveArea(m_CanMoveList);
+                GameEntry.Battle.SetAreaSelectEffect(m_CanMoveList.ConvertAll((input) => input.GridPos), m_GridMap);
             }
             else
             {
@@ -36,7 +37,7 @@ namespace SSRPG
         protected override void OnLeave(IFsm<BattleUnit> fsm, bool isShutdown)
         {
             m_CanMoveList = null;
-
+            GameEntry.Battle.HideAreaSelectEffect();
             GameEntry.Effect.HideGridMapEffect();
             GameEntry.Event.Unsubscribe(EventName.PointerDownGridMap, OnPointGridMap);
 

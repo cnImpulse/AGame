@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace SSRPG
@@ -30,11 +31,18 @@ namespace SSRPG
 
             m_SkillIdList = m_Owner.Owner.Data.SkillList;
             m_ActionList.InitList(m_SkillIdList.Count);
+            InitActionListPos();
         }
 
         protected override void OnClose(bool isShutdown, object userData)
         {
             base.OnClose(isShutdown, userData);
+        }
+
+        private void InitActionListPos()
+        {
+            var isLeft = Camera.main.WorldToViewportPoint(m_Owner.Owner.transform.position).x < 0.5;
+            m_ActionList.transform.SetLocalPositionX(isLeft ? (Screen.width - 610) : 100);
         }
 
         private void OnClickMask()

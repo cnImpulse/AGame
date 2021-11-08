@@ -32,6 +32,7 @@ namespace SSRPG
             GameEntry.UI.CloseUIForm(isShutdown, m_SerilId);
             m_SerilId = 0;
 
+            GameEntry.Battle.HideAreaSelectEffect();
             GameEntry.Effect.HideGridMapEffect();
             GameEntry.Event.Unsubscribe(EventName.PointerDownGridMap, OnPointGridMap);
 
@@ -44,6 +45,7 @@ namespace SSRPG
             m_SkillId = skillId;
             m_CanReleaseList = m_GridMap.Data.GetSkillReleaseRange(Owner, m_SkillId);
             m_GridMap.ShowAttackArea(m_CanReleaseList);
+            GameEntry.Battle.SetAreaSelectEffect(m_CanReleaseList.ConvertAll((input) => input.GridPos), m_GridMap);
         }
 
         private void OnPointGridMap(object sender, GameEventArgs e)

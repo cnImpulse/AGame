@@ -1234,7 +1234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BattleId: 0
-  AutoBattle: 1
+  AutoBattle: 0
 --- !u!114 &2126496759
 MonoBehaviour:
   m_ObjectHideFlags: 0

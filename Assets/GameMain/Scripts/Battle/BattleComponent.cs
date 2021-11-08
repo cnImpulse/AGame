@@ -12,11 +12,44 @@ namespace SSRPG
         public bool AutoBattle = true;
 
         private int m_SelectEffectId = 0;
+        private GridMap m_GridMap = null;
+        private List<Vector2Int> m_SelectEffectArea = null;
 
         private void Start()
         {
             GameEntry.Event.Subscribe(EventName.GridUnitDamage, OnGridUnitDamage);
             GameEntry.Event.Subscribe(EventName.GridUnitDead, OnGridUnitDead);
+        }
+
+        private void Update()
+        {
+            if (m_SelectEffectArea == null || m_GridMap == null)
+            {
+                return;
+            }
+
+            var gridPos = m_GridMap.WorldPosToGridPos(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            if (m_SelectEffectArea.Contains(gridPos))
+            {
+                GameEntry.Battle.ShowSelectEffect(m_GridMap.GridPosToWorldPos(gridPos));
+            }
+            else
+            {
+                GameEntry.Battle.HideSelectEffect();
+            }
+        }
+
+        public void SetAreaSelectEffect(List<Vector2Int> area, GridMap gridMap)
+        {
+            m_SelectEffectArea = area;
+            m_GridMap = gridMap;
+        }
+
+        public void HideAreaSelectEffect()
+        {
+            m_SelectEffectArea = null;
+            m_GridMap = null;
+            HideSelectEffect();
         }
 
         public void ShowSelectEffect(Vector3 position)

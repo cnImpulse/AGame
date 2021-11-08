@@ -19,15 +19,28 @@ namespace SSRPG
 
             m_CanAttackList = m_GridMap.Data.GetCanAttackGrids(Owner);
             m_GridMap.ShowAttackArea(m_CanAttackList);
+            GameEntry.Battle.SetAreaSelectEffect(m_CanAttackList.ConvertAll((input) => input.GridPos), m_GridMap);
         }
 
         protected override void OnUpdate(IFsm<BattleUnit> fsm, float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
+
+            var gridPos = m_GridMap.WorldPosToGridPos(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            var gridData = m_GridMap.Data.GetGridData(gridPos);
+            if (m_CanAttackList != null && m_CanAttackList.Contains(gridData))
+            {
+                GameEntry.Battle.ShowSelectEffect(m_GridMap.GridPosToWorldPos(gridPos));
+            }
+            else
+            {
+                GameEntry.Battle.HideSelectEffect();
+            }
         }
 
         protected override void OnLeave(IFsm<BattleUnit> fsm, bool isShutdown)
         {
+            GameEntry.Battle.HideAreaSelectEffect();
             GameEntry.Effect.HideGridMapEffect();
             GameEntry.Event.Unsubscribe(EventName.PointerDownGridMap, OnPointGridMap);
 
