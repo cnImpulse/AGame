@@ -59,5 +59,9 @@ namespace Cfg.UI
         /// 回合切换动画
         /// </summary>
         RoundSwitchForm = 1003,
+        /// <summary>
+        /// 单位信息界面
+        /// </summary>
+        GridUnitInfoForm = 1004,
     }
 }

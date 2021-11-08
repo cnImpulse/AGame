@@ -45,7 +45,6 @@ namespace SSRPG
         protected override void OnLeave(IFsm<ProcedureBattle> fsm, bool isShutdown)
         {
             m_BattleUnitFsm = null;
-            GameEntry.Battle.HideSelectEffect();
             GameEntry.Event.Unsubscribe(EventName.PointerDownGridMap, OnPointGridMap);
 
             base.OnLeave(fsm, isShutdown);
