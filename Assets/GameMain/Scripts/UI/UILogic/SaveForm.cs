@@ -17,7 +17,7 @@ namespace SSRPG
             base.OnInit(userData);
 
             m_SaveList = GetChild<UIListTemplate>("m_SaveList");
-            m_SaveList.AddListener(OnSaveListInit, OnSaveListShow);
+            m_SaveList.AddListener(OnSaveItemInit, OnSaveItemShow);
         }
 
         protected override void OnOpen(object userData)
@@ -30,7 +30,7 @@ namespace SSRPG
             m_SaveList.AddItems(MaxSave);
         }
 
-        private void OnSaveListInit(int index, UIItemTemplate item)
+        private void OnSaveItemInit(int index, UIItemTemplate item)
         {
             var m_SaveBtn = item.GetChild<Button>("m_SaveBtn");
             var m_SaveIndex = item.GetChild<TextMeshProUGUI>("m_SaveIndex");
@@ -52,7 +52,7 @@ namespace SSRPG
             m_SaveBtn.onClick.AddListener(() => { OnClickSaveItem(index); });
         }
 
-        private void OnSaveListShow(int index, UIItemTemplate item)
+        private void OnSaveItemShow(int index, UIItemTemplate item)
         {
             var m_SaveTip = item.GetChild<TextMeshProUGUI>("m_SaveTip");
             if (GameEntry.Save.HasSave(index))

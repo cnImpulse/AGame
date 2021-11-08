@@ -61,13 +61,11 @@ namespace SSRPG
             if (IsAutoBattle)
             {
                 m_BattleUnitFsm = GameEntry.Fsm.CreateFsm(battleUnit, new AutoActionState(), new EndActionState());
-                m_BattleUnitFsm.Start<AutoActionState>();
             }
             else
             {
                 m_BattleUnitFsm = GameEntry.Fsm.CreateFsm(battleUnit, new MoveState(),
                     new ActionState(), new AttackState(), new SkillState(), new EndActionState());
-                m_BattleUnitFsm.Start<MoveState>();
             }
             Fsm.SetData("BattleUnitFsm", new VarObject { Value = m_BattleUnitFsm });
         }

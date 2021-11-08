@@ -12,7 +12,7 @@ namespace SSRPG
         [SerializeField]
         private Transform m_EffectInstanceRoot = null;
 
-        private Dictionary<int, Effect> m_LoadedEffectList = null;
+        private Dictionary<int, EffectData> m_EffectList = null;
 
         public Tilemap m_GridMapEffect = null;
 
@@ -27,7 +27,7 @@ namespace SSRPG
             GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnCreatEffect);
 
             m_GridMapEffect = GetComponentInChildren<Tilemap>();
-            m_LoadedEffectList = new Dictionary<int, Effect>();
+            m_EffectList = new Dictionary<int, EffectData>();
         }
 
         /// <summary>
@@ -41,15 +41,16 @@ namespace SSRPG
             int entityId = GameEntry.Entity.GenerateSerialId();
             EffectData effectData = new EffectData(entityId, (int)type, position, lifetime);
 
+            m_EffectList.Add(entityId, effectData);
             GameEntry.Entity.ShowEffect(effectData);
             return entityId;
         }
 
-        public Effect GetEffect(int entityId)
+        public EffectData GetEffect(int entityId)
         {
-            if (m_LoadedEffectList.TryGetValue(entityId, out var effect))
+            if (m_EffectList.TryGetValue(entityId, out var data))
             {
-                return effect;
+                return data;
             }
 
             return null;
@@ -100,9 +101,9 @@ namespace SSRPG
         /// <param name="entityId">特效实体Id</param>
         public void HideEffect(int entityId)
         {
-            if (m_LoadedEffectList.ContainsKey(entityId))
+            if (m_EffectList.ContainsKey(entityId))
             {
-                m_LoadedEffectList.Remove(entityId);
+                m_EffectList.Remove(entityId);
                 GameEntry.Entity.HideEntity(entityId);
             }
         }
@@ -112,7 +113,6 @@ namespace SSRPG
             var ne = (ShowEntitySuccessEventArgs)e;
             if (ne.Entity.Logic is Effect)
             {
-                m_LoadedEffectList.Add(ne.Entity.Id, ne.Entity.Logic as Effect);
                 ne.Entity.transform.SetParent(m_EffectInstanceRoot);
             }
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityGameFramework.Runtime;
+using DG.Tweening;
 
 namespace SSRPG
 {
@@ -10,12 +11,12 @@ namespace SSRPG
     {
         private ProcedureBattle m_ProcedureBattle = null;
 
-        private GameObject m_SelectPanel = null;
-        private Toggle m_AutoBattleBtn = null;
+        private Button m_StartBtn = null;
+        private Button m_SetBtn = null;
 
-        public void OnStartBtnClick()
+        public void OnClickStartBtn()
         {
-            m_SelectPanel.SetActive(false);
+            m_StartBtn.gameObject.SetActive(false);
             m_ProcedureBattle.StartBattle();
         }
 
@@ -23,8 +24,10 @@ namespace SSRPG
         {
             base.OnInit(userData);
 
-            m_SelectPanel = GetChild("m_SelectPanel").gameObject;
-            m_AutoBattleBtn = GetChild<Toggle>("m_AutoBattleBtn");
+            m_StartBtn = GetChild<Button>("m_StartBtn");
+            m_SetBtn = GetChild<Button>("m_SetBtn");
+            m_StartBtn.onClick.AddListener(OnClickStartBtn);
+            m_SetBtn.onClick.AddListener(() => { GameEntry.UI.OpenUIForm(Cfg.UI.FormType.GameSetForm); });
         }
 
         protected override void OnOpen(object userData)
@@ -32,19 +35,8 @@ namespace SSRPG
             base.OnOpen(userData);
 
             m_ProcedureBattle = userData as ProcedureBattle;
-            if (m_ProcedureBattle == null)
-            {
-                Log.Warning("ProcedureBattle is invalid when open BattleForm.");
-                return;
-            }
 
-            m_AutoBattleBtn.isOn = GameEntry.Battle.AutoBattle;
-            m_AutoBattleBtn.onValueChanged.AddListener(OnValueChanged);
-        }
-
-        private void OnValueChanged(bool isOn)
-        {
-            GameEntry.Battle.AutoBattle = isOn;
+            m_StartBtn.gameObject.SetActive(true);
         }
     }
 }

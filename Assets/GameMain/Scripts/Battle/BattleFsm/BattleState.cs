@@ -19,6 +19,14 @@ namespace SSRPG
             GameEntry.Event.Subscribe(EventName.BattleUnitActionEnd, OnBattleUnitActionEnd);
 
             m_BattleUnitFsm = Fsm.GetData<VarObject>("BattleUnitFsm").Value as IFsm<BattleUnit>;
+            if (IsAutoBattle)
+            {
+                m_BattleUnitFsm.Start<AutoActionState>();
+            }
+            else
+            {
+                m_BattleUnitFsm.Start<MoveState>();
+            }
         }
 
         protected override void OnUpdate(IFsm<ProcedureBattle> fsm, float elapseSeconds, float realElapseSeconds)

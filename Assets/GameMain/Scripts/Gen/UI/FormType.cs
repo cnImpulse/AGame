@@ -12,17 +12,17 @@ namespace Cfg.UI
     public enum FormType
     {
         /// <summary>
-        /// 弹出框
+        /// 菜单界面
         /// </summary>
-        DialogForm = 1,
+        MenuForm = 1,
         /// <summary>
-        /// 主菜单
+        /// 游戏设置界面
         /// </summary>
-        MenuForm = 100,
+        GameSetForm = 2,
         /// <summary>
         /// 存档界面
         /// </summary>
-        SaveForm = 101,
+        SaveForm = 3,
         /// <summary>
         /// 奖励界面
         /// </summary>

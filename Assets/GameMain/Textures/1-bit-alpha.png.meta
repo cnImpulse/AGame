@@ -18205,10 +18205,10 @@ TextureImporter:
       name: 1-bit-alpha_711
       rect:
         serializedVersion: 2
-        x: 624
-        y: 112
-        width: 16
-        height: 16
+        x: 625
+        y: 113
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

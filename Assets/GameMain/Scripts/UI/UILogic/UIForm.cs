@@ -12,7 +12,7 @@ namespace SSRPG
         private Dictionary<string, Transform> m_ChildList = null;
 
         [SerializeField]
-        private bool m_OpenFade = true;
+        private bool m_FadeOpen = true;
         [SerializeField]
         private float m_FadeTime = 0.3f;
         private Canvas m_CachedCanvas = null;
@@ -51,9 +51,14 @@ namespace SSRPG
             InitChildList();
 
             var m_CloseBtn = GetChild<Button>("m_CloseBtn");
+            var m_CloseMask = GetChild<Button>("m_CloseMask");
             if (m_CloseBtn != null)
             {
                 m_CloseBtn.onClick.AddListener(() => { Close(); });
+            }
+            if (m_CloseMask != null)
+            {
+                m_CloseMask.onClick.AddListener(() => { Close(); });
             }
         }
 
@@ -102,10 +107,14 @@ namespace SSRPG
         {
             base.OnOpen(userData);
 
-            if (m_OpenFade)
+            m_CanvasGroup.alpha = 0f;
+            if (m_FadeOpen)
             {
-                m_CanvasGroup.alpha = 0f;
                 m_CanvasGroup.DOFade(1, m_FadeTime);
+            }
+            else
+            {
+                m_CanvasGroup.alpha = 1f;
             }
         }
 

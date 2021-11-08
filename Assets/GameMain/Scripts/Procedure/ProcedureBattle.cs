@@ -50,8 +50,6 @@ namespace SSRPG
             base.OnLeave(procedureOwner, isShutdown);
 
             GameEntry.Entity.HideEntity(GridMap);
-            GameEntry.Fsm.DestroyFsm(m_Fsm);
-            
             GridMap = null;
             m_BattleEnd = false;
             m_LevelData = null;
@@ -143,15 +141,7 @@ namespace SSRPG
                 if (battleUnitList.Count == 0)
                 {
                     m_BattleEnd = true;
-                    BattleResultInfo info = null;
-                    if (data.CampType == CampType.Player)
-                    {
-                        info = new BattleResultInfo(CampType.Enemy);
-                    }
-                    else if(data.CampType == CampType.Enemy)
-                    {
-                        info = new BattleResultInfo(CampType.Player);
-                    }
+                    BattleResultInfo info = new BattleResultInfo(BattleUtl.GetHostileCamp(data.CampType));
                     GameEntry.DataNode.SetData("BattleResultInfo", info);
                     GameEntry.Fsm.DestroyFsm(m_Fsm);
                 }
