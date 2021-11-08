@@ -23,7 +23,7 @@ namespace SSRPG
         {
             base.OnOpen(userData);
 
-            //m_AutoBattle.isOn = GameEntry.Battle.AutoBattle;
+            m_AutoBattle.isOn = GameEntry.Battle.AutoBattle;
         }
 
         private void OnSettingItemInit(int index, UIItemTemplate item)

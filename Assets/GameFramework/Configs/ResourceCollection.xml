@@ -24,6 +24,36 @@
       <Resource Name="Libraries/DOTween/Editor/Imgs/Footer_dark" LoadType="0" Packed="False" />
       <Resource Name="Libraries/DOTween/Editor/Imgs/Header" LoadType="0" Packed="False" />
       <Resource Name="Libraries/DOTween/readme" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Fonts/gb2312" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Fonts/LiberationSans" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Fonts/LiberationSans - OFL" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Fonts/mplus_hzk_12" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Resources/FontsMaterials/LiberationSans SDF" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Resources/FontsMaterials/LiberationSans SDF - Drop Shadow" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Resources/FontsMaterials/LiberationSans SDF - Fallback" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Resources/FontsMaterials/LiberationSans SDF - Outline" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Resources/FontsMaterials/mplus_hzk_12" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Resources/FontsMaterials/mplus_hzk_12_ascll" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Resources/LineBreaking Following Characters" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Resources/LineBreaking Leading Characters" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Resources/Sprite Assets/EmojiOne" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Resources/Style Sheets/Default Style Sheet" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Resources/TMP Settings" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Shaders/TMP_Bitmap" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Shaders/TMP_Bitmap-Mobile" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Shaders/TMP_SDF" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Shaders/TMP_SDF Overlay" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Shaders/TMP_SDF SSD" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Shaders/TMP_SDF-Mobile" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Shaders/TMP_SDF-Surface" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Shaders/TMP_Sprite" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Sprites/EmojiOne" LoadType="0" Packed="False" />
+      <Resource Name="Libraries/TextMesh Pro/Sprites/EmojiOne Attribution" LoadType="0" Packed="False" />
       <Resource Name="Scenes/Battle" LoadType="0" Packed="False" />
       <Resource Name="Scenes/Main" LoadType="0" Packed="False" />
       <Resource Name="Scenes/Menu" LoadType="0" Packed="False" />
@@ -36,6 +66,11 @@
       <Resource Name="Textures/ui_background" LoadType="0" Packed="False" />
       <Resource Name="Textures/ui_elements" LoadType="0" Packed="False" />
       <Resource Name="Tilemap/GridMapPalette" LoadType="0" Packed="False" />
+      <Resource Name="Tilemap/Tiles/BattleUnit/10001" LoadType="0" Packed="False" />
+      <Resource Name="Tilemap/Tiles/BattleUnit/10002" LoadType="0" Packed="False" />
+      <Resource Name="Tilemap/Tiles/BattleUnit/10003" LoadType="0" Packed="False" />
+      <Resource Name="Tilemap/Tiles/BattleUnit/10004" LoadType="0" Packed="False" />
+      <Resource Name="Tilemap/Tiles/BattleUnit/10005" LoadType="0" Packed="False" />
       <Resource Name="Tilemap/Tiles/BattleUnit/20001" LoadType="0" Packed="False" />
       <Resource Name="Tilemap/Tiles/BattleUnit/20002" LoadType="0" Packed="False" />
       <Resource Name="Tilemap/Tiles/BattleUnit/20003" LoadType="0" Packed="False" />
@@ -53,6 +88,7 @@
       <Resource Name="UI/UIForms/ActionForm" LoadType="0" Packed="False" />
       <Resource Name="UI/UIForms/BattleEndForm" LoadType="0" Packed="False" />
       <Resource Name="UI/UIForms/BattleForm" LoadType="0" Packed="False" />
+      <Resource Name="UI/UIForms/GameSetForm" LoadType="0" Packed="False" />
       <Resource Name="UI/UIForms/MainForm" LoadType="0" Packed="False" />
       <Resource Name="UI/UIForms/MenuForm" LoadType="0" Packed="False" />
       <Resource Name="UI/UIForms/RewardForm" LoadType="0" Packed="False" />
@@ -69,42 +105,62 @@
       <Resource Name="UI/UITemplate/Button" LoadType="0" Packed="False" />
       <Resource Name="UI/UITemplate/Mask" LoadType="0" Packed="False" />
       <Resource Name="UI/UITemplate/Panel" LoadType="0" Packed="False" />
-      <Resource Name="UI/UITemplate/Toggle" LoadType="0" Packed="False" />
     </Resources>
     <Assets>
       <Asset Guid="00e918e5eaf95481d91f0fb44e9fdffc" ResourceName="UI/UIForms/RewardForm" />
       <Asset Guid="05e454c46a3b542cba92437b51c28702" ResourceName="Libraries/DOTween/Editor/DOTweenEditor" />
       <Asset Guid="05f2cab18d5f74ba78ae0d001ff342d4" ResourceName="UI/UIForms/MainForm" />
       <Asset Guid="080234849a74141d9b8a605754a9a4d4" ResourceName="Entities/Effect/Attack" />
+      <Asset Guid="0d34014710d7044748297fd1f5b49171" ResourceName="Libraries/TextMesh Pro/Resources/FontsMaterials/mplus_hzk_12" />
       <Asset Guid="0f886a9127bae4c818e73b1689effaa9" ResourceName="UI/UIForms/BattleForm" />
+      <Asset Guid="0f90acf365ff14b36b7d97f5a6d7c55a" ResourceName="Tilemap/Tiles/BattleUnit/10003" />
       <Asset Guid="0f91267c4e3fc47c782bf912eca92da4" ResourceName="Tilemap/Tiles/Effect/brith" />
+      <Asset Guid="128e987d567d4e2c824d754223b3f3b0" ResourceName="Libraries/TextMesh Pro/Shaders/TMP_Bitmap" />
+      <Asset Guid="13879aa4664724aea9f60afdad7def14" ResourceName="Tilemap/Tiles/BattleUnit/10001" />
+      <Asset Guid="14eb328de4b8eb245bb7cea29e4ac00b" ResourceName="Libraries/TextMesh Pro/Shaders/TMP_SDF SSD" />
       <Asset Guid="150b764d51dad49769643168ba5d195e" ResourceName="Animations/attack" />
       <Asset Guid="15c8f1529119140559ed53035fb47293" ResourceName="GameData/CfgData/ui_tbluiform" />
       <Asset Guid="1b3af992a1fcd488c9e9e157be6fb230" ResourceName="Tilemap/Tiles/BattleUnit/20003" />
       <Asset Guid="1b76dd88acb73418ab1965fe1b322bae" ResourceName="Libraries/DOTween/DOTween" />
+      <Asset Guid="1caf1ab0181bf49578866ebd69166749" ResourceName="Tilemap/Tiles/BattleUnit/10005" />
+      <Asset Guid="1e3b057af24249748ff873be7fafee47" ResourceName="Libraries/TextMesh Pro/Shaders/TMP_Bitmap-Mobile" />
       <Asset Guid="2073f82efb7e64fbcafccc1435d90d74" ResourceName="UI/UIItems/RewardItem" />
+      <Asset Guid="2252c776114a24df5b0bdfec99db406d" ResourceName="Tilemap/Tiles/BattleUnit/10004" />
       <Asset Guid="24748f78856e64920ab42eb4a446ab87" ResourceName="Tilemap/Tiles/Land/bridge" />
       <Asset Guid="2b14e7ab3ade84f2083fda2652d7942b" ResourceName="Scenes/Main" />
+      <Asset Guid="2e498d1c8094910479dc3e1b768306a4" ResourceName="Libraries/TextMesh Pro/Resources/FontsMaterials/LiberationSans SDF - Fallback" />
       <Asset Guid="2faab3884e54c449db6ba912523c7bbe" ResourceName="UI/UIForms/SkillActionForm" />
       <Asset Guid="32ee94de5cbe648328cd2130fadd134c" ResourceName="Tilemap/Tiles/Effect/streak" />
       <Asset Guid="3515c8cd8ad7e4000bef6bf155fd625c" ResourceName="Textures/streak" />
+      <Asset Guid="381dcb09d5029d14897e55f98031fca5" ResourceName="Libraries/TextMesh Pro/Sprites/EmojiOne Attribution" />
       <Asset Guid="3ae7d058d9956459b82a6b23b155d466" ResourceName="Scenes/Battle" />
       <Asset Guid="3bdcf52b0cfde45e4a31ae66caa4848a" ResourceName="UI/UIItems/SkillBtnItem" />
+      <Asset Guid="3c01a0e3eee664782b1b0b8fee28eb87" ResourceName="Libraries/TextMesh Pro/Resources/FontsMaterials/mplus_hzk_12_ascll" />
+      <Asset Guid="3f5b5dff67a942289a9defa416b206f3" ResourceName="Libraries/TextMesh Pro/Resources/TMP Settings" />
+      <Asset Guid="48bb5f55d8670e349b6e614913f9d910" ResourceName="Libraries/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas" />
       <Asset Guid="4bf48e4c7808440398b7cc7a59ddbbae" ResourceName="Animations/select" />
       <Asset Guid="4d21cd83125a34ce8a7cbfe456e43f6f" ResourceName="Libraries/DOTween/Editor/Imgs/Header" />
+      <Asset Guid="52b0e9828a1204ec68033c1a2a04ca6d" ResourceName="UI/UIForms/GameSetForm" />
       <Asset Guid="52f20ea9a6a4e4b77aed980201f3f48a" ResourceName="UI/UITemplate/Panel" />
-      <Asset Guid="54fc3ae8b7f3649a2a2f5312c54a18f7" ResourceName="UI/UITemplate/Toggle" />
       <Asset Guid="56557d5a9c51743fbac737e24b8a2552" ResourceName="Scenes/Menu" />
       <Asset Guid="5ebb14b2d59eb424aa21ad450a8d0def" ResourceName="Textures/1-bit" />
       <Asset Guid="5fd1ce6d814ac4095b355dd07b7eba83" ResourceName="Textures/default" />
       <Asset Guid="6030f497fdb7b4bb69ab349708101ecf" ResourceName="UI/UIForms/TipsForm" />
+      <Asset Guid="68e6db2ebdc24f95958faec2be5558d6" ResourceName="Libraries/TextMesh Pro/Shaders/TMP_SDF" />
+      <Asset Guid="6e59c59b81ab47f9b6ec5781fa725d2c" ResourceName="Libraries/TextMesh Pro/Fonts/LiberationSans - OFL" />
       <Asset Guid="6f3e3e9e0eb324c8b84164785b0c51a7" ResourceName="UI/UIForms/MenuForm" />
       <Asset Guid="78924d28a88a740da8781c57e7ea9121" ResourceName="UI/UIItems/SaveItem" />
       <Asset Guid="78ba797f8e9a249ad95eb099558801f1" ResourceName="UI/UIForms/ActionForm" />
+      <Asset Guid="79459efec17a4d00a321bdcc27bbc385" ResourceName="Libraries/TextMesh Pro/Resources/FontsMaterials/LiberationSans SDF - Outline" />
+      <Asset Guid="7e7b2a119aca54008aa4f7c313c681c0" ResourceName="Tilemap/Tiles/BattleUnit/10002" />
+      <Asset Guid="7ec5c509df5c548078491768e22ec812" ResourceName="Libraries/TextMesh Pro/Fonts/gb2312" />
       <Asset Guid="84eb8fb60f5354087896de6fe9bde97d" ResourceName="UI/UIItems/DiscipleItem" />
+      <Asset Guid="85187c2149c549c5b33f0cdb02836b17" ResourceName="Libraries/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile" />
       <Asset Guid="864ba27222ec94f47bcb7dea9352843c" ResourceName="Libraries/DOTween/readme" />
       <Asset Guid="874db2ccc564d4097bc6d2e4c68e5007" ResourceName="UI/UIForms/SaveForm" />
       <Asset Guid="875045fcbdb134f0baf2177aa6d26754" ResourceName="Tilemap/Tiles/Obstacle/tree" />
+      <Asset Guid="8f05276190cf498a8153f6cbe761d4e6" ResourceName="Libraries/TextMesh Pro/Sprites/EmojiOne" />
+      <Asset Guid="8f586378b4e144a9851e7b34d9b748ee" ResourceName="Libraries/TextMesh Pro/Resources/FontsMaterials/LiberationSans SDF" />
       <Asset Guid="901016219265e44f09b94570ef51f332" ResourceName="Tilemap/Tiles/Land/land" />
       <Asset Guid="903e26384fcd04e1db3324200de6ac62" ResourceName="Libraries/DOTween/Editor/Imgs/Footer" />
       <Asset Guid="925d8356c02334055ad1307167ffe88f" ResourceName="Tilemap/Tiles/Obstacle/bone" />
@@ -112,6 +168,7 @@
       <Asset Guid="9c332076f5e59428cb17304593d049b8" ResourceName="Textures/ui_elements" />
       <Asset Guid="9cc5113fe3cd640098b8811366afcb27" ResourceName="Tilemap/Tiles/Obstacle/obstacle" />
       <Asset Guid="9cf0073e558ac40c38775f9ff9f9a8d2" ResourceName="Textures/swordsman" />
+      <Asset Guid="a02a7d8c237544f1962732b55a9aebf1" ResourceName="Libraries/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay" />
       <Asset Guid="a0d8412db0a304433a6b5edd8d16def2" ResourceName="Animations/attack" />
       <Asset Guid="a5b42489d5ee946689cf25ad349c59f2" ResourceName="Tilemap/Tiles/BattleUnit/default" />
       <Asset Guid="a673d187781e143e989541ac45ce67be" ResourceName="Tilemap/Tiles/Obstacle/river" />
@@ -121,18 +178,28 @@
       <Asset Guid="adadc124e83b241f49f19be975870123" ResourceName="Tilemap/Tiles/BattleUnit/20001" />
       <Asset Guid="b44583834a1ad4411bb7e1796976e747" ResourceName="UI/UITemplate/Button" />
       <Asset Guid="bb8716d1b6ae048438a1e712fa92a24a" ResourceName="Tilemap/Tiles/BattleUnit/20002" />
+      <Asset Guid="bc1ede39bf3643ee8e493720e4259791" ResourceName="Libraries/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking" />
       <Asset Guid="bd07542869ec846189405398f140286b" ResourceName="Libraries/DOTween/Editor/Imgs/DOTweenMiniIcon" />
       <Asset Guid="be78392097dce4371acd5ebe3ebb3666" ResourceName="GameData/CfgData/entity_tblentity" />
       <Asset Guid="bfef49cddc34e4a91b95f2e483d93248" ResourceName="GameData/LevelData/LevelData_0" />
       <Asset Guid="c1e8b11ec2458462f8c1f977668b541a" ResourceName="Tilemap/Tiles/Obstacle/bonfire" />
       <Asset Guid="c3ddc94f6251d42fcbd5d8acb6bb9e81" ResourceName="Libraries/DOTween/Editor/Imgs/Footer_dark" />
+      <Asset Guid="c41005c129ba4d66911b75229fd70b45" ResourceName="Libraries/TextMesh Pro/Resources/Sprite Assets/EmojiOne" />
       <Asset Guid="c45ab0c16642844c69ca777febfd0996" ResourceName="Textures/1-bit-alpha" />
+      <Asset Guid="c6d966442bc0649f9a9c21d13ae6a6dd" ResourceName="Libraries/TextMesh Pro/Fonts/mplus_hzk_12" />
+      <Asset Guid="c8d12adcee749c344b8117cf7c7eb912" ResourceName="Libraries/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD" />
       <Asset Guid="cbef19145ec334b3fb2e715115d1b5d7" ResourceName="Textures/ui_background" />
       <Asset Guid="ce5a48f064bfd4f199c53f835a754b51" ResourceName="GameData/CfgData/effect_tblgridmapeffect" />
+      <Asset Guid="cf81c85f95fe47e1a27f6ae460cf182c" ResourceName="Libraries/TextMesh Pro/Shaders/TMP_Sprite" />
       <Asset Guid="d2462ea44740945ed9056651266d16e9" ResourceName="Entities/BattleUnit/BattleUnit" />
       <Asset Guid="d39088eb7dbc54b3abab0deccd950ef9" ResourceName="Entities/Effect/Select" />
       <Asset Guid="d49c4022af12c4dee9a8afd03f475d1f" ResourceName="Libraries/DOTween/Editor/Imgs/DOTweenIcon" />
+      <Asset Guid="d82c1b31c7e74239bff1220585707d2b" ResourceName="Libraries/TextMesh Pro/Resources/LineBreaking Leading Characters" />
+      <Asset Guid="dd89cf5b9246416f84610a006f916af7" ResourceName="Libraries/TextMesh Pro/Shaders/TMP_SDF Overlay" />
+      <Asset Guid="dffef66376be4fa480fb02b19edbe903" ResourceName="Libraries/TextMesh Pro/Sprites/EmojiOne" />
+      <Asset Guid="e3265ab4bf004d28a9537516768c1c75" ResourceName="Libraries/TextMesh Pro/Fonts/LiberationSans" />
       <Asset Guid="e5f6f5190a6dc41cba87b0b91af8bb64" ResourceName="GameData/CfgData/battle_tblbattleunitskill" />
+      <Asset Guid="e73a58f6e2794ae7b1b7e50b7fb811b0" ResourceName="Libraries/TextMesh Pro/Resources/FontsMaterials/LiberationSans SDF - Drop Shadow" />
       <Asset Guid="ebd8396e21776493abf826a03a8e37fd" ResourceName="UI/UIForms/BattleEndForm" />
       <Asset Guid="ef330be4ed26a4013bc6c7856ff8e8ca" ResourceName="UI/UIForms/StoryForm" />
       <Asset Guid="f05d9a4a4495d6b47acc2dffa1e87ece" ResourceName="Animations/select" />
@@ -140,8 +207,12 @@
       <Asset Guid="f3c136183efae4d31aaca77707a03812" ResourceName="Textures/select" />
       <Asset Guid="f605514da60c84183b7b80aa66f8b2e7" ResourceName="Entities/GridMap/GridMap_0" />
       <Asset Guid="f768ce9b261734f63b5faf62281cfd2c" ResourceName="UI/UIItems/ButtonItem" />
+      <Asset Guid="f7ada0af4f174f0694ca6a487b8f543d" ResourceName="Libraries/TextMesh Pro/Shaders/TMP_SDF-Surface" />
+      <Asset Guid="f952c082cb03451daed3ee968ac6c63e" ResourceName="Libraries/TextMesh Pro/Resources/Style Sheets/Default Style Sheet" />
+      <Asset Guid="fade42e8bc714b018fac513c043d323b" ResourceName="Libraries/TextMesh Pro/Resources/LineBreaking Following Characters" />
       <Asset Guid="fdaa63a4d2da94fe0afa15eb7a9125d5" ResourceName="GameData/CfgData/effect_tbleffect" />
       <Asset Guid="fe0e9b332e0a2421892dff5241640b3a" ResourceName="Tilemap/Tiles/Land/path" />
+      <Asset Guid="fe393ace9b354375a9cb14cdbbc28be4" ResourceName="Libraries/TextMesh Pro/Shaders/TMP_SDF-Mobile" />
     </Assets>
   </ResourceCollection>
 </UnityGameFramework>
