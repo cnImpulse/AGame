@@ -15,7 +15,7 @@ namespace SSRPG
         private bool m_FadeOpen = true;
         [SerializeField]
         private float m_FadeTime = 0.3f;
-        private Canvas m_CachedCanvas = null;
+        protected Canvas m_CachedCanvas = null;
         protected CanvasGroup m_CanvasGroup = null;
 
         public void Close(bool ignoreFade = false)

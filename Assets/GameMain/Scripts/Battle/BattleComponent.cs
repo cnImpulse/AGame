@@ -81,6 +81,8 @@ namespace SSRPG
             target.BeAttack(info.DamageHP);
 
             GameEntry.Effect.CreatEffect(Cfg.Effect.EffectType.Attack, target.transform.position, 0.5f);
+
+            GameEntry.UI.OpenUIForm(Cfg.UI.FormType.TextBubbleForm, info);
             GameEntry.GameTips.PlayTips(string.Format("{0}对{1}造成{2}点伤害",
                 BattleUtl.GetText(caster.Data.CampType, caster.Name),
                 BattleUtl.GetText(target.Data.CampType, target.Name),

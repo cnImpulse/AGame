@@ -63,5 +63,6 @@ namespace Cfg.UI
         /// 单位信息界面
         /// </summary>
         GridUnitInfoForm = 1004,
+        TextBubbleForm = 1005,
     }
 }
