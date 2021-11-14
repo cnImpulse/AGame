@@ -14,8 +14,10 @@ namespace Cfg
    
 public sealed class Tables
 {
-    public Battle.TblBattleUnit TblBattleUnit {get; }
-    public Battle.TblBattleUnitSkill TblBattleUnitSkill {get; }
+    public Battle.TblRole TblRole {get; }
+    public Battle.TblTalent TblTalent {get; }
+    public Battle.TblSkill TblSkill {get; }
+    public Battle.TblWeapon TblWeapon {get; }
     public UI.TblUIForm TblUIForm {get; }
     public Entity.TblEntity TblEntity {get; }
     public Effect.TblEffect TblEffect {get; }
@@ -23,8 +25,10 @@ public sealed class Tables
     public Scene.TblScene TblScene {get; }
 
     public static readonly string[] Assets = {
-        "battle_tblbattleunit",
-        "battle_tblbattleunitskill",
+        "battle_tblrole",
+        "battle_tbltalent",
+        "battle_tblskill",
+        "battle_tblweapon",
         "ui_tbluiform",
         "entity_tblentity",
         "effect_tbleffect",
@@ -35,10 +39,14 @@ public sealed class Tables
     public Tables(System.Func<string, ByteBuf> loader)
     {
         var tables = new System.Collections.Generic.Dictionary<string, object>();
-        TblBattleUnit = new Battle.TblBattleUnit(loader("battle_tblbattleunit")); 
-        tables.Add("Battle.TblBattleUnit", TblBattleUnit);
-        TblBattleUnitSkill = new Battle.TblBattleUnitSkill(loader("battle_tblbattleunitskill")); 
-        tables.Add("Battle.TblBattleUnitSkill", TblBattleUnitSkill);
+        TblRole = new Battle.TblRole(loader("battle_tblrole")); 
+        tables.Add("Battle.TblRole", TblRole);
+        TblTalent = new Battle.TblTalent(loader("battle_tbltalent")); 
+        tables.Add("Battle.TblTalent", TblTalent);
+        TblSkill = new Battle.TblSkill(loader("battle_tblskill")); 
+        tables.Add("Battle.TblSkill", TblSkill);
+        TblWeapon = new Battle.TblWeapon(loader("battle_tblweapon")); 
+        tables.Add("Battle.TblWeapon", TblWeapon);
         TblUIForm = new UI.TblUIForm(loader("ui_tbluiform")); 
         tables.Add("UI.TblUIForm", TblUIForm);
         TblEntity = new Entity.TblEntity(loader("entity_tblentity")); 
@@ -50,8 +58,10 @@ public sealed class Tables
         TblScene = new Scene.TblScene(loader("scene_tblscene")); 
         tables.Add("Scene.TblScene", TblScene);
 
-        TblBattleUnit.Resolve(tables); 
-        TblBattleUnitSkill.Resolve(tables); 
+        TblRole.Resolve(tables); 
+        TblTalent.Resolve(tables); 
+        TblSkill.Resolve(tables); 
+        TblWeapon.Resolve(tables); 
         TblUIForm.Resolve(tables); 
         TblEntity.Resolve(tables); 
         TblEffect.Resolve(tables); 
@@ -61,8 +71,10 @@ public sealed class Tables
 
     public void TranslateText(System.Func<string, string, string> translator)
     {
-        TblBattleUnit.TranslateText(translator); 
-        TblBattleUnitSkill.TranslateText(translator); 
+        TblRole.TranslateText(translator); 
+        TblTalent.TranslateText(translator); 
+        TblSkill.TranslateText(translator); 
+        TblWeapon.TranslateText(translator); 
         TblUIForm.TranslateText(translator); 
         TblEntity.TranslateText(translator); 
         TblEffect.TranslateText(translator); 

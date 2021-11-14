@@ -14,6 +14,12 @@ namespace SSRPG
         [InspectorName("地图Id")]
         private int m_MapId = 0;
 
+        [Range(1, 10)]
+        [SerializeField]
+        [InspectorName("地图等级")]
+        private int m_MapLevel = 1;
+
+        [Range(1, 10)]
         [SerializeField]
         [InspectorName("玩家战斗单位上限")]
         private int m_MaxPlayerBattleUnit = 3;
@@ -21,8 +27,8 @@ namespace SSRPG
         [ContextMenu("保存数据")]
         private void SaveData()
         {
-            var data = new LevelData(m_MapId);
-            data.maxPlayerBattleUnit = m_MaxPlayerBattleUnit;
+            var data = new LevelData(m_MapId, m_MapLevel);
+            data.MaxPlayerBattleUnit = m_MaxPlayerBattleUnit;
 
             var tilemap = GetComponent<Tilemap>();
             var bounds = tilemap.cellBounds;
@@ -39,7 +45,7 @@ namespace SSRPG
 
                     if (tile.name == "brith")
                     {
-                        data.playerBrithList.Add((Vector2Int)position);
+                        data.PlayerBrithList.Add((Vector2Int)position);
                     }
                     else 
                     {
@@ -50,7 +56,7 @@ namespace SSRPG
                         }
 
                         var index = GridMapUtl.GridPosToIndex((Vector2Int)position);
-                        data.enemyList.Add(index, typeId);
+                        data.EnemyList.Add(index, typeId);
                     }
                 }
             }

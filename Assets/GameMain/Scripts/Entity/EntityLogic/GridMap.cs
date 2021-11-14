@@ -136,8 +136,9 @@ namespace SSRPG
         /// <summary>
         /// 注册战斗单位实体
         /// </summary>
-        public bool RegisterBattleUnit(BattleUnitData battleUnitData)
+        public bool RegisterBattleUnit(RoleData roleData, Vector2Int gridPos, CampType campType)
         {
+            BattleUnitData battleUnitData = new BattleUnitData(roleData, gridPos, campType);
             GridData gridData = m_Data.GetGridData(battleUnitData.GridPos);
             if (gridData == null || !gridData.CanArrive())
             {

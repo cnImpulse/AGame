@@ -6,21 +6,23 @@ namespace SSRPG
 {
     public class LevelData
     {
-        public int mapId = 0;
-        public int maxPlayerBattleUnit = -1;
-        public List<Vector2Int> playerBrithList = null;
-        public Dictionary<int, int> enemyList = null;
+        public int MapId = 0;
+        public int MapLevel = 0;
+        public int MaxPlayerBattleUnit = -1;
+        public List<Vector2Int> PlayerBrithList = null;
+        public Dictionary<int, int> EnemyList = null;
 
         [JsonConstructor]
         private LevelData()
         {
         }
 
-        public LevelData(int mapId)
+        public LevelData(int mapId, int mapLevel)
         {
-            this.mapId = mapId;
-            playerBrithList = new List<Vector2Int>();
-            enemyList = new Dictionary<int, int>();
+            MapId = mapId;
+            MapLevel = mapLevel;
+            PlayerBrithList = new List<Vector2Int>();
+            EnemyList = new Dictionary<int, int>();
         }
     }
 }

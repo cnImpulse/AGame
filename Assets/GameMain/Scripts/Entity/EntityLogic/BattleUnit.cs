@@ -126,8 +126,8 @@ namespace SSRPG
                 return;
             }
 
-            DamageInfo damageInfo = new DamageInfo(m_Data.ATK, Id, gridData.GridUnit.Id);
-            GameEntry.Event.Fire(this, EventName.GridUnitDamage, damageInfo);
+            SkillInfo damageInfo = new SkillInfo(m_Data.ATK, Id, gridData.GridUnit.Id);
+            GameEntry.Event.Fire(this, EventName.ReleaseSkill, damageInfo);
         }
     }
 }

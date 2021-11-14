@@ -18,8 +18,6 @@ namespace SSRPG
 
         public GridMap GridMap { get; private set; }
 
-        public bool IsDead => m_Data.HP <= 0;
-
         public GridData GridData => GridMap.Data.GetGridData(m_Data.GridPos);
 
         protected override void OnInit(object userData)
@@ -58,26 +56,6 @@ namespace SSRPG
         protected override void OnDetachFrom(EntityLogic parentEntity, object userData)
         {
             base.OnDetachFrom(parentEntity, userData);
-        }
-
-        //-----------------------------------
-
-        public void BeAttack(int damageHP)
-        {
-            damageHP = Mathf.Max(0, damageHP);
-
-            m_Data.HP -= damageHP;
-            if (IsDead)
-            {
-                OnDead();
-            }
-        }
-
-        protected virtual void OnDead()
-        {
-            Log.Info("{0}: 死亡", Name);
-
-            GameEntry.Event.Fire(this, EventName.GridUnitDead);
         }
     }
 }

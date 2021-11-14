@@ -145,7 +145,7 @@ namespace SSRPG
 
         public List<GridData> GetSkillReleaseRange(BattleUnit battleUnit, int skillId)
         {
-            var cfg = GameEntry.Cfg.Tables.TblBattleUnitSkill.Get(skillId);
+            var cfg = GameEntry.Cfg.Tables.TblSkill.Get(skillId);
             return GetCanAttackGrids(battleUnit.Data.GridPos, cfg.ReleaseRange);
         }
 

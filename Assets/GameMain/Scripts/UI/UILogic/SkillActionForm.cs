@@ -55,7 +55,7 @@ namespace SSRPG
             var button = item.GetComponent<Button>();
             var text = item.GetChild<TextMeshProUGUI>("m_Text");
 
-            var cfg = GameEntry.Cfg.Tables.TblBattleUnitSkill.Get(m_SkillIdList[index]);
+            var cfg = GameEntry.Cfg.Tables.TblSkill.Get(m_SkillIdList[index]);
             text.text = cfg.Name;
             button.onClick.AddListener(() => { m_Owner.ReleaseSkill(cfg.Id); });
         }

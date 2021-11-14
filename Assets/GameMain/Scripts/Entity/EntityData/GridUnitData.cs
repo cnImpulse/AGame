@@ -24,7 +24,6 @@ namespace SSRPG
             m_GridPos       = gridPos;
             m_GridUnitType  = gridUnitType;
             m_CampType      = campType;
-            m_HP            = MaxHP;
             Name            = gridUnitType.ToString();
         }
 
@@ -55,6 +54,11 @@ namespace SSRPG
             get => m_HP;
             set
             {
+                if (value <= 0)
+                {
+                    GameEntry.Event.Fire(this, EventName.GridUnitDead);
+                }
+
                 if (value > MaxHP)
                 {
                     m_HP = MaxHP;

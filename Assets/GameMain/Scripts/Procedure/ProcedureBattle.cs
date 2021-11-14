@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using GameFramework;
-using GameFramework.Event;
 using GameFramework.Fsm;
+using GameFramework.Event;
 using GameFramework.Procedure;
 using UnityGameFramework.Runtime;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
@@ -11,9 +11,9 @@ namespace SSRPG
     public class ProcedureBattle : ProcedureBase
     {
         private bool m_BattleEnd = false;
+
         private LevelData m_LevelData = null;
         private BattleForm m_BattleForm = null;
-
         private IFsm<ProcedureBattle> m_Fsm = null;
 
         public GridMap GridMap { get; private set; }
@@ -62,13 +62,6 @@ namespace SSRPG
             GameEntry.Event.Unsubscribe(EventName.GridUnitDead, OnGridUnitDead);
         }
 
-        private void InitBattleFsm()
-        {
-            m_Fsm = GameEntry.Fsm.CreateFsm(this, new BattleStartState(), new RoundStartState(),
-                new BattleUnitSelectState(), new BattleState(), new RoundEndState(), new BattleEndState());
-            m_Fsm.Start<BattleStartState>();
-        }
-
         private void InitBattle(int levelId)
         {
             string path = AssetUtl.GetLevelData(levelId);
@@ -76,65 +69,69 @@ namespace SSRPG
             {
                 TextAsset textAsset = asset as TextAsset;
                 m_LevelData = Utility.Json.ToObject<LevelData>(textAsset.text);
-                GameEntry.Entity.ShowGridMap(m_LevelData.mapId);
+                GameEntry.Entity.ShowGridMap(m_LevelData.MapId);
             });
         }
 
         private void InitBattleUnit()
         {
-            // 加载敌人
-            foreach (var enemy in m_LevelData.enemyList)
+            foreach (var enemy in m_LevelData.EnemyList)
             {
-                int typeId = enemy.Value;
+                var typeId = enemy.Value;
                 var gridData = GridMap.Data.GetGridData(enemy.Key);
-                BattleUnitData battleUnitData = new BattleUnitData(typeId, gridData.GridPos, CampType.Enemy);
-                GridMap.RegisterBattleUnit(battleUnitData);
+                var roleData = new RoleData(typeId);
+                roleData.UpLevel(m_LevelData.MapLevel);
+                GridMap.RegisterBattleUnit(roleData, gridData.GridPos, CampType.Enemy);
             }
 
-            // 加载玩家战棋
-            int posCount = m_LevelData.playerBrithList.Count;
-            foreach(var position in m_LevelData.playerBrithList)
+            int posCount = m_LevelData.PlayerBrithList.Count;
+            foreach(var position in m_LevelData.PlayerBrithList)
             {
-                int typeId = 10000 + Random.Range(1, 6);
-                BattleUnitData battleUnitData = new BattleUnitData(typeId, position, CampType.Player);
-                GridMap.RegisterBattleUnit(battleUnitData);
+                var typeId = 1000 + Random.Range(1, 6);
+                var roleData = new RoleData(typeId);
+                roleData.UpLevel(m_LevelData.MapLevel);
+                GridMap.RegisterBattleUnit(roleData, position, CampType.Player);
             }
         }
 
-        private void InitBattleUnitSelect()
+        private void InitBattleForm()
         {
             GameEntry.UI.OpenUIForm(Cfg.UI.FormType.BattleForm, this);
         }
 
-        private void OnOpenUIFormSuccess(object sender, GameEventArgs e)
+        private void InitBattleFsm()
         {
-            OpenUIFormSuccessEventArgs ne = (OpenUIFormSuccessEventArgs)e;
-            if (ne.UserData != this)
-            {
-                return;
-            }
-
-            m_BattleForm = (BattleForm)ne.UIForm.Logic;
+            m_Fsm = GameEntry.Fsm.CreateFsm(this, new BattleStartState(), new RoundStartState(),
+                new BattleUnitSelectState(), new BattleState(), new RoundEndState(), new BattleEndState());
+            m_Fsm.Start<BattleStartState>();
         }
 
         private void OnShowGirdMapSuccess(object sender, GameEventArgs e)
         {
             ShowEntitySuccessEventArgs ne = (ShowEntitySuccessEventArgs)e;
-            if (ne.EntityLogicType == typeof(GridMap))
+            if (ne.Entity.Logic is GridMap)
             {
                 GridMap = ne.Entity.Logic as GridMap;
-                GameEntry.Effect.ShowGridEffect(m_LevelData.playerBrithList, Cfg.Effect.GridEffectType.Brith);
-                InitBattleUnitSelect();
+                GameEntry.Effect.ShowGridEffect(m_LevelData.PlayerBrithList, Cfg.Effect.GridEffectType.Brith);
                 InitBattleUnit();
+                InitBattleForm();
+            }
+        }
+
+        private void OnOpenUIFormSuccess(object sender, GameEventArgs e)
+        {
+            OpenUIFormSuccessEventArgs ne = (OpenUIFormSuccessEventArgs)e;
+            if (ne.UIForm.Logic is BattleForm)
+            {
+                m_BattleForm = ne.UIForm.Logic as BattleForm;
             }
         }
 
         private void OnGridUnitDead(object sender, GameEventArgs e)
         {
-            var gridUnit = sender as GridUnit;
+            var data = sender as GridUnitData;
 
-            GridUnitData data = gridUnit.Data;
-            GridMap.UnRegisterGridUnit(gridUnit);
+            GridMap.UnRegisterGridUnit(GameEntry.Entity.GetEntityLogic<GridUnit>(data.Id));
             if (data.GridUnitType == GridUnitType.BattleUnit)
             {
                 var battleUnitList = GridMap.GetGridUnitList<BattleUnit>(data.CampType);

@@ -43,7 +43,7 @@ namespace SSRPG
             var m_ItemBtn = item.GetChild<Button>("m_ItemBtn");
 
             int rewardId = m_RewardDataList[index];
-            var cfg = GameEntry.Cfg.Tables.TblBattleUnit.Get(rewardId);
+            var cfg = GameEntry.Cfg.Tables.TblRole.Get(rewardId);
 
             m_ItemName.text = cfg.Name;
             m_ItemBtn.onClick.AddListener(()=> {

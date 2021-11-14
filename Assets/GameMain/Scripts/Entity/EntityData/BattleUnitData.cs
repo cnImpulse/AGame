@@ -8,52 +8,31 @@ namespace SSRPG
     [Serializable]
     public class BattleUnitData : GridUnitData
     {
-        [SerializeField]
-        private int m_MaxHP = 0;
+        private RoleData m_RoleData = null;
 
-        [SerializeField]
-        private int m_MaxMP = 0;
-
-        [SerializeField]
         private int m_Mp = 0;
 
-        [SerializeField]
-        private int m_ATK = 0;
-
-        [SerializeField]
-        private int m_AtkRange = 0;
-
-        [SerializeField]
-        private int m_MOV = 0;
-
-        [SerializeField]
-        private List<int> m_SkillList = null;
-
-        public BattleUnitData(int typeId, Vector2Int gridPos, CampType campType)
-            : base(typeId, gridPos, GridUnitType.BattleUnit, campType) 
+        public BattleUnitData(RoleData roleData, Vector2Int gridPos, CampType campType)
+            : base(roleData.TypeId, gridPos, GridUnitType.BattleUnit, campType)
         {
-            var cfg = GameEntry.Cfg.Tables.TblBattleUnit.Get(typeId);
-            m_ATK = cfg.ATK;
-            m_MOV = cfg.MOV;
-            m_MaxHP = cfg.MaxHP;
-            m_MaxMP = cfg.MaxMP;
-            m_AtkRange = cfg.AtkRange;
-            m_SkillList = cfg.SkillList;
-            Name = cfg.Name;
+            m_RoleData = roleData;
 
+            Name = roleData.Name;
             HP = MaxHP;
             MP = MaxMP;
         }
 
+        public Attribute Attribute => m_RoleData.Attribute;
+
         /// <summary>
         /// 最大生命。
         /// </summary>
-        public override int MaxHP => m_MaxHP;
+        public override int MaxHP => Attribute.HP;
 
         /// <summary>
         /// 最大魔法值
         /// </summary>
-        public int MaxMP => m_MaxMP;
+        public int MaxMP => Attribute.MP;
 
         /// <summary>
         /// 魔法值
@@ -77,21 +56,21 @@ namespace SSRPG
         /// <summary>
         /// 攻击力
         /// </summary>
-        public int ATK => m_ATK;
+        public int ATK => Attribute.STR;
 
         /// <summary>
         /// 移动力
         /// </summary>
-        public int MOV => m_MOV;
+        public int MOV => Attribute.MOV;
 
         /// <summary>
         /// 攻击范围
         /// </summary>
-        public int AtkRange => m_AtkRange;
+        public int AtkRange => 1;
 
         /// <summary>
         /// 技能列表
         /// </summary>
-        public List<int> SkillList => m_SkillList;
+        public List<int> SkillList => m_RoleData.SkillList;
     }
 }

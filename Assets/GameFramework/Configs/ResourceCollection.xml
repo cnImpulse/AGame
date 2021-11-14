@@ -89,6 +89,7 @@
       <Resource Name="UI/UIForms/BattleEndForm" LoadType="0" Packed="False" />
       <Resource Name="UI/UIForms/BattleForm" LoadType="0" Packed="False" />
       <Resource Name="UI/UIForms/GameSetForm" LoadType="0" Packed="False" />
+      <Resource Name="UI/UIForms/GridUnitInfoForm" LoadType="0" Packed="False" />
       <Resource Name="UI/UIForms/MainForm" LoadType="0" Packed="False" />
       <Resource Name="UI/UIForms/MenuForm" LoadType="0" Packed="False" />
       <Resource Name="UI/UIForms/RewardForm" LoadType="0" Packed="False" />
@@ -96,6 +97,7 @@
       <Resource Name="UI/UIForms/SaveForm" LoadType="0" Packed="False" />
       <Resource Name="UI/UIForms/SkillActionForm" LoadType="0" Packed="False" />
       <Resource Name="UI/UIForms/StoryForm" LoadType="0" Packed="False" />
+      <Resource Name="UI/UIForms/TextBubbleForm" LoadType="0" Packed="False" />
       <Resource Name="UI/UIForms/TipsForm" LoadType="0" Packed="False" />
       <Resource Name="UI/UIItems/ButtonItem" LoadType="0" Packed="False" />
       <Resource Name="UI/UIItems/DiscipleItem" LoadType="0" Packed="False" />
@@ -170,11 +172,13 @@
       <Asset Guid="9cf0073e558ac40c38775f9ff9f9a8d2" ResourceName="Textures/swordsman" />
       <Asset Guid="a02a7d8c237544f1962732b55a9aebf1" ResourceName="Libraries/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay" />
       <Asset Guid="a0d8412db0a304433a6b5edd8d16def2" ResourceName="Animations/attack" />
+      <Asset Guid="a5847605dc7b8494b854060ed90a3b60" ResourceName="UI/UIForms/GridUnitInfoForm" />
       <Asset Guid="a5b42489d5ee946689cf25ad349c59f2" ResourceName="Tilemap/Tiles/BattleUnit/default" />
       <Asset Guid="a673d187781e143e989541ac45ce67be" ResourceName="Tilemap/Tiles/Obstacle/river" />
       <Asset Guid="a88e20b408cf94af2bd2408e8bfd82fe" ResourceName="GameData/CfgData/scene_tblscene" />
       <Asset Guid="aba6a41bc7e0c497e84fbfed08681f9c" ResourceName="UI/UITemplate/Mask" />
       <Asset Guid="abf2294d9a5e94d7e8ad3ccd127c17cd" ResourceName="GameData/CfgData/battle_tblbattleunit" />
+      <Asset Guid="ad04897dc77ee40b79db02bcb4ed376b" ResourceName="UI/UIForms/TextBubbleForm" />
       <Asset Guid="adadc124e83b241f49f19be975870123" ResourceName="Tilemap/Tiles/BattleUnit/20001" />
       <Asset Guid="b44583834a1ad4411bb7e1796976e747" ResourceName="UI/UITemplate/Button" />
       <Asset Guid="bb8716d1b6ae048438a1e712fa92a24a" ResourceName="Tilemap/Tiles/BattleUnit/20002" />

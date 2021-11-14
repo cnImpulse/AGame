@@ -55,13 +55,13 @@ namespace SSRPG
             var m_ATK = item.GetChild<Text>("m_ATK");
             var m_AtkRange = item.GetChild<Text>("m_AtkRange");
 
-            var cfg = GameEntry.Cfg.Tables.TblBattleUnit.Get(index);
-            m_Name.text = cfg.Name;
-            m_Desc.text = cfg.Desc;
-            m_HP.text = string.Format("血量: {0}", cfg.MaxHP);
-            m_MOV.text = string.Format("移动力: {0}", cfg.MOV);
-            m_ATK.text = string.Format("攻击力: {0}", cfg.ATK);
-            m_AtkRange.text = string.Format("攻击范围: {0}", cfg.AtkRange);
+            //var cfg = GameEntry.Cfg.Tables.TblRole.Get(index);
+            //m_Name.text = cfg.Name;
+            //m_Desc.text = cfg.Desc;
+            //m_HP.text = string.Format("血量: {0}", cfg.MaxHP);
+            //m_MOV.text = string.Format("移动力: {0}", cfg.MOV);
+            //m_ATK.text = string.Format("攻击力: {0}", cfg.ATK);
+            //m_AtkRange.text = string.Format("攻击范围: {0}", cfg.AtkRange);
         }
 
         private void OnClickExploreBtn()

@@ -4549,4 +4549,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LevelId: 0
   m_MapId: 0
-  m_MaxPlayerBattleUnit: 4
+  m_MapLevel: 1
+  m_MaxPlayerBattleUnit: 5

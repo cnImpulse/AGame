@@ -22,10 +22,16 @@ namespace SSRPG
         {
             base.OnOpen(userData);
 
-            var info = userData as DamageInfo;
+            var info = userData as SkillInfo;
 
             Vector2 position;
-            var worldPos = GameEntry.Entity.GetEntity(info.TargetId).transform.position;
+            var entity = GameEntry.Entity.GetEntity(info.TargetId);
+            if (entity == null)
+            {
+                return;
+            }
+
+            var worldPos = entity.transform.position;
             var screenPos = Camera.main.WorldToScreenPoint(worldPos);
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)m_CachedCanvas.transform, screenPos,
                 m_CachedCanvas.worldCamera, out position))
@@ -39,7 +45,9 @@ namespace SSRPG
             }
 
             m_CanvasGroup.alpha = 1;
-            m_Txt.text = "-" + info.DamageHP;
+
+            m_Txt.text = info.EffectValue.ToString();
+            m_Txt.color = info.EffectValue > 0 ? Color.green : Color.red;
             var tweener = m_Txt.transform.DOMoveY(m_Txt.transform.position.y + 100, 1);
             var tweener1 = m_CanvasGroup.DOFade(0, 1);
             tweener1.SetDelay(1f);
