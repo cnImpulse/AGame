@@ -118,16 +118,5 @@ namespace SSRPG
             GridMap.MoveTo(this, destination);
             transform.position = GridMap.GridPosToWorldPos(destination);
         }
-
-        public void Attack(GridData gridData)
-        {
-            if (gridData == null || gridData.GridUnit == null)
-            {
-                return;
-            }
-
-            SkillInfo damageInfo = new SkillInfo(m_Data.ATK, Id, gridData.GridUnit.Id);
-            GameEntry.Event.Fire(this, EventName.ReleaseSkill, damageInfo);
-        }
     }
 }

@@ -30,7 +30,6 @@ namespace SSRPG
 
             InitActionListPos();
             m_ActionList.InitList();
-            m_ActionList.AddItem((int)ActionType.Attack);
             m_ActionList.AddItem((int)ActionType.Skill);
             m_ActionList.AddItem((int)ActionType.Await);
         }
@@ -58,11 +57,7 @@ namespace SSRPG
             var text = item.GetChild<TextMeshProUGUI>("m_Text");
 
             var type = (ActionType)index;
-            if (type == ActionType.Attack)
-            {
-                text.text = "攻击";
-            }
-            else if (type == ActionType.Skill)
+            if (type == ActionType.Skill)
             {
                 text.text = "技能";
                 if (m_Owner.Owner.Data.SkillList.Count == 0)

@@ -116,11 +116,11 @@ namespace SSRPG
             return canMoveList;
         }
 
-        public List<GridData> GetCanAttackGrids(BattleUnit battleUnit, bool beforeMove = false)
+        public List<GridData> GetCanAttackGrids(BattleUnit battleUnit, int atkRange, bool beforeMove = false)
         {
             if (beforeMove == false)
             {
-                return GetCanAttackGrids(battleUnit.Data.GridPos, battleUnit.Data.AtkRange);
+                return GetCanAttackGrids(battleUnit.Data.GridPos, atkRange);
             }
 
             List<GridData> canMoveList = GetCanMoveGrids(battleUnit);
@@ -128,7 +128,7 @@ namespace SSRPG
 
             foreach (var gridData in canMoveList)
             {
-                var gridList = GetCanAttackGrids(gridData.GridPos, battleUnit.Data.AtkRange);
+                var gridList = GetCanAttackGrids(gridData.GridPos, atkRange);
                 foreach (var grid in gridList)
                 {
                     if (canMoveList.Contains(grid) || canAttackList.Contains(grid))

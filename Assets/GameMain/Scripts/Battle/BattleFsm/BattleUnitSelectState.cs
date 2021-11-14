@@ -64,7 +64,7 @@ namespace SSRPG
             else
             {
                 m_BattleUnitFsm = GameEntry.Fsm.CreateFsm(battleUnit, new MoveState(),
-                    new ActionState(), new AttackState(), new SkillState(), new EndActionState());
+                    new ActionState(), new SkillState(), new EndActionState());
             }
             Fsm.SetData("BattleUnitFsm", new VarObject { Value = m_BattleUnitFsm });
         }

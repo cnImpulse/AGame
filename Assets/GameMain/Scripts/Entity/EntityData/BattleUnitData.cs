@@ -54,19 +54,9 @@ namespace SSRPG
         }
 
         /// <summary>
-        /// 攻击力
-        /// </summary>
-        public int ATK => Attribute.STR;
-
-        /// <summary>
         /// 移动力
         /// </summary>
         public int MOV => Attribute.MOV;
-
-        /// <summary>
-        /// 攻击范围
-        /// </summary>
-        public int AtkRange => 1;
 
         /// <summary>
         /// 技能列表

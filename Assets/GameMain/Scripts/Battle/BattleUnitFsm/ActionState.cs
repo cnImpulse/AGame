@@ -33,11 +33,7 @@ namespace SSRPG
 
         public void SelectAction(ActionType actionType)
         {
-            if (actionType == ActionType.Attack)
-            {
-                ChangeState<AttackState>();
-            }
-            else if (actionType == ActionType.Skill)
+            if (actionType == ActionType.Skill)
             {
                 ChangeState<SkillState>();
             }

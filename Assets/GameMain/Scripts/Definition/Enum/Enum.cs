@@ -36,7 +36,6 @@ namespace SSRPG
     public enum ActionType
     {
         None,
-        Attack = 1, // 攻击
         Skill = 2,  // 释放技能
         Await = 3,  // 待机
     }

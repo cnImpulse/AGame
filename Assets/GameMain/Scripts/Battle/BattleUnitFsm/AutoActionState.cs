@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GameFramework.Fsm;
-using GameFramework.Event;
-using UnityGameFramework.Runtime;
 
 namespace SSRPG
 {
@@ -13,7 +11,8 @@ namespace SSRPG
         {
             base.OnEnter(fsm);
 
-            BattleUnit attackTarget = FindAttackTarget();
+            var skillCfg = GameEntry.Cfg.Tables.TblSkill.Get(SelectSkill());
+            BattleUnit attackTarget = FindTarget(skillCfg);
             if (attackTarget == null)
             {
                 GameEntry.Fsm.StartCoroutine(AutoAction(Owner));
@@ -21,7 +20,7 @@ namespace SSRPG
             }
 
             var path = new List<GridData>();
-            var end = FindMoveEnd(attackTarget);
+            var end = FindMoveEnd(attackTarget, skillCfg);
             bool result = GameEntry.Navigator.Navigate(m_GridMap.Data, Owner, end, out path);
             if (result == true)
             {
@@ -50,18 +49,25 @@ namespace SSRPG
         // 3. 根据攻击范围寻找移动终点, 远程单位会尽量让敌人离自身最远
         // 4. 移动到目标点, 攻击
 
+        private int SelectSkill()
+        {
+            return Owner.Data.SkillList[0];
+        }
+
         /// <summary>
         /// 寻找攻击目标
         /// </summary>
-        private BattleUnit FindAttackTarget()
+        private BattleUnit FindTarget(Cfg.Battle.Skill skillCfg)
         {
-            var canAttackList = m_GridMap.Data.GetCanAttackGrids(Owner, true);
+            var canAttackList = m_GridMap.Data.GetCanAttackGrids(Owner, skillCfg.ReleaseRange, true);
 
+            var targetCamp = skillCfg.SkillType == Cfg.Battle.SkillType.Damage ?
+                BattleUtl.GetHostileCamp(Owner.Data.CampType) : Owner.Data.CampType;
             foreach (var gridData in canAttackList)
             {
                 GridUnit gridUnit = gridData.GridUnit;
-                if (gridUnit != null && gridUnit.Data.GridUnitType == GridUnitType.BattleUnit &&
-                    gridUnit.Data.CampType != Owner.Data.CampType)
+                if (gridUnit != null && gridUnit is BattleUnit &&
+                    gridUnit.Data.CampType == targetCamp)
                 {
                     return gridUnit as BattleUnit;
                 }
@@ -72,7 +78,7 @@ namespace SSRPG
         /// <summary>
         /// 寻找移动终点
         /// </summary>
-        private GridData FindMoveEnd(BattleUnit attackTarget)
+        private GridData FindMoveEnd(BattleUnit attackTarget, Cfg.Battle.Skill skillCfg)
         {
             if (attackTarget == null)
             {
@@ -84,7 +90,7 @@ namespace SSRPG
             foreach (var gridData in canMoveList)
             {
                 int distance = GridMapUtl.GetDistance(attackTarget.GridData, gridData);
-                int atkRange = Owner.Data.AtkRange;
+                int atkRange = skillCfg.ReleaseRange;
                 if (distance > atkRange)
                 {
                     continue;
@@ -142,13 +148,14 @@ namespace SSRPG
                 m_GridMap.MoveTo(battleUnit, path[path.Count - 1].GridPos);
             }
 
-            var canAttackList = m_GridMap.Data.GetCanAttackGrids(battleUnit);
-            m_GridMap.ShowAttackArea(canAttackList);
+            var skillId = SelectSkill();
+            var canReleaseList = m_GridMap.Data.GetSkillReleaseRange(battleUnit, skillId);
+            m_GridMap.ShowAttackArea(canReleaseList);
             yield return new WaitForSeconds(0.5f);
             GameEntry.Effect.HideGridMapEffect();
 
             yield return new WaitForSeconds(0.2f);
-            battleUnit.Attack(attackTarget.GridData);
+            GameEntry.Skill.RequestReleaseSkill(skillId, battleUnit.Id, attackTarget.Id);
 
             ChangeState<EndActionState>();
         }
