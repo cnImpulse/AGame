@@ -41,9 +41,9 @@ namespace SSRPG
             if (m_StoryQueue.Count == 0)
             {
                 List<int> rewardIdList = new List<int>();
-                rewardIdList.Add(20001);
-                rewardIdList.Add(20002);
-                rewardIdList.Add(20003);
+                rewardIdList.Add(1001);
+                rewardIdList.Add(1002);
+                rewardIdList.Add(1003);
                 GameEntry.UI.OpenUIForm(Cfg.UI.FormType.RewardForm, rewardIdList);
                 Close();
                 return;

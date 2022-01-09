@@ -8,7 +8,7 @@ namespace SSRPG
 
         public const string PointerDownGridMap      = "PointerDownGridMap";
         public const string GridUnitDead            = "GridUnitDead";
-        public const string ReleaseSkill = "GridUnitDamage";
+        public const string ReleaseSkill            = "ReleaseSkill";
         public const string BattleUnitActionEnd     = "BattleUnitActionEnd";
         public const string BattleUnitActionCancel  = "BattleUnitActionCancel";
 
