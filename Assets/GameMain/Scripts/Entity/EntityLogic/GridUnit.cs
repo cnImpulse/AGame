@@ -50,7 +50,6 @@ namespace SSRPG
 
             GridMap = parentEntity as GridMap;
             transform.position = GridMap.GridPosToWorldPos(m_Data.GridPos);
-            GameEntry.GridUnitInfo.ShowGridUnitInfo(this);
         }
 
         protected override void OnDetachFrom(EntityLogic parentEntity, object userData)

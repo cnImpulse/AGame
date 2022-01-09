@@ -34,12 +34,6 @@ namespace SSRPG
             private set;
         }
 
-        public static GridUnitInfoComponent GridUnitInfo
-        {
-            get;
-            private set;
-        }
-
         /// <summary>
         /// 技能组件
         /// </summary>
@@ -83,7 +77,6 @@ namespace SSRPG
             Battle          = UnityGameFramework.Runtime.GameEntry.GetComponent<BattleComponent>();
             Effect          = UnityGameFramework.Runtime.GameEntry.GetComponent<EffectComponent>();
             Navigator       = UnityGameFramework.Runtime.GameEntry.GetComponent<NavigatorComponent>();
-            GridUnitInfo    = UnityGameFramework.Runtime.GameEntry.GetComponent<GridUnitInfoComponent>();
             GameTips        = UnityGameFramework.Runtime.GameEntry.GetComponent<GameTipsComponent>();
             Save            = UnityGameFramework.Runtime.GameEntry.GetComponent<SaveComponent>();
         }
