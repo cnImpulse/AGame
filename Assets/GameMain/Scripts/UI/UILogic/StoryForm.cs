@@ -7,6 +7,8 @@ namespace SSRPG
 {
     public class StoryForm : UIForm
     {
+        private ProcedureLoadSaveData m_Owner = null;
+
         private Button m_ContinueBtn = null;
         private Text m_InfoTxt = null;
 
@@ -28,10 +30,9 @@ namespace SSRPG
         {
             base.OnOpen(userData);
 
-            m_StoryQueue.Enqueue("有一个人前来卖瓜。");
-            m_StoryQueue.Enqueue("生异形吗，你们哥俩。");
-            m_StoryQueue.Enqueue("哥们儿，这瓜多少钱一斤啊。");
-            m_StoryQueue.Enqueue("两块钱一斤。");
+            m_Owner = userData as ProcedureLoadSaveData;
+
+            m_StoryQueue.Enqueue("你被包围了。");
 
             PlayStory();
         }
@@ -40,11 +41,13 @@ namespace SSRPG
         {
             if (m_StoryQueue.Count == 0)
             {
-                List<int> rewardIdList = new List<int>();
-                rewardIdList.Add(1001);
-                rewardIdList.Add(1002);
-                rewardIdList.Add(1003);
-                GameEntry.UI.OpenUIForm(Cfg.UI.FormType.RewardForm, rewardIdList);
+                //List<int> rewardIdList = new List<int>();
+                //rewardIdList.Add(1001);
+                //rewardIdList.Add(1002);
+                //rewardIdList.Add(1003);
+                //GameEntry.UI.OpenUIForm(Cfg.UI.FormType.RewardForm, rewardIdList);
+
+                m_Owner.EndProcedure();
                 Close();
                 return;
             }

@@ -20,7 +20,8 @@ namespace SSRPG
 
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenMainFormSuccess);
 
-            GameEntry.UI.OpenUIForm(Cfg.UI.FormType.MainForm, this);
+            //GameEntry.UI.OpenUIForm(Cfg.UI.FormType.MainForm, this);
+            EnterExplore();
         }
 
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)
