@@ -32,7 +32,7 @@ namespace SSRPG
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
             GameEntry.Event.Subscribe(EventName.GridUnitDead, OnGridUnitDead);
 
-            InitBattle(0);
+            InitBattle(GameEntry.Battle.BattleId);
         }
 
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)

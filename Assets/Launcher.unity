@@ -1103,7 +1103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72a6f4c3b051744049e857f34364a754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BattleId: 0
+  BattleId: 1
   AutoBattle: 0
 --- !u!114 &2126496759
 MonoBehaviour:

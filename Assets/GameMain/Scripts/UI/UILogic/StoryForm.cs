@@ -47,6 +47,8 @@ namespace SSRPG
                 //rewardIdList.Add(1003);
                 //GameEntry.UI.OpenUIForm(Cfg.UI.FormType.RewardForm, rewardIdList);
 
+                GameEntry.Save.SaveData.EndFirstGuide = true;
+                GameEntry.Save.Save();
                 m_Owner.EndProcedure();
                 Close();
                 return;

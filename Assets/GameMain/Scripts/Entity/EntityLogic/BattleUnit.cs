@@ -52,7 +52,7 @@ namespace SSRPG
 
             m_SpriteRenderer = GetComponent<SpriteRenderer>();
             ColorUtility.TryParseHtmlString("#70FFF0", out playerColor);
-            ColorUtility.TryParseHtmlString("#FF7070", out enemyColor);
+            ColorUtility.TryParseHtmlString("#FFFFFF", out enemyColor);
         }
 
         protected override void OnShow(object userData)
