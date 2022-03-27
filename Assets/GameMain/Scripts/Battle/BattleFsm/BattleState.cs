@@ -10,7 +10,7 @@ namespace SSRPG
     public class BattleState : BattleStateBase
     {
         private IFsm<BattleUnit> m_BattleUnitFsm = null;
-        private int m_GridUnitInfoForm = 0;
+        private int m_GridUnitInfoFormId = 0;
 
         protected override void OnInit(IFsm<ProcedureBattle> fsm)
         {
@@ -27,8 +27,8 @@ namespace SSRPG
             GameEntry.Event.Subscribe(EventName.BattleUnitActionEnd, OnBattleUnitActionEnd);
 
             m_BattleUnitFsm = Fsm.GetData<VarObject>("BattleUnitFsm").Value as IFsm<BattleUnit>;
-            GameEntry.UI.CloseUIForm(true, m_GridUnitInfoForm);
-            m_GridUnitInfoForm = GameEntry.UI.OpenUIForm(Cfg.UI.FormType.GridUnitInfoForm, m_BattleUnitFsm.Owner);
+            GameEntry.UI.CloseUIForm(false, m_GridUnitInfoFormId);
+            m_GridUnitInfoFormId = GameEntry.UI.OpenUIForm(Cfg.UI.FormType.GridUnitInfoForm, m_BattleUnitFsm.Owner);
             if (IsAutoBattle)
             {
                 m_BattleUnitFsm.Start<AutoActionState>();
@@ -47,7 +47,7 @@ namespace SSRPG
         protected override void OnLeave(IFsm<ProcedureBattle> fsm, bool isShutdown)
         {
             DestoryBattleUnitFsm();
-            GameEntry.UI.CloseUIForm(true, m_GridUnitInfoForm);
+            GameEntry.UI.CloseUIForm(false, m_GridUnitInfoFormId);
             GameEntry.Event.Unsubscribe(EventName.BattleUnitActionCancel, OnBattleUnitActionCancel);
             GameEntry.Event.Unsubscribe(EventName.BattleUnitActionEnd, OnBattleUnitActionEnd);
 
@@ -95,11 +95,19 @@ namespace SSRPG
             var gridUnit = gridData.GridUnit;
             if (gridUnit == null)
             {
+                GameEntry.UI.CloseUIForm(false, m_GridUnitInfoFormId);
                 return;
             }
 
-            GameEntry.UI.CloseUIForm(true, m_GridUnitInfoForm);
-            m_GridUnitInfoForm = GameEntry.UI.OpenUIForm(Cfg.UI.FormType.GridUnitInfoForm, gridUnit);
+            var form = GameEntry.UI.GetUIForm(m_GridUnitInfoFormId);
+            var logic = form?.Logic as GridUnitInfoForm;
+            if (logic?.Owner == gridUnit)
+            {
+                return;
+            }
+
+            GameEntry.UI.CloseUIForm(false, m_GridUnitInfoFormId);
+            m_GridUnitInfoFormId = GameEntry.UI.OpenUIForm(Cfg.UI.FormType.GridUnitInfoForm, gridUnit);
         }
     }
 }

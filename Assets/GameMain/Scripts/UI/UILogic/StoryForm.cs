@@ -32,7 +32,8 @@ namespace SSRPG
 
             m_Owner = userData as ProcedureLoadSaveData;
 
-            m_StoryQueue.Enqueue("你被包围了。");
+            m_StoryQueue.Enqueue("这里是死路!");
+            m_StoryQueue.Enqueue("击败敌人,找到出去的办法。");
 
             PlayStory();
         }

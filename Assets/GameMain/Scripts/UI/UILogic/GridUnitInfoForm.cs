@@ -11,15 +11,19 @@ namespace SSRPG
     {
         private GridUnit m_Owner = null;
 
+        private RectTransform m_RootPanel = null;
         private Image m_Img = null;
         private TextMeshProUGUI m_NameTxt = null;
         private TextMeshProUGUI m_HpTxt = null;
         private TextMeshProUGUI m_MpTxt = null;
 
+        public GridUnit Owner => m_Owner;
+
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
 
+            m_RootPanel = GetChild<RectTransform>("m_RootPanel");
             m_Img = GetChild<Image>("m_Img");
             m_NameTxt = GetChild<TextMeshProUGUI>("m_NameTxt");
             m_HpTxt = GetChild<TextMeshProUGUI>("m_HpTxt");
@@ -42,6 +46,22 @@ namespace SSRPG
                 var battleUnit = m_Owner as BattleUnit;
                 m_MpTxt.text = string.Format("MP:{0}/{1}", battleUnit.Data.MaxMP, battleUnit.Data.MP);
             }
+
+            InitFormPosition();
+        }
+
+        private void InitFormPosition()
+        {
+            var pivot = Vector2.zero;
+            var edge = RectTransform.Edge.Left;
+            if (Camera.main.WorldToViewportPoint(m_Owner.transform.position).x < 0.5)
+            {
+                pivot = Vector2.right;
+                edge = RectTransform.Edge.Right;
+            }
+
+            m_RootPanel.pivot = pivot;
+            m_RootPanel.SetInsetAndSizeFromParentEdge(edge, 10, 0);
         }
 
         protected override void OnClose(bool isShutdown, object userData)
