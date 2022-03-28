@@ -1,7 +1,12 @@
+{{~
+    name = x.name
+    namespace = x.namespace
+    tables = x.tables
+~}}
 
-package {{package}}
+package {{namespace}}
 
-import "bright/serialization"
+import "{{assembly.args.go_bright_module_name}}/serialization"
 
 type ByteBufLoader func(string) (*serialization.ByteBuf, error)
 

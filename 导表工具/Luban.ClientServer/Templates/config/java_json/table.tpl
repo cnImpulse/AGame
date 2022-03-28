@@ -24,7 +24,7 @@ public final class {{name}} {
         _dataMap = new java.util.HashMap<{{java_box_define_type key_type}}, {{java_box_define_type value_type}}>();
         _dataList = new java.util.ArrayList<{{java_box_define_type value_type}}>();
         
-        for(var _e_ : __json__.getAsJsonArray()) {
+        for(com.google.gson.JsonElement _e_ : __json__.getAsJsonArray()) {
             {{java_box_define_type value_type}} _v;
             {{java_deserialize '_e_.getAsJsonObject()' '_v' value_type}}
             _dataList.add(_v);
@@ -40,6 +40,29 @@ public final class {{name}} {
     public <T extends {{java_box_define_type value_type}}> T getAs({{java_define_type key_type}} key) { return (T)_dataMap.get(key); }
 {{~end~}}
     public {{java_box_define_type value_type}} get({{java_define_type key_type}} key) { return _dataMap.get(key); }
+
+    public void resolve(java.util.HashMap<String, Object> _tables) {
+        for({{java_box_define_type value_type}} v : _dataList) {
+            v.resolve(_tables);
+        }
+    }
+
+    {{~else if x.is_list_table ~}}
+    private final java.util.ArrayList<{{java_box_define_type value_type}}> _dataList;
+    
+    public {{name}}(JsonElement __json__) {
+        _dataList = new java.util.ArrayList<{{java_box_define_type value_type}}>();
+        
+        for(com.google.gson.JsonElement _e_ : __json__.getAsJsonArray()) {
+            {{java_box_define_type value_type}} _v;
+            {{java_deserialize '_e_.getAsJsonObject()' '_v' value_type}}
+            _dataList.add(_v);
+        }
+    }
+
+    public java.util.ArrayList<{{java_box_define_type value_type}}> getDataList() { return _dataList; }
+
+    public {{java_box_define_type value_type}} get(int index) { return _dataList.get(index); }
 
     public void resolve(java.util.HashMap<String, Object> _tables) {
         for({{java_box_define_type value_type}} v : _dataList) {

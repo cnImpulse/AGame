@@ -1,4 +1,4 @@
-{{-
+{{~
     go_full_name = x.go_full_name
     key_type = x.key_ttype
     key_type1 =  x.key_ttype1
@@ -7,9 +7,9 @@
     index_field = x.index_field
     index_field1 = x.index_field1
     index_field2 = x.index_field2
--}}
+~}}
 
-package {{package}}
+package {{x.top_module}}
 
 {{~if x.is_map_table~}}
 type {{go_full_name}} struct {
@@ -52,6 +52,31 @@ func (table *{{go_full_name}}) Get(key {{go_define_type key_type}}) {{go_define_
     return table._dataMap[key]
 }
 
+
+{{~else if x.is_list_table~}}
+type {{go_full_name}} struct {
+    _dataList []{{go_define_type value_type}}
+}
+
+func New{{go_full_name}}(_buf []map[string]interface{}) (*{{go_full_name}}, error) {
+	_dataList := make([]{{go_define_type value_type}}, 0, len(_buf))
+	for _, _ele_ := range _buf {
+		if _v, err2 := {{go_deserialize_type value_type '_ele_'}}; err2 != nil {
+			return nil, err2
+		} else {
+			_dataList = append(_dataList, _v)
+		}
+	}
+	return &{{go_full_name}}{_dataList:_dataList}, nil
+}
+
+func (table *{{go_full_name}}) GetDataList() []{{go_define_type value_type}} {
+    return table._dataList
+}
+
+func (table *{{go_full_name}}) Get(index int) {{go_define_type value_type}} {
+    return table._dataList[index]
+}
 
 {{~else~}}
 

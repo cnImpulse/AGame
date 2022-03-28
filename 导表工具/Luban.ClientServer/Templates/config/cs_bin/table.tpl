@@ -15,7 +15,7 @@ namespace {{x.namespace_with_top_module}}
 /// {{x.escape_comment}}
 /// </summary>
 {{~end~}}
-public sealed class {{name}}
+public partial class {{name}}
 {
     {{~if x.is_map_table ~}}
     private readonly Dictionary<{{cs_define_type key_type}}, {{cs_define_type value_type}}> _dataMap;
@@ -33,6 +33,7 @@ public sealed class {{name}}
             _dataList.Add(_v);
             _dataMap.Add(_v.{{x.index_field.convention_name}}, _v);
         }
+        PostInit();
     }
 
     public Dictionary<{{cs_define_type key_type}}, {{cs_define_type value_type}}> DataMap => _dataMap;
@@ -52,6 +53,7 @@ public sealed class {{name}}
         {
             v.Resolve(_tables);
         }
+        PostResolve();
     }
 
     public void TranslateText(System.Func<string, string, string> translator)
@@ -61,7 +63,74 @@ public sealed class {{name}}
             v.TranslateText(translator);
         }
     }
+        {{~else if x.is_list_table ~}}
+    private readonly List<{{cs_define_type value_type}}> _dataList;
 
+    {{~if x.is_union_index~}}
+    private {{cs_table_union_map_type_name x}} _dataMapUnion;
+    {{~else if !x.index_list.empty?~}}
+    {{~for idx in x.index_list~}}
+    private Dictionary<{{cs_define_type idx.type}}, {{cs_define_type value_type}}> _dataMap_{{idx.index_field.name}};
+    {{~end~}}
+    {{~end~}}
+
+    public {{name}}(ByteBuf _buf)
+    {
+        _dataList = new List<{{cs_define_type value_type}}>();
+        
+        for(int n = _buf.ReadSize() ; n > 0 ; --n)
+        {
+            {{cs_define_type value_type}} _v;
+            {{cs_deserialize '_buf' '_v' value_type}}
+            _dataList.Add(_v);
+        }
+    {{~if x.is_union_index~}}
+        _dataMapUnion = new {{cs_table_union_map_type_name x}}();
+        foreach(var _v in _dataList)
+        {
+            _dataMapUnion.Add(({{cs_table_key_list x "_v"}}), _v);
+        }
+    {{~else if !x.index_list.empty?~}}
+    {{~for idx in x.index_list~}}
+        _dataMap_{{idx.index_field.name}} = new Dictionary<{{cs_define_type idx.type}}, {{cs_define_type value_type}}>();
+    {{~end~}}
+    foreach(var _v in _dataList)
+    {
+    {{~for idx in x.index_list~}}
+        _dataMap_{{idx.index_field.name}}.Add(_v.{{idx.index_field.convention_name}}, _v);
+    {{~end~}}
+    }
+    {{~end~}}
+        PostInit();
+    }
+
+
+    public List<{{cs_define_type value_type}}> DataList => _dataList;
+
+    {{~if x.is_union_index~}}
+    public {{cs_define_type value_type}} Get({{cs_table_get_param_def_list x}}) => _dataMapUnion.TryGetValue(({{cs_table_get_param_name_list x}}), out {{cs_define_type value_type}} __v) ? __v : null;
+    {{~else if !x.index_list.empty? ~}}
+        {{~for idx in x.index_list~}}
+    public {{cs_define_type value_type}} GetBy{{idx.index_field.convention_name}}({{cs_define_type idx.type}} key) => _dataMap_{{idx.index_field.name}}.TryGetValue(key, out {{cs_define_type value_type}} __v) ? __v : null;
+        {{~end~}}
+    {{~end~}}
+
+    public void Resolve(Dictionary<string, object> _tables)
+    {
+        foreach(var v in _dataList)
+        {
+            v.Resolve(_tables);
+        }
+        PostResolve();
+    }
+
+    public void TranslateText(System.Func<string, string, string> translator)
+    {
+        foreach(var v in _dataList)
+        {
+            v.TranslateText(translator);
+        }
+    }
     {{~else~}}
 
      private readonly {{cs_define_type value_type}} _data;
@@ -71,6 +140,7 @@ public sealed class {{name}}
         int n = _buf.ReadSize();
         if (n != 1) throw new SerializationException("table mode=one, but size != 1");
         {{cs_deserialize '_buf' '_data' value_type}}
+        PostInit();
     }
 
 
@@ -89,6 +159,7 @@ public sealed class {{name}}
     public void Resolve(Dictionary<string, object> _tables)
     {
         _data.Resolve(_tables);
+        PostResolve();
     }
 
     public void TranslateText(System.Func<string, string, string> translator)
@@ -97,6 +168,9 @@ public sealed class {{name}}
     }
 
     {{~end~}}
+    
+    partial void PostInit();
+    partial void PostResolve();
 }
 
 }

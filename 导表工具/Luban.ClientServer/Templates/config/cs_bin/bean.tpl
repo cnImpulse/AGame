@@ -16,7 +16,7 @@ namespace {{x.namespace_with_top_module}}
 /// {{x.escape_comment}}
 /// </summary>
 {{~end~}}
-public {{x.cs_class_modifier}} class {{name}} : {{if parent_def_type}} {{x.parent}} {{else}} Bright.Config.BeanBase {{end}}
+public {{x.cs_class_modifier}} partial class {{name}} : {{if parent_def_type}} {{x.parent}} {{else}} Bright.Config.BeanBase {{end}}
 {
     public {{name}}(ByteBuf _buf) {{if parent_def_type}} : base(_buf) {{end}}
     {
@@ -29,6 +29,7 @@ public {{x.cs_class_modifier}} class {{name}} : {{if parent_def_type}} {{x.paren
         }
         {{~end~}}
         {{~end~}}
+        PostInit();
     }
 
     public static {{name}} Deserialize{{name}}(ByteBuf _buf)
@@ -37,7 +38,7 @@ public {{x.cs_class_modifier}} class {{name}} : {{if parent_def_type}} {{x.paren
         switch (_buf.ReadInt())
         {
         {{~for child in x.hierarchy_not_abstract_children~}}
-            case {{child.full_name}}.ID: return new {{child.full_name}}(_buf);
+            case {{child.full_name}}.__ID__: return new {{child.full_name}}(_buf);
         {{~end~}}
             default: throw new SerializationException();
         }
@@ -59,14 +60,17 @@ public {{x.cs_class_modifier}} class {{name}} : {{if parent_def_type}} {{x.paren
     {{~if field.gen_ref~}}
     public {{field.cs_ref_validator_define}}
     {{~end~}}
+    {{~if field.ctype.type_name == "datetime" && !field.ctype.is_nullable ~}}
+    public long {{field.convention_name}}_Millis => {{field.convention_name}} * 1000L;
+    {{~end~}}
     {{~if field.gen_text_key~}}
     public {{cs_define_text_key_field field}} { get; }
     {{~end~}}
     {{~end~}}
 
 {{~if !x.is_abstract_type~}}
-    public const int ID = {{x.id}};
-    public override int GetTypeId() => ID;
+    public const int __ID__ = {{x.id}};
+    public override int GetTypeId() => __ID__;
 {{~end~}}
 
     public {{x.cs_method_modifier}} void Resolve(Dictionary<string, object> _tables)
@@ -81,6 +85,7 @@ public {{x.cs_class_modifier}} class {{name}} : {{if parent_def_type}} {{x.paren
         {{cs_recursive_resolve field '_tables'}}
         {{~end~}}
         {{~end~}}
+        PostResolve();
     }
 
     public {{x.cs_method_modifier}} void TranslateText(System.Func<string, string, string> translator)
@@ -105,6 +110,9 @@ public {{x.cs_class_modifier}} class {{name}} : {{if parent_def_type}} {{x.paren
     {{~end~}}
         + "}";
     }
-    }
+    
+    partial void PostInit();
+    partial void PostResolve();
+}
 
 }
